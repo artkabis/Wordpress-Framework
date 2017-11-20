@@ -8,12 +8,12 @@
 
 
 /**** FRAMEWORK ******/
-
+/*  >>  Github >> https://raw.githubusercontent.com/artkabis/Wordpress-Framework/6b83e95ec1e454d46b31de09ccec77b3e8c8bec2/css/artkabis_tools_wp.css   **/
 /** PROD OPTI V 1.04 >>
-   <link rel="stylesheet" id="toolsCSS" href="https://rawcdn.githack.com/artkabis/Wordpress-Framework/6fc42d52c80def213c640fe6a6d02b88de89d73b/css/artkabis_tools_wp.css" type="text/css" media="all">
+   <link rel="stylesheet" id="toolsCSS" href="https://rawcdn.githack.com/artkabis/Wordpress-Framework/6b83e95ec1e454d46b31de09ccec77b3e8c8bec2/css/artkabis_tools_wp.css" type="text/css" media="all">
 
 ** DEV >> 
-   <link rel="stylesheet" id="toolsCSS" href="https://raw.githack.com/artkabis/Wordpress-Framework/6fc42d52c80def213c640fe6a6d02b88de89d73b/css/artkabis_tools_wp.css" type="text/css" media="all">
+   <link rel="stylesheet" id="toolsCSS" href="https://raw.githack.com/artkabis/Wordpress-Framework/6b83e95ec1e454d46b31de09ccec77b3e8c8bec2/css/artkabis_tools_wp.css" type="text/css" media="all">
 */
 
 
@@ -149,18 +149,18 @@
     .wpb_wrapper .bg50, .bg50-inner > .vc_column-inner{background-size: 50%!important;}
 
     /* ROTATION + */
-    .rot5,.bgRot5 .ts-background{-webkit-transform:rotate(5deg);transform:rotate(5deg)}
+    .rot5, .bgRot5 .ts-background{-webkit-transform:rotate(5deg);transform:rotate(5deg)}
     .rotY5,.bgRotY5 .ts-background{-webkit-transform:rotateY(5deg);transform:rotateY(5deg)}
-    .rot15.bgRot15 .ts-background{-webkit-transform:rotate(15deg);transform:rotate(15deg)}
-    .rotY15,.bgRotY15 .ts-background{-webkit-transform:rotateY(15deg);transform:rotateY(15deg)}
-    .rot25.bgRot25 .ts-background{-webkit-transform:rotate(25deg);transform:rotate(25deg)}
-    .rotY25.bgRotY25 .ts-background{-webkit-transform:rotateY(25deg);transform:rotateY(25deg)}
-    .rot45.bgRot45 .ts-background{-webkit-transform:rotate(45deg);transform:rotate(45deg)}
-    .rotY45.bgRotY45 .ts-background{-webkit-transform:rotateY(45deg);transform:rotateY(45deg)}
-    .rot90.bgRot90 .ts-background{-webkit-transform:rotate(90deg);transform:rotate(90deg)}
-    .rotY90.bgRotY90 .ts-background{-webkit-transform:rotateY(90deg);transform:rotateY(90deg)}
-    .rot180.bgRot180 .ts-background{-webkit-transform:rotate(180deg);transform:rotate(180deg)}
-    .rotY180.bgRotY180 .ts-background{-webkit-transform:rotateY(180deg);transform:rotateY(180deg)}
+    .rot15, .bgRot15 .ts-background{-webkit-transform:rotate(15deg);transform:rotate(15deg)}
+    .rotY15, .bgRotY15 .ts-background{-webkit-transform:rotateY(15deg);transform:rotateY(15deg)}
+    .rot25, .bgRot25 .ts-background{-webkit-transform:rotate(25deg);transform:rotate(25deg)}
+    .rotY25, .bgRotY25 .ts-background{-webkit-transform:rotateY(25deg);transform:rotateY(25deg)}
+    .rot45, .bgRot45 .ts-background{-webkit-transform:rotate(45deg);transform:rotate(45deg)}
+    .rotY45, .bgRotY45 .ts-background{-webkit-transform:rotateY(45deg);transform:rotateY(45deg)}
+    .rot90, .bgRot90 .ts-background{-webkit-transform:rotate(90deg);transform:rotate(90deg)}
+    .rotY90, .bgRotY90 .ts-background{-webkit-transform:rotateY(90deg);transform:rotateY(90deg)}
+    .rot180, .bgRot180 .ts-background{-webkit-transform:rotate(180deg);transform:rotate(180deg)}
+    .rotY180, .bgRotY180 .ts-background{-webkit-transform:rotateY(180deg);transform:rotateY(180deg)}
     
     /* ROTATION - */
     .rot-5, .bgRot-5 .ts-background{-webkit-transform:rotate(-5deg);transform:rotate(-5deg)}
