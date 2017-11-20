@@ -1,5 +1,5 @@
 /* ┌─────────────────────────────────────────────────────────────────────┐ \\
-// │ Artkabis 1.3 - CSS        Library                                   │ \\
+// │ Artkabis 1.4 - CSS        Library                                   │ \\
 // ├─────────────────────────────────────────────────────────────────────┤ \\
 // │ Copyright (c) 2015-2016 Gregory NICOLLE (http://urliss35.free.fr)   │ \\
 // │ Copyright (c) 20013-2016 Sencha Labs (http://sencha.com)            │ \\
@@ -9,11 +9,11 @@
 
 /**** FRAMEWORK ******/
 
-/** PROD OPTI V 1.03 >>
-   <link rel="stylesheet" id="initCSS" href="https://rawcdn.githack.com/artkabis/Framework_AS3/f2f5c59fb7d7142389b2482a63f8d59361af71b3/initCSS.css" type="text/css" media="all">
+/** PROD OPTI V 1.04 >>
+   <link rel="stylesheet" id="toolsCSS" href="https://rawcdn.githack.com/artkabis/Framework_AS3/f2f5c59fb7d7142389b2482a63f8d59361af71b3/initCSS.css" type="text/css" media="all">
 
 ** DEV >> 
-   <link rel="stylesheet" id="initCSS" href="https://raw.githack.com/artkabis/Framework_AS3/f2f5c59fb7d7142389b2482a63f8d59361af71b3/initCSS.css" type="text/css" media="all">
+   <link rel="stylesheet" id="toolsCSS" href="https://raw.githack.com/artkabis/Framework_AS3/f2f5c59fb7d7142389b2482a63f8d59361af71b3/initCSS.css" type="text/css" media="all">
 */
 
 
@@ -50,6 +50,10 @@
     .center{ text-align:center }
     .right-align{ text-align:right }
     .justify{ text-align:justify }
+
+    .wmV{writing-mode: vertical-rl}
+    .wmV{writing-mode: vertical-rl}
+
 
     .taCenter, .taCenter p {text-align:center!important}
     .taJustify, .taJustify p {text-align:justify!important}
@@ -145,31 +149,32 @@
     .wpb_wrapper .bg50, .bg50-inner > .vc_column-inner{background-size: 50%!important;}
 
     /* ROTATION + */
-    .rot5{-webkit-transform:rotate(5deg);transform:rotate(5deg)}
-    .rotY5{-webkit-transform:rotateY(5deg);transform:rotateY(5deg)}
-    .rot15{-webkit-transform:rotate(15deg);transform:rotate(15deg)}
-    .rotY15{-webkit-transform:rotateY(15deg);transform:rotateY(15deg)}
-    .rot25{-webkit-transform:rotate(25deg);transform:rotate(25deg)}
-    .rotY25{-webkit-transform:rotateY(25deg);transform:rotateY(25deg)}
-    .rot45{-webkit-transform:rotate(45deg);transform:rotate(45deg)}
-    .rotY45{-webkit-transform:rotateY(45deg);transform:rotateY(45deg)}
-    .rot90{-webkit-transform:rotate(90deg);transform:rotate(90deg)}
-    .rotY90{-webkit-transform:rotateY(90deg);transform:rotateY(90deg)}
-    .rot180{-webkit-transform:rotate(180deg);transform:rotate(180deg)}
-    .rotY180{-webkit-transform:rotateY(180deg);transform:rotateY(180deg)}
+    .rot5,.bgRot5 .ts-background{-webkit-transform:rotate(5deg);transform:rotate(5deg)}
+    .rotY5,.bgRotY5 .ts-background{-webkit-transform:rotateY(5deg);transform:rotateY(5deg)}
+    .rot15.bgRot15 .ts-background{-webkit-transform:rotate(15deg);transform:rotate(15deg)}
+    .rotY15,.bgRotY15 .ts-background{-webkit-transform:rotateY(15deg);transform:rotateY(15deg)}
+    .rot25.bgRot25 .ts-background{-webkit-transform:rotate(25deg);transform:rotate(25deg)}
+    .rotY25.bgRotY25 .ts-background{-webkit-transform:rotateY(25deg);transform:rotateY(25deg)}
+    .rot45.bgRot45 .ts-background{-webkit-transform:rotate(45deg);transform:rotate(45deg)}
+    .rotY45.bgRotY45 .ts-background{-webkit-transform:rotateY(45deg);transform:rotateY(45deg)}
+    .rot90.bgRot90 .ts-background{-webkit-transform:rotate(90deg);transform:rotate(90deg)}
+    .rotY90.bgRotY90 .ts-background{-webkit-transform:rotateY(90deg);transform:rotateY(90deg)}
+    .rot180.bgRot180 .ts-background{-webkit-transform:rotate(180deg);transform:rotate(180deg)}
+    .rotY180.bgRotY180 .ts-background{-webkit-transform:rotateY(180deg);transform:rotateY(180deg)}
+    
     /* ROTATION - */
-    .rot-5{-webkit-transform:rotate(-5deg);transform:rotate(-5deg)}
-    .rotY-5{-webkit-transform:rotateY(-5deg);transform:rotateY(-5deg)}
-    .rot-15{-webkit-transform:rotate(-15deg);transform:rotate(-15deg)}
-    .rotY-15{-webkit-transform:rotateY(-15deg);transform:rotateY(-15deg)}
-    .rot-25{-webkit-transform:rotate(-25deg);transform:rotate(-25deg)}
-    .rotY-25{-webkit-transform:rotateY(-25deg);transform:rotateY(-25deg)}
-    .rot-45{-webkit-transform:rotate(-45deg);transform:rotate(-45deg)}
-    .rotY-45{-webkit-transform:rotateY(-45deg);transform:rotateY(-45deg)}
-    .rot-90{-webkit-transform:rotate(-90deg);transform:rotate(-90deg)}
-    .rotY-90{-webkit-transform:rotateY(-90deg);transform:rotateY(-90deg)}
-    .rot-180{-webkit-transform:rotate(-180deg);transform:rotate(-180deg)}
-    .rotY-180{-webkit-transform:rotateY(-180deg);transform:rotateY(-180deg)}
+    .rot-5, .rot-5 .ts-background{-webkit-transform:rotate(-5deg);transform:rotate(-5deg)}
+    .rotY-5, .rotY-5 .ts-background{-webkit-transform:rotateY(-5deg);transform:rotateY(-5deg)}
+    .rot-15, .rot-15 .ts-background{-webkit-transform:rotate(-15deg);transform:rotate(-15deg)}
+    .rotY-15, .rotY-15 .ts-background{-webkit-transform:rotateY(-15deg);transform:rotateY(-15deg)}
+    .rot-25, .rot-25 .ts-background{-webkit-transform:rotate(-25deg);transform:rotate(-25deg)}
+    .rotY-25, .rotY-25 .ts-background{-webkit-transform:rotateY(-25deg);transform:rotateY(-25deg)}
+    .rot-45, .rot-45 .ts-background{-webkit-transform:rotate(-45deg);transform:rotate(-45deg)}
+    .rotY-45, .rotY-45 .ts-background{-webkit-transform:rotateY(-45deg);transform:rotateY(-45deg)}
+    .rot-90, .rot-90 .ts-background{-webkit-transform:rotate(-90deg);transform:rotate(-90deg)}
+    .rotY-90, .rotY-90 .ts-background{-webkit-transform:rotateY(-90deg);transform:rotateY(-90deg)}
+    .rot-180, .rot-180 .ts-background{-webkit-transform:rotate(-180deg);transform:rotate(-180deg)}
+    .rotY-180, .rotY-180 .ts-background{-webkit-transform:rotateY(-180deg);transform:rotateY(-180deg)}
 
     /**** FLEX ORDER ****/
     .fo-0 {display: -webkit-box;display: -ms-flexbox;display: flex;-webkit-box-ordinal-group: 1;-ms-flex-order: 0;order: 0;}
