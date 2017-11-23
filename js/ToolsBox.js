@@ -509,7 +509,15 @@ $.removeData(div, 'mesValeurs');
 
 
 
-****************************************************** stylizz x words in phrase *****************************************************
+*************** Recupération du nombre de mots à modifier dans un title *****
+var classW = 'themeColor_word-';
+var titleClass = $('.myH1').attr('class');
+var indexWordClass = titleClass.indexOf(classW);
+var nbWords =parseInt(titleClass.substring(indexWordClass+classW.length,indexWordClass+classW.length+1),10);
+
+console.log('nbWords >> '+nbWords);
+
+/******* Modification et découpe du nombre de mot d'une chaine de caractère en parametre ****/
 $.fn.wrapStart = function (numWords) { 
     var node = this.contents().filter(function () { return this.nodeType == 3 }).first(),
         text = node.text(),
@@ -519,14 +527,14 @@ $.fn.wrapStart = function (numWords) {
         return;
     
     node[0].nodeValue = text.slice(first.length);
-    node.before('<span>' + first + '</span><br/>');
+    node.before('<span class="themeColor">' + first + '</span>');
 };
 
-$("div").wrapStart(4);
-/*******************************************************************************************************************************************/
-
-
-
+// Découpe le nombre de mots definis via la class themeColor_word- 
+//si themeColor_word-4, alors les 4 premiers mots du h1 auront la classe themeColor appliquée
+$(".myH1").wrapStart(nbWords);
+							 
+/*********************************************************************************************************/
 
 
 
