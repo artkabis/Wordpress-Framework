@@ -509,9 +509,21 @@ $.removeData(div, 'mesValeurs');
 
 
 
+****************************************************** stylizz x words in phrase *****************************************************
+$.fn.wrapStart = function (numWords) { 
+    var node = this.contents().filter(function () { return this.nodeType == 3 }).first(),
+        text = node.text(),
+        first = text.split(" ", numWords).join(" ");
 
+    if (!node.length)
+        return;
+    
+    node[0].nodeValue = text.slice(first.length);
+    node.before('<span>' + first + '</span><br/>');
+};
 
-
+$("div").wrapStart(4);
+/*******************************************************************************************************************************************/
 
 
 
