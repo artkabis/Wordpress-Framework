@@ -1822,6 +1822,44 @@
     .pr0-768, .pr0-inner-768 > .vc_column-inner{padding-right:0px!important;}
     .plr0-768, .plr0-inner-768 > .vc_column-inner{padding-left:0px!important;padding-right:0px!important;}
 
+    .w025-768{width: 2.0833333325%!important;}
+    .w05-768{width: 4.166666665%!important;}    
+    .w1-768,.w1-inner-768 > .vc_column-inner {width: 8.33333333%!important;}
+    .w2-768,.w2-inner-768 > .vc_column-inner {width: 16.66666667%!important;}
+    .w3-768,.w3-inner-768 > .vc_column-inner {width: 25%!important;}
+    .w4-768,.w4-inner-768 > .vc_column-inner {width: 33.33333333%!important;}
+    .w5-768,.w5-inner-768 > .vc_column-inner {width: 41.66666667%!important;}
+    .w6-768,.w6-inner-768 > .vc_column-inner {width: 50%!important;}
+    .w7-768,.w7-inner-768 > .vc_column-inner {width: 58.33333333%!important;}
+    .w8-768,.w8-inner-768 > .vc_column-inner {width: 66.66666667%!important;}
+    .w9-768,.w9-inner-768 > .vc_column-inner {width: 75%!important;}
+    .w10-768,.w10-inner-768 > .vc_column-inner {width: 83.33333333%!important;}
+    .w11-768,.w11-inner-768 > .vc_column-inner {width: 91.66666667%!important;}
+    .w12-768,.w12-inner-768 > .vc_column-inner {width: 100%!important;}
+
+    /**** MAX HEIGHT ****/
+    .maxH50-768{max-height: 50px;}.maxH70-768{max-height: 70px;}.maxH80-768{max-height: 80px;}.maxH90-768{max-height: 90px;}
+    .maxH100-768{max-height: 100px;}.maxH125-768{max-height: 125px;}.maxH150-768{max-height: 150px;}.maxH175-768{max-height: 175px;}
+    .maxH200-768{max-height: 200px;}.maxH225-768{max-height: 225px;}.maxH250-768{max-height: 250px;}.maxH275-768{max-height: 275px;}
+    .maxH300-768{max-height: 300px;}.maxH325-768{max-height: 325px;}.maxH350-768{max-height: 350px;}.maxH375-768{max-height: 375px;}
+    .maxH400-768{max-height: 400px;}.maxH425-768{max-height: 425px;}.maxH450-768{max-height: 450px;}.maxH475-768{max-height: 475px;}
+    .maxH500-768{max-height: 500px;}.maxH525-768{max-height: 525px;}.maxH550-768{max-height: 550px;}.maxH575-768{max-height: 575px;}
+    .maxH600-768{max-height: 600px;}.maxH625-768{max-height: 625px;}.maxH650-768{max-height: 650px;}.maxH675-768{max-height: 675px;}
+    .maxH700-768{max-height: 700px;}.maxH725-768{max-height: 725px;}.maxH750-768{max-height: 750px;}.maxH775-768{max-height: 775px;}
+    .maxH800-768{max-height: 800px;}.maxH825-768{max-height: 825px;}.maxH850-768{max-height: 850px;}.maxH875-768{max-height: 875px;}
+    .maxH900-768{max-height: 900px;}.maxH925-768{max-height: 925px;}.maxH950-768{max-height: 950px;}.maxH975-768{max-height: 975px;}
+
+    /**** MIN HEIGHT ****/
+    .mh0-768, .mh0-inner-768 > .vc_column-inner{min-height: 0;}.mh25-768, .mh25-inner-768 > .vc_column-inner{min-height:25px;}.mh50-768, .mh50-inner-768 > .vc_column-inner{min-height:50px;}.mh75-768, .mh75-inner-768 > .vc_column-inner{min-height:75px;}
+    .mh100-768, .mh100-inner-768 > .vc_column-inner{min-height:100px;}.mh125-768, .mh125-inner-768 > .vc_column-inner{min-height:125px;}.mh150-768, .mh150-inner-768 > .vc_column-inner{min-height:150px;}.mh175-768, .mh175-inner-768 > .vc_column-inner{min-height:175px;}
+    .mh200-768, .mh200-inner-768 > .vc_column-inner{min-height:200px;}.mh225-768, .mh225-inner-768 > .vc_column-inner{min-height:225px;}.mh250-768, .mh250-inner-768 > .vc_column-inner{min-height:250px;}.mh275-768, .mh275-inner-768 > .vc_column-inner{min-height:275px;}
+    .mh300-768, .mh300-inner-768 > .vc_column-inner{min-height:300px;}.mh325-768, .mh325-inner-768 > .vc_column-inner{min-height:325px;}.mh350-768, .mh350-inner-768 > .vc_column-inner{min-height:350px;}.mh375-768, .mh375-inner-768 > .vc_column-inner{min-height:375px;}
+    .mh400-768, .mh400-inner-768 > .vc_column-inner{min-height:400px;}.mh425-768, .mh425-inner-768 > .vc_column-inner{min-height:425px;}.mh450-768, .mh450-inner-768 > .vc_column-inner{min-height:450px;}.mh475-768, .mh475-inner-768 > .vc_column-inner{min-height:475px;}
+    .mh500-768, .mh500-inner-768 > .vc_column-inner{min-height:500px;}.mh525-768, .mh525-inner-768 > .vc_column-inner{min-height:525px;}.mh550-768, .mh550-inner-768 > .vc_column-inner{min-height:550px;}.mh475-768, .mh575-inner-768 > .vc_column-inner{min-height:575px;}
+    .mh600-768, .mh600-inner-768 > .vc_column-inner{min-height:600px;}.mh625-768, .mh625-inner-768 > .vc_column-inner{min-height:625px;}.mh650-768, .mh650-inner-768 > .vc_column-inner{min-height:650px;}.mh675-768, .mh675-inner-768 > .vc_column-inner{min-height:675px;}
+    .mh700-768, .mh700-inner-768 > .vc_column-inner{min-height:700px;}.mh725-768, .mh725-inner-768 > .vc_column-inner{min-height:725px;}.mh750-768, .mh750-inner-768 > .vc_column-inner{min-height:750px;}.mh775-768, .mh675-inner-768 > .vc_column-inner{min-height:775px;}
+    .mh800-768, .mh800-inner-768 > .vc_column-inner{min-height:800px;}.mh825-768, .mh825-inner-768 > .vc_column-inner{min-height:825px;}.mh850-768, .mh850-inner-768 > .vc_column-inner{min-height:850px;}.mh875-768, .mh875-inner-768 > .vc_column-inner{min-height:875px;}
+    .mh900-768, .mh900-inner-768 > .vc_column-inner{min-height:900px;}.mh925-768, .mh925-inner-768 > .vc_column-inner{min-height:925px;}.mh950-768, .mh950-inner-768 > .vc_column-inner{min-height:950px;}.mh975-768, .mh975-inner-768 > .vc_column-inner{min-height:975px;}    
 }
 
 @media only screen and (min-width:768px) and (max-width:960px) {
