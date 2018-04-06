@@ -2,7 +2,6 @@
 // │ Artkabis 1.3 - CSS        Library                                   │ \\
 // ├─────────────────────────────────────────────────────────────────────┤ \\
 // │ Copyright (c) 2015-2016 Gregory NICOLLE (http://urliss35.free.fr)   │ \\
-// │ Copyright (c) 20013-2016 Sencha Labs (http://sencha.com)            │ \\
 // │ Licensed under the MIT (http://artkabis.com/license.html) license   │ \\
 // └─────────────────────────────────────────────────────────────────────┘ \\
 
@@ -10,15 +9,15 @@
 /**** FRAMEWORK ******/
 
 /** PROD OPTI V 1.03 >>
-   <link rel="stylesheet" id="initCSS" href="https://rawcdn.githack.com/artkabis/Framework_AS3/f2f5c59fb7d7142389b2482a63f8d59361af71b3/initCSS.css" type="text/css" media="all">
+   <link rel="stylesheet" id="initCSS" href="https://rawcdn.githack.com/artkabis/Wordpress-Framework/master/css/ArtkabisToolsWP.css" type="text/css" media="all">
 
 ** DEV >> 
-   <link rel="stylesheet" id="initCSS" href="https://raw.githack.com/artkabis/Framework_AS3/f2f5c59fb7d7142389b2482a63f8d59361af71b3/initCSS.css" type="text/css" media="all">
+   <link rel="stylesheet" id="initCSS" href="https://raw.githack.com/artkabis/Wordpress-Framework/master/css/ArtkabisToolsWP.css" type="text/css" media="all">
 */
 
 
 
-    @import url('https://fonts.googleapis.com/css?family=Josefin+Sans:100,100i,300,300i,400,400i,600,600i,700,700i|Lato:100,100i,300,300i,400,400i,700,700i,900,900i&subset=latin-ext');
+    @import url('https://fonts.googleapis.com/css?family=Raleway:100,200,300,400,400i,500,500i,600,700,800,900,900i|Josefin+Sans:100,100i,300,300i,400,400i,600,600i,700,700i|Lato:100,100i,300,300i,400,400i,700,700i,900,900i&subset=latin-ext');
    /*********************** --------------RESET----------------- ***************************/
     .noMargin,.resetImg,.resetImg figure div {margin: 0!important;}
     .noChildPadding:first-child,.noPadding, .noPadding-inner > .vc_column-inner {padding: 0!important;}
