@@ -1,3 +1,6 @@
+// P_2_1_1_04
+
+
 /**
  * shapes in a grid, that are always facing the mouse
  * 	 
@@ -103,13 +106,13 @@ function keyTyped() {
     tileHeight = height/float(tileCount);
   }
 
-  if (key == '1') currentShape = loadImage("module_1.svg");
-  if (key == '2') currentShape = loadImage("module_1.svg");
-  if (key == '3') currentShape = loadImage("module_1.svg");
-  if (key == '4') currentShape = loadImage("module_1.svg");
-  if (key == '5') currentShape = loadImage("module_1.svg");
-  if (key == '6') currentShape = loadImage("module_1.svg");
-  if (key == '7') currentShape = loadImage("module_1.svg");
+  if (key == '1') currentShape = loadImage("https://habitat-confort-renovation_1542278923.site-privilege.pagesjaunes.fr/wp-content/uploads/sites/6830/2019/01/module_1.svg");
+  if (key == '2') currentShape = loadImage("https://habitat-confort-renovation_1542278923.site-privilege.pagesjaunes.fr/wp-content/uploads/sites/6830/2019/01/module_1.svg");
+  if (key == '3') currentShape = loadImage("https://habitat-confort-renovation_1542278923.site-privilege.pagesjaunes.fr/wp-content/uploads/sites/6830/2019/01/module_1.svg");
+  if (key == '4') currentShape = loadImage("https://habitat-confort-renovation_1542278923.site-privilege.pagesjaunes.fr/wp-content/uploads/sites/6830/2019/01/module_1.svg");
+  if (key == '5') currentShape = loadImage("https://habitat-confort-renovation_1542278923.site-privilege.pagesjaunes.fr/wp-content/uploads/sites/6830/2019/01/module_1.svg");
+  if (key == '6') currentShape = loadImage("https://habitat-confort-renovation_1542278923.site-privilege.pagesjaunes.fr/wp-content/uploads/sites/6830/2019/01/module_1.svg");
+  if (key == '7') currentShape = loadImage("https://habitat-confort-renovation_1542278923.site-privilege.pagesjaunes.fr/wp-content/uploads/sites/6830/2019/01/module_1.svg");
 }
   
 function keyPressed(){
@@ -118,3 +121,14 @@ function keyPressed(){
   if (keyCode == LEFT_ARROW) shapeAngle -=5;
   if (keyCode == RIGHT_ARROW) shapeAngle +=5;
 }  
+
+
+
+
+
+
+
+
+
+
+
