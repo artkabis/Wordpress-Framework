@@ -121,14 +121,3 @@ function keyPressed(){
   if (keyCode == LEFT_ARROW) shapeAngle -=5;
   if (keyCode == RIGHT_ARROW) shapeAngle +=5;
 }  
-
-
-
-
-
-
-
-
-
-
-
