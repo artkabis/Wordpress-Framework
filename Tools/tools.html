@@ -1,8 +1,8 @@
 /* ┌─────────────────────────────────────────────────────────────────────┐ \\
 // │ Artkabis 1.3 - JavaScript Library                                   │ \\
 // ├─────────────────────────────────────────────────────────────────────┤ \\
-// │ Copyright (c) 2015-2016 Gregory NICOLLE (http://urliss35.free.fr)   │ \\
-// │ Copyright (c) 20013-2016 Sencha Labs (http://sencha.com)            │ \\
+// │ Copyright (c) 2015-2019 Gregory NICOLLE (http://urliss35.free.fr)   │ \\
+// │ Copyright (c) 20013-2019 Artkabis Lab                               │ \\
 // │ Licensed under the MIT (http://artkabis.com/license.html) license   │ \\
 // └─────────────────────────────────────────────────────────────────────┘ \\
 
@@ -37,6 +37,124 @@ window.log = function(){
 
 
 
+
+
+
+
+
+******************** Utilisation de de la fonction mouseenter en association **************************
+<script>
+$( ".menu li a" ).mouseenter(function(me) {$( this ).find( "span" ).text( "mouse enter x " + me.pageX );
+  }).mouseleave(function() {$( this ).find( "span" ).text( "mouse leave" );
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+/********************************************** Owl slider presque tout slider bloquer le drag du carousel pour pouvoir utiliser le module TS Image Commutateur  image en même temps ***********************************************************/
+<script>
+setTimeout(eraseDrag,1500);
+function eraseDrag(){
+    $('.owl-stage .owl-item').each(function(i,t){$(this).addClass('disable-owl-swipe');});
+    $(".disable-owl-swipe").on("touchstart mousedown", function(e) {e.stopPropagation();});
+} 
+</script>
+
+
+
+
+
+
+
+******************************** Animé un texte seulement si celui-ci comporte une classe précise ***************************
+******************************** Detecte si un dans l'ensemble des h2 un élement comporte une classe ************************
+******************************** Une fois la classe détecté on lance l'animation des lettres du h2   ************************
+<script>
+$('#Content h2').each(function() {
+  if ($(this).is('.animTitle')) {
+      animatedTitle();
+  }
+});
+function animatedTitle(){
+var controller1 = new ScrollMagic.Controller(); 
+var $postTitleText = $(".animTitle");
+$postTitleText.html( $postTitleText.html().replace(/./g, "<span>$&</span>").replace(/\s/g, " "));
+$postTitleText.find("span").css({'position':'relative'});
+var tweenTitle = TweenMax.staggerFromTo( $postTitleText.find("span"), 0.2, {opacity:0, rotationY:-190, top:"-30px"}, {opacity:1, rotationX:0, top:"0"},0.1);//,end 
+new ScrollMagic.Scene({triggerElement: '.rowH2-4',offset: -100})
+    //.setPin(".contentH2-4")
+    //.setClassToggle(".contentH2-4", "testClass")
+    .on("enter leave", updateBox)
+          .setTween(tweenTitle)
+    .addTo(controller1);
+}
+</script>
+
+
+
+
+
+
+
+
+********************************************************* Gestion drag via isDragging ***************************************************************
+lien d'exemple : http://jsfiddle.net/W7tvD/1399/
+<div>
+    <p>Click link to toggle throbble. Drag link to sort</p>
+    <ul>
+        <li><a href="#">Some link #1</a></li>
+        <li><a href="#">Some link #2</a></li>
+        <li><a href="#">Some link #3</a></li>
+        <li><a href="#">Some link #4</a></li>
+    </ul>
+
+    <div id="throbble">
+    <img src="http://dummyimage.com/100x50/000/fff&text=Throbble!">
+    </div>
+</div>
+<script>
+$(function() {
+    var isDragging = false;
+    $("a")
+    .mousedown(function() {
+        isDragging = false;
+    })
+    .mousemove(function() {
+        isDragging = true;
+     })
+    .mouseup(function() {
+        var wasDragging = isDragging;
+        isDragging = false;
+        if (!wasDragging) {
+            $("#throbble").toggle();
+        }
+    });
+
+    $("ul").sortable();
+});
+</script>
+<style>#throbble { display: none }</style>
+
+
+
+
+
+
+
+
+
+
+
+
+
 /******************************************************************* utilisation de console.error ****************************/
 <script type="text/javascript">
 
@@ -44,7 +162,7 @@ var a = false;
 var b = 2;
 var d =true;
 
-function (a, b, d){
+function l (a, b, d){
 	if(b>1) try{
 		if (d) return;
 	}catch (d){
@@ -61,15 +179,117 @@ function (a, b, d){
 
 
 
+/*********************************************************** Création d'une popup avec overlay ouvrant une iframe au clic d'un bouton******************************************************/
+<script type="text/javascript">
+
+	if(location.pathname === '/'){
+		$('.modal').slideToggle(0);
+		$('.section_wrapper').before('<div class="overlay"></div>');
+		$('.overlay').fadeToggle(0);
+		var cmp=false;
+		$(".openModal").click(function(e){
+			 e.preventDefault();
+			  jQuery('.modal').stop(true,true).slideToggle(300);
+			  $('.overlay').fadeToggle(300);
+		});
+		$(".overlay").click(function(e){
+			e.preventDefault();
+			jQuery('.modal').stop(true,true).slideToggle(300);
+			$('.overlay').fadeToggle(300);
+		});
+	}
+	
+	
+	/******* Deuxième methode avec deux iframes et deux boutons ****/
+if(location.pathname === '/'){
+    $('.modal-1,.modal-2').slideToggle(0);
+    $('.section_wrapper').before('<div class="overlay"></div>');
+    $('.overlay').fadeToggle(0);
+    var cmp=false;
+    $(".openModal-1").click(function(e){
+         e.preventDefault();
+          jQuery('.modal-1').stop(true,true).slideToggle(300);
+          $('.overlay').fadeToggle(300);
+          $('.modal-2').fadeOut(0);
+    });
+    $(".overlay").click(function(e){
+        e.preventDefault();
+        $('.modal-1, .modal-2').stop(true,true).fadeOut(300);
+        $('.overlay').fadeToggle(300);
+    });
+
+    $('.openModal-2 a').attr('href','#');
+    $('.openModal-2 a').on('click', function(e){
+        $('.modal-2').fadeToggle(0);
+        $('.modal-1').fadeOut(0);
+        e.preventDefault();
+        $('.overlay').fadeToggle(300);    
+    });
+}
+</script>
+<style>
+	.modal {
+		position: absolute!important;
+		top: 61%;
+		left: 50%!important;
+		height: 50vh;
+		transform: translate(-50%,-50%);
+		width: 50vw!important;
+		z-index: 7;
+	}
+	.modal iframe {
+		width: 50vw;
+		height: 50vh;
+	}
+	.overlay {
+		background: rgba(0,0,0,.8);
+		position: absolute;
+		height: 100%;
+		width: 100%;
+		top: 0;
+		left: 0;
+		z-index: 6;
+    }
+    </style>
+
+
+
+
+
+
+/*********************************************************** Widget Modal(popup au clic de l'icone phone) ******************************************************/
+<script type="text/javascript">
+$('.modal').slideToggle(0);
+$('.cachePhone').fadeToggle(0);
+var cmp=false;
+$(".phoneContact .tel").click(function(e){
+     e.preventDefault();
+      jQuery('.modal').stop(true,true).slideToggle(300);
+      $('.cachePhone').delay(0.3).fadeToggle(800);
+});
+//  Tools Modal
+function viewModal($elem,$tel,$cmp){
+    console.log("start function viewModal");
+    $('.modal .cachePhone').slideToggle(300);
+    if($cmp === false){
+        TweenMax.to($('.modal'),0.3,{opacity:1,scale:1,right:"210%"});
+        setTimeout(enableModal,500,$tel);
+    }else{   
+        TweenMax.to($('.modal'),0.3,{opacity:0,scale:0,right:"-510%"});
+        setTimeout(disableModal,500,$tel);
+    }
+}
+function disableModal ($tel){$cmp=false;}
+function enableModal($tel){$cmp=true;}
+
+</script>
 
 
 
 
 /******************************************************************* ajout de tooltip sur media grid ****************************/
 <script type="text/javascript">
-
         //Ajout de tootltip en récupérant les alt des images
-       
         applyTooltip =()=>	$('.vc_grid-item-mini').each(function(i,t){$(this).find('.vc_gitem-animated-block').after('<div class="myTooltip">'+$(this).find('img').attr('alt')+'</div>');});
 		 to  = setTimeout(applyTooltip,2000);
 
@@ -109,13 +329,123 @@ function (a, b, d){
 .vc_grid-item-mini > div.myTooltip:first-letter{
             text-transform: capitalize;
 }
-
 </style>
 
 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/************************************ Tooltip sur un élément info bulle
+<script>
+if (jQuery(window).width() > 1024) {
+    $('.contact_details').after('<div class="mariagenet horaires"><a><img src="/wp-content/uploads/sites/2242/2018/12/time.png"/></a></div>');
+    $('.horaires img').before('<div class ="tooltip">test</div>');
+    $('.horaires' ).hover( function() {
+        console.log('hover');
+        $(this).find('.tooltip').html('Du lundi au vendredi<br>9h - 12h / 14h - 18h');
+        $(this).find('.tooltip').addClass('actif');
+      }, function() {
+        console.log('out');
+        $(this).find('.tooltip').removeClass('actif');
+      }
+    );
+}
+</script>
+<style>
+.tooltip:not(actif){display:none;/*position: absolute;background:black;color:white;*/}
+.tooltip.actif{display:block;position: absolute;background:black;color:white;    padding: 10px;    top: 12px;    right: 14%;}
+.tooltip { border: none;  }
+
+.mariagenet.horaires a img { 
+position: absolute;
+margin-left: 137px;
+height: 50px;
+top: 15px;
+}
+</style>
+/**************************************************************************************************************************/
+
+
+
+
+
+
+
+
+***************************************************** Animation de point sur un élément géométrique avec Vue.js et TweenLite
+<script>
+
+
+new Vue({
+    el: '#app',
+    data: function () {
+        var defaultSides = 30;
+        var stats = Array.apply(null, { length: defaultSides }).map(function () { return 100 });
+        return {
+            stats: stats,points: generatePoints(stats),sides: defaultSides,minRadius: 60,interval: null,updateInterval: 1000
+        };
+    },
+    watch: {
+        sides: function (newSides, oldSides) {
+            var sidesDifference = newSides - oldSides;
+            if (sidesDifference > 0) {
+                for (var i = 1; i <= sidesDifference; i++) {
+                    this.stats.push(this.newRandomValue());
+                }
+            } else {
+                var absoluteSidesDifference = Math.abs(sidesDifference);
+                for (var j = 1; j <= absoluteSidesDifference; j++) {this.stats.shift();}
+            }
+        },
+        stats: function (newStats) {TweenLite.to(this.$data, this.updateInterval / 1000, {points: generatePoints(newStats)});},
+        updateInterval: function () {this.resetInterval()}
+    },
+    mounted: function () {this.resetInterval();},
+    methods: {
+        randomizeStats: function () {var vm = this;this.stats = this.stats.map(function () {return vm.newRandomValue();});},
+        newRandomValue: function () {return Math.ceil(this.minRadius + Math.random() * (100 - this.minRadius));},
+        resetInterval: function () {var vm = this;clearInterval(this.interval);this.randomizeStats();this.interval = setInterval(function () { vm.randomizeStats() }, this.updateInterval);}
+    }
+});
+
+function valueToPoint (value, index, total) {
+  var x     = 0;
+  var y     = -value * 0.9;
+  var angle = Math.PI * 2 / total * index;
+  var cos   = Math.cos(angle);
+  var sin   = Math.sin(angle);
+  var tx    = x * cos - y * sin + 100;
+  var ty    = x * sin + y * cos + 100;
+  return { x: tx, y: ty };
+}
+
+function generatePoints (stats) {
+	var total = stats.length;
+	return stats.map(function (stat, index) {
+    var point = valueToPoint(stat, index, total);
+    return point.x + ',' + point.y;
+  }).join(' ');
+}
+
+
+</script>
 
 
 
@@ -138,8 +468,6 @@ function (a, b, d){
 
 
 <script type="text/javascript">
-
-
 /* ---------------------------------------------------------------------------
 	 * Equal Height | Wraps
 	 * --------------------------------------------------------------------------- */
@@ -226,8 +554,9 @@ Import app >>
 <script type="text/javascript">
 
 $('.distHover > div').attr({"data-intensity":"0.6","data-speedin": "1.2","data-speedout":"0.5"});
-var myAnim1=new hoverEffect({parent:document.querySelector('.distortHover > div'),image1:'/wp-content/uploads/sites/6039/2018/07/image-accueil-3_635.jpg',image2:'/wp-content/uploads/sites/6039/2018/07/image-accueil-3_669_nb.jpg',displacementImage:'/wp-content/uploads/sites/6039/2018/07/image-distort3.png'});
+var myAnim1 = new hoverEffect({parent:document.querySelector('.distortHover > div'),image1:'/wp-content/uploads/sites/6039/2018/07/image-accueil-3_635.jpg',image2:'/wp-content/uploads/sites/6039/2018/07/image-accueil-3_669_nb.jpg',displacementImage:'/wp-content/uploads/sites/6039/2018/07/image-distort3.png'});
 $('.distHover canvas').css('width',$('.distHover > div').width()+'px!important');
+
 </script>
 
 
@@ -397,7 +726,7 @@ function splitString(stringToSplit, separator) {
 
 
 
-**********************************************************************   image cliquable   ouvrant la gallerie avec un overlay exemple sur >> https://concept-ainterieur.site-privilege.pagesjaunes.fr/cuisine/ *********************************************
+/**********************************************************************   image cliquable   ouvrant la gallerie avec un overlay exemple sur >> https://concept-ainterieur.site-privilege.pagesjaunes.fr/cuisine/ *********************************************/
 var open = false;
 $('#Content .content_wrapper').after('<div class="overlay"></div>');
 $('.overlay').fadeOut();
@@ -465,22 +794,49 @@ if(location.pathname === '/cuisine/'){
 
 /*********** fonction permettant de modifier les images des vignettes woocomerce en supprimant les redimenstionnement et en ajoutant celle-ci au background du parent "mask" ************/
 <script type="text/javascript">
+/*** Suppression du -333x333 des images ***/
+if($("body").find(".woocommerce")){
+	var src = [];
+	$(".product-loop-thumb a img").each(function(){
+        $(this).attr('src', $(this).attr("src").replace(/-[\d]{3}x[\d]{3}/, ''));
+        console.log("SRC capturerd >> " + $(this).attr('src'));
+		// newUrlImg.push($(this).attr('src', $(this).attr("src").replace(/-[\d]{3}x[\d]{3}/, '')));
+	});
+	setTimeout(addBg,500);
+	function addBg(){
+		$(".product-loop-thumb a img").each(function(i,t){
+			src.push($(this).attr('src'));
+			console.log('SRC placed >> '+src[i]);
+			$(this).parent().parent().find('.mask').css({'background-image':'url('+src[i]+')','background-size':'cover'});
+		});
+    }
+}
+</script>
 
+
+
+
+
+/************************** Retouche image woocommerce pour les placer en background-image centré et en contain, les img sont enssuite supprimés ********/
+<script type="text/javascript">
 
 /*** Suppression du -333x333 des images ***/
-if(location.pathname.contains('vehicule')){
-    $(".isotope-item a img").each(function(){
+if($("body").find(".woocommerce")){
+    var src = [];
+    $(".product-loop-thumb a img").each(function(){
         $(this).attr('src', $(this).attr("src").replace(/-[\d]{3}x[\d]{3}/, ''));
-       // newUrlImg.push($(this).attr('src', $(this).attr("src").replace(/-[\d]{3}x[\d]{3}/, '')));
+        console.log("SRC capturerd >> " + $(this).attr('src'));
+        // newUrlImg.push($(this).attr('src', $(this).attr("src").replace(/-[\d]{3}x[\d]{3}/, '')));
     });
-}
-setTimeout(addBg,500);
-function addBg(){
-    $('.isotope-item a img').each(function(i,t){
-        src.push($(this).attr('src'));
-        console.log('src tab >> '+src[i]);
-        $(this).parent().parent().find('.mask').css({'background-image':'url('+src[i]+')','background-size':'cover'});
-    });
+    setTimeout(addBg,500);
+    function addBg(){
+        $(".product-loop-thumb a img").each(function(i,t){
+            src.push($(this).attr('src'));
+            console.log('SRC placed >> '+src[i]);
+            $(this).parent().parent().find('.mask').css({'background-image':'url('+src[i]+')','background-size':'contain','background-repeat':'no-repeat',    'background-position': 'center center'});
+            $(this).remove();
+        });
+    }
 }
 </script>
 
@@ -509,7 +865,6 @@ function addBg(){
 
 /****************************************** Recuperation du href d'un lien pour realiser un window.location sur son parent ********************************************/
 <script type="text/javascript">
-
 var links=[];
 $('.cadre .wpb_text_column ').each(function(i,t){
     $(this).css('cursor','pointer');
@@ -539,11 +894,50 @@ $(this).click(function(e){
 
 
 
+<script type="text/javascript">
+
+// Code javascript boite-meme-hauteur - debut -------------------------------------------------------------------------------------------------------------------------------------------
+jQuery(function ($) {
+    var resizeTimer;
+    $(window).on('resize', function (e) {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(function () {
+            var boites = $('.boite-meme-hauteur');
+            var nBoite = boites.length;
+            if (nBoite !== 0) {
+                $('.meme-hauteur').css({
+                    'height': 100 + '%'
+                });
+                var heights = [];
+                var max_height = 0;
+                boites.each(function () {
+                    var lesRe = $(this).find('.wpb_wrapper > .vc_row');
+                    var lesRangees;
+                    if (lesRe.length !== 0) {
+                        lesRangees = $(this).find('.vc_row');
+                    } else {
+                        lesRangees = $(this);
+                    }
+                    lesRangees.each(function () {
+                        heights = [];
+                        var lesTextes = $(this).find('.meme-hauteur');
+                        lesTextes.each(function () {
+                            heights.push($(this).height());
+                            max_height = Math.max.apply(null, heights);
+                        });
+                        $(this).find('.meme-hauteur').css({
+                            'height': max_height + 'px'
+                        });
+                    });
+                });
+            }
+        }, 250);
+    });
+});
+// Code javascript boite-meme-hauteur - fin -------------------------------------------------------------------------------------------------------------------------------------------
 
 
-
-
-
+</script>
 
 
 
@@ -608,17 +1002,25 @@ function deleteTitlePL(){
     $('.news').find('h2').remove();
 }
 </script>
-
-
 ************************************----------------------------------------------******************************
 
 
 
 
 
+************************************************* utilisation api slider revolution une fois celui-ci chargé dans le DOM ************************************
 
-
-
+<script>
+var sliderR = $('.rev_slider');//liaison du slider à l'api
+// au click du bouton presentation du slider, on simule le click du premier bouton situé dans le menu navigation de droite
+var api = sliderR.on('revolution.slide.onloaded', function() {
+    console.log('slider chargé !!!!');
+    $('.btnSliderNext').on('click',function(me){
+        console.log('click sur bouton du slider');
+        $('.contNav li:first-child').trigger('click');
+    });
+});
+</script>
 
 
 
@@ -652,8 +1054,6 @@ if(location.pathname === "/nos-realisations/" ){
 
 <script type="text/javascript">
 
-
-
 /*** échange des des pictos toilette et vidéo ***/
 var div1 = $('.gchoice_10_23_1');
 var div2 = $('.gchoice_10_23_3');
@@ -663,8 +1063,6 @@ var tdiv2 = div2.clone();
 
 div1.replaceWith(tdiv2);
 div2.replaceWith(tdiv1);
-
-
 </script>
 
 
@@ -673,7 +1071,6 @@ div2.replaceWith(tdiv1);
 
 
 ************************************----------------Modifier la valeur et le background-image des frigots du calculateur de volume  ------------------------------******************************
-
 <script type="text/javascript">
 
 setTimeout(replaceElementCalc,500);
@@ -701,6 +1098,103 @@ function replaceElementCalc(){
 
 
 
+
+********************************************************************** Action barre visible en sticky  *********************************************
+<script type="text/javascript">
+/*************************************** Modif Greg *********************************************************/
+/* New Action_bar
+******************/
+$('#Wrapper #Top_bar > .container').before('<ul class="contact_details"><li class="phone"><i class="icon-phone"></i><a href="tel:0553022222">05 53 02 22 22</a></li><li class="phone"><i class="icon-phone"></i><a href="tel:0553221225">05 53 22 12 25</a></li></ul>');
+</script>
+<style>
+    *************************************** Modif Greg *********************************************************/
+/* New Action_bar
+******************/
+#Header i {color: #888;}
+#Header .contact_details {background: #222;text-align: center;padding: 10px 0;}
+#Header span {color: white;}
+#Header a {color: #e94d1a;}
+#Header .phone {display: inline-block;margin-right: 10px;}
+#Action_bar{display:none;}
+/*** Debug anim top
+***/
+body #Top_bar.is-sticky {top: 0!important;}
+</style>
+
+
+
+autre méthode :
+
+******** Désactiver la barre d'action 
+<script>
+$('#Header_wrapper').before('<ul class="contact_details"><li class="phone"><span class="dn-sm" style="padding-right:3px;">Royan</span><i class="icon-phone"></i><a href="tel:0546066318">05 46 06 63 18</a></li></ul>');
+</script>
+<style>
+/***** new action_bar fixed on top ******/
+.contact_details {position: fixed;display: inline-block;width: 100%;height: auto;top: 0;left: 0;text-align:center;background: black;z-index: 999;}
+.contact_details li {height: 30px;}
+.contact_details i {color: #a7a7a7;}
+.contact_details span {color: white;line-height:30px;}
+.contact_details a {color: #e84e1c;}
+#Top_bar {position: fixed!important;top: 30px!important;}
+#Action_bar.is-ticky{top: 30px!important;}
+#Action_bar {padding: 0!important;}
+#Action_bar {padding: 0!important;} 
+</style>
+/**************************************************************************************************************************************************************/
+
+
+
+
+
+
+
+
+
+
+
+********************************** Si l'objet est chargé dans le dom (est ready) ********************************************************
+********************************** alors on lance la detection de la date de fin de l'événement *****************************************
+********************************** si celle-ci est dépassé on cache l'élément en question, sinon il reste affiché ***********************
+<script>
+const onDomElementIsReady = (elementToWatch)=> {
+      return new Promise((res, rej)=> {
+        let idInterval = setInterval(()=> {
+          //On vérifie que l'élément existe
+          if($(elementToWatch).length > 0) {
+            clearInterval(idInterval); //suppression de l'interval
+            res($(elementToWatch)); //resolution de promise (une fois la pile d'événements terminée)            
+          }
+        },100);
+      });
+    };
+  
+  var countDownDate = new Date("February 26, 2019 23:59:59").getTime();
+  
+      var now = new Date().getTime();
+      var distance = countDownDate - now;
+  
+      if (distance < 0) {
+  onDomElementIsReady(".ts-amaran-wrapper").then(element => { 
+          $('#ts-amaran-overlay-color, #ts-amaran-overlay-noise, .ts-amaran-wrapper').remove();
+      }); 
+      } 
+
+    </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ********************************************************************** Delete title h2, prolive *********************************************
 <script type="text/javascript">
 
@@ -710,6 +1204,8 @@ var socialIcon ={"padding-left": "10px","color": "white"};
 $('#Action_bar .social').html('<a href="https://www.perene.fr/">Visitez notre site  <i class="fa-icon-globe"></i></a>');
 $('#Action_bar .social a').css(styleSocial);
 $('#Action_bar .social i').css(socialIcon);
+
+$('#cn-notice-text').replace('html', 'En poursuivant votre navigation sur ce site, vous acceptez que nous utilisions des cookies pour mesurer l\'audience de nos sites et pour vous proposer des fonctionnalités sociales, du contenu et des publicités éventuellement personnalisés');  
 
 </script>
 
@@ -735,6 +1231,84 @@ $('#Action_bar .social i').css(socialIcon);
 
 
 
+
+
+
+
+
+
+********************************************************************** Actualité avec date d'expiration timer  *********************************************
+<script type="text/javascript">
+var countDownDate = new Date("Dec 31, 2019 23:59:59").getTime();
+var x = setInterval(function() {
+    var now = new Date().getTime();
+    var distance = countDownDate - now;
+    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    document.getElementById("timerActu").innerHTML = '<div class="downcount clearfix" data-date="12/31/2018 23:59:59" data-offset="+1"><div class="column one-fourth column_quick_fact"><div class="quick_fact"><div><div class="number-wrapper"><div class="number days">'+ days + '</div></div><h3 class="title">days</h3><hr class="hr_narrow"></div></div></div><div class="column one-fourth column_quick_fact"><div class="quick_fact"><div><div class="number-wrapper"><div class="number hours">' + hours + '</div></div><h3 class="title">hours</h3><hr class="hr_narrow"></div></div></div><div class="column one-fourth column_quick_fact"><div class="quick_fact"><div><div class="number-wrapper"><div class="number minutes">'
+    + minutes + '</div></div><h3 class="title">minutes</h3><hr class="hr_narrow"></div></div></div><div class="column one-fourth column_quick_fact"><div class="quick_fact"><div><div class="number-wrapper"><div class="number seconds">' + seconds + '</div></div><h3 class="title">seconds</h3><hr class="hr_narrow"></div></div></div></div>';
+    if (distance < 0) {
+        clearInterval(x);
+        document.getElementById("demo").innerHTML = "L'offre a expiré !";
+    }
+}, 1000);
+// ajout du timer en Home dans l'extrait d'actualité
+$(".home a[title|='ALERTE'] + div > div > div .wpb_single_image").append('<div id="timerActu"></div>');
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+****************************** Afficher une galerie avec le chargement d'une lightbox caché par défaut (utilisation de presque tout slider et ts-gallerie-dimage *********
+<script>
+// Au clic de #cuisine1 on simule le clic sur #content-cuisine1 qui ouvre la lightbox
+jQuery('[id^="cuisine"').on('click', function() {
+    var lastID = $(this).attr('id').toString().indexOf('e');
+    var nb = $(this).attr('id').toString().substring(lastID+1,lastID+2);
+    console.log('lastID >> '+lastID, 'nb >> '+nb);
+    setTimeout(openBox,200,($('#content-cuisine'+nb)));
+});
+
+function openBox($target){
+    console.log("target >> clic >> "+$target.attr('id'));
+    var __target = $target.find('.ts-flipster-item-content > a');
+	//si la galerie ne comprte qu'une seule image, alors le __target find doit changer
+    if(__target.attr('class') === undefined){
+        __target = $target.find('.nchgrid-item > a');
+        console.log('.ts-flipser-item-content > a is undefined      New __target >> '+__target);
+    }
+    console.log(__target.attr('class'));
+    __target.trigger('click');
+} 
+</script>
 
 
 
@@ -811,6 +1385,125 @@ head.appendChild(script);
 
 
 
+
+************************************ Suppression des titles de la page cookies et remplacement par des span
+<script type="text/javascript">
+
+$('#pj-cookie-page h1, #pj-cookie-page h2, #pj-cookie-page h3, #pj-cookie-page h4').replaceWith(function(){
+return $("<span/>").append($(this).contents());
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+************************************ Menu de contact rapide  ******************************
+[vc_row full_width="stretch_row_content_no_spaces" equal_height="yes" content_placement="middle" el_class="contactRapide"][vc_column width="1/2" el_class="spacer"][/vc_column][vc_column width="1/6" el_class="colPicto"][vc_single_image image="169" alignment="center" onclick="custom_link" css_animation="fadeInDown" link="tel:0232645353"][/vc_column][vc_column width="1/6" el_class="colPicto"][vc_single_image image="180" alignment="center" onclick="custom_link" css_animation="fadeInDown" link="tel:0647798961"][/vc_column][vc_column width="1/6" el_class="colPicto"][vc_single_image image="171" alignment="center" onclick="custom_link" css_animation="fadeInDown" link="/contact/"][/vc_column][/vc_row][vc_row full_width="stretch_row_content_no_spaces" equal_height="yes" content_placement="middle"][vc_column el_class="bgVideo"][vc_custom_heading text="Allo Agenda, appel sortant à Vernon près de Versailles" font_container="tag:h1|text_align:center" use_theme_fonts="yes" css_animation="fadeInDown" el_class="myH1"][vc_raw_html]JTNDZGl2JTIwY2xhc3MlM0QlMjJiYWNrZ3JvdW5kJTIyJTIwZGF0YS1wYXJhbGxheCUzRCUyMiUyMiUyMGRhdGEtc3RlbGxhci1yYXRpbyUzRCUyMjAuNCUyMiUyMHN0eWxlJTNEJTIydHJhbnNmb3JtJTNBJTIwdHJhbnNsYXRlM2QlMjgwcHglMkMlMjAwcHglMkMlMjAwcHglMjklM0IlMjIlM0UlM0NidXR0b24lM0VDb250YWN0ZXotbm91cyUzQyUyRmJ1dHRvbiUzRSUzQ2RpdiUyMGNsYXNzJTNEJTIyY29udFRpdGxlU2xpZGUlMjIlM0UlM0NzcGFuJTIwY2xhc3MlM0QlMjJ0aXRsZS1zbGlkZXIxJTIyJTNFTSVDMyVBQW1lJTIwYWJzZW50Li4uJTNDJTJGc3BhbiUzRSUwQSUyMCUyMCUyMCUyMCUzQ3NwYW4lMjBjbGFzcyUzRCUyMnRpdGxlLXNsaWRlcjIlMjIlM0UuLi4lMjBWb3VzJTIwJUMzJUFBdGVzJTIwcHIlQzMlQTlzZW50JTNDJTJGc3BhbiUzRSUwQSUzQyUyRmRpdiUzRSUwQSUzQ3ZpZGVvJTIwbG9vcCUzRCUyMiUyMiUyMGF1dG9wbGF5JTNEJTIyJTIyJTIwbXV0ZWQlM0QlMjIlMjIlMjBwbGF5c2lubGluZSUzRCUyMiUyMiUyMGNsYXNzJTNEJTIyJTIyJTNFJTBBJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTNDc291cmNlJTIwc3JjJTNEJTIyaHR0cHMlM0ElMkYlMkZ3d3cuYXJhdGVsLmZyJTJGdXBsb2FkcyUyRjkxOWRjNmU0LTQxNGYtMTFlOC04YjcxLWZhMTYzZTE0ZWE1NiUyRmQzYTI3ZDFlNGVlYTgyYWNlMTU4NGRjZjEyZTI3YjViNzUwMWFjYmFfd2ViLm1wNCUyMiUyMHR5cGUlM0QlMjJ2aWRlbyUyRm1wNCUyMiUzRSUwQSUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUzQ3NvdXJjZSUyMHNyYyUzRCUyMmh0dHBzJTNBJTJGJTJGd3d3LmFyYXRlbC5mciUyRnVwbG9hZHMlMkY5MTlkYzZlNC00MTRmLTExZTgtOGI3MS1mYTE2M2UxNGVhNTYlMkZkM2EyN2QxZTRlZWE4MmFjZTE1ODRkY2YxMmUyN2I1Yjc1MDFhY2JhX3dlYi53ZWJtJTIyJTIwdHlwZSUzRCUyMnZpZGVvJTJGd2VibSUyMiUzRSUwQSUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUzQyUyRnZpZGVvJTNFJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTNDJTJGZGl2JTNF[/vc_raw_html][/vc_column][/vc_row]
+<script type="text/javascript">
+$($(".contactRapide").detach()).insertAfter("#Top_bar .top_bar_left .menu_wrapper");
+$(".top_bar_left").after('<div class="slogan-tools"><span class="slogan">Même absent, vous êtes présent</span></div>');
+TweenMax.fromTo($('.slogan-tools'),1,{left:"-800px"},{left:"0"});
+</script>
+<style>
+/************************ Contact rapide : pictos cliquables
+***/
+#Top_bar .contactRapide {
+    position: relative!important;
+    height: 40px;
+    width: calc((40px + 15px) * 3);
+    top: 15px;
+    transform: translate(-50%,-50%);
+    left: inherit!important;
+    right: -160px;
+    z-index: 9999;
+    margin: 0;
+    float: right;
+    transition: all .4s;
+    opacity: 1!important;
+}
+#Top_bar.is-sticky .contactRapide {
+    top: 18px!important;
+    transition: all .4s;
+}
+#Top_bar .contactRapide .colPicto {
+    transform: scale(1);
+    width: 40px;
+    filter: drop-shadow(0 0 2px rgba(0,0,0,.5));
+    margin-right: 15px;
+    transition: all .4s;
+}
+#Top_bar .contactRapide .colPicto:hover {
+    transform: scale(1.25);
+    transition: all .4s;
+}
+#Top_bar .contactRapide .colPicto img {
+    filter: hue-rotate(0deg) saturate(1);
+    transform: rotate(0);
+    transition: all .1s;
+}
+
+#Top_bar .contactRapide .colPicto:hover img {
+    filter: hue-rotate(150deg) saturate(10);
+    transform: rotate(10deg);
+    transition: all .2s;
+}
+
+</style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+******************************** Ajout de balise meta dans le head google site verification ***************************************
+<script type="text/javascript">
+$('head').append('<meta name="google-site-verification" content="VlsubgsTVrKYWnZztcoHo6TVjzCbwaHXXAu_pw8rmhc" />');
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 **********************************************************************  Detection de mousedown sur dektop et touchstart sur mobile via javascript *********************************************
 
 <script type="text/javascript">
@@ -818,30 +1511,92 @@ head.appendChild(script);
 
 $(document).ready(function () {
     var isTouchDevice = 'ontouchstart' in document.documentElement;
-    
     $("#touchSensitive").mousedown(function(event) {
-        if (isTouchDevice == false) {   
-            pushed();   
-        }
+        if (isTouchDevice == false) {   pushed();}
     });
     $("#touchSensitive").mouseup(function(event) {
-        if (isTouchDevice == false) {   
-            released(); 
-        }
+        if (isTouchDevice == false) {   released(); }
     });
     $('#touchSensitive').on('touchstart', function(){
-        if (isTouchDevice)  {   
-            pushed();   
-        }
+        if (isTouchDevice)  {   pushed();   }
     });
     $('#touchSensitive').on('touchend', function(){
-        if (isTouchDevice)  {   
-            released(); 
-        }
+        if (isTouchDevice)  {   released(); }
     });
 });
 
 </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+/******** Ajouter une navigation a href sur plusieurs éléments via des liens contenu dans un tableau ******/
+var links=['/renovation-maison/',
+'/renovation-appartement/',
+'/renovation-salle-de-bains/',
+'/amenagement-combles-pyrenees-atlantiques/',
+'/amenagement-professionnel/',
+'/chauffage-climatisation-biarritz-pau/'];
+$('.colReal').each(function(i, t) {$(this).find('.vc_column-inner').wrap('<a href="'+links[i]+'"></a>');});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+    /***** deco first letter and add span ****/
+$(".decoLetter p").each(function(i, t) {
+    var elem=$(this).contents().filter(function() {return this.nodeType==3;
+    }).first(), text=elem.text().trim(), first=text.slice(0, 1);
+    if( !elem.length)return;
+    elem[0].nodeValue=text.slice(first.length);
+    elem.before('<span class = "dropcap">'+first+'</span>');
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -863,6 +1618,146 @@ $(document).ready(function () {
 function newDoc() {
     window.location.assign("https://www.w3schools.com")
 }
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+******************************************** Ajouter un id à l'ensemble des lien d'un menu pricinpal conteantn des sous-menu ***********************************
+<script>
+// On créait une boucle sur l'ensemmble de li du ul menu-main-menu
+$('#menu-main-menu li').each(function(i,t){
+    //si on ne rencontre pas de li a vallant undefined alors on continu
+    if($(this).find('a').attr('href') !== undefined ){
+        //on créait une variable contenant suelement les lien valident et on y incrémente l'id #row1
+        var newLink = $(this).find('a').attr('href') + '#row1';
+        //on implémente les nouveaux liens aux liens prédédents
+        $(this).find('a').attr('href',newLink);
+    }
+});
+//On n'applique pas l'ajout d'id sur les pages home et contact
+$('#menu-main-menu > li:first-child').find('a').attr('href','/');
+$('#menu-main-menu > li:last-child').find('a').attr('href','/contact/');
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/************************************ Importer / charger une fueille de style CSS dans le Head *****************************************************/
+<script>
+	var filename='https://tympanus.net/codrops/adpacks/demoadpacks.css?' + new Date().getTime();		
+	var fileref=document.createElement("link");
+	fileref.setAttribute("rel", "stylesheet");
+	fileref.setAttribute("type", "text/css");
+	fileref.setAttribute("href", filename);
+	document.getElementsByTagName("head")[0].appendChild(fileref);
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+************************************************************* post grid change background image defaut *****************************************************
+<script>
+
+setTimeout(check,700);
+function check(){
+    console.log($('.vc_grid-item-mini').find('.vc_gitem-zone'));
+    $('.vc_grid-item-mini').each(function(i,t){
+        if($(this).find('.vc_gitem-zone').css('background-image').indexOf("plugins") > -1){
+            $(this).find('.vc_gitem-zone').css('background-image','');
+        }
+    });
+} 
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -897,6 +1792,259 @@ $('.colCarre').each(function(i,t){
 
 
 
+
+
+
+
+
+
+
+
+/********************************* Effet de couleur sur carte Mappy ******************************/
+
+.colonneMap > div > div > div > div:before {
+    position: absolute;
+    left: 15px;
+    top: 0;
+    width: 95%;
+    height: 100%;
+    content: '';
+    background: #6679ae;
+    z-index: 2;
+    mix-blend-mode: color;
+	ponter-events:none;
+} 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+********************************************************** Faire clignoter un élément en jouant sur son opacité avec la fonction animate *****************************************
+<script>
+
+function visible(){
+    $("#menu-item-2677 span").animate({opacity: 1,}, 500, function() {invisible();});}
+function invisible(){
+    $("#menu-item-2677 span").animate({opacity: 0,}, 500, function() {visible();});}
+invisible(); 
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+/******************************************************  desactivation bouton gravity form et clignotement du champ d'alerte *******************************************/
+setTimeout(alert,500);
+function alert(){
+    $(".gform_footer").before('<div class="cache"></div>');
+    $("#gform_submit_button_21").attr("onclick",' ');
+    $("#gform_submit_button_21").attr("onkeypress"," ");
+     $("#gform_submit_button_21").css ('pointer-events','none');
+    
+    $(".cache").click(function() {
+    doBounce($('.alerte'), 3, '10px', 300);   
+});
+
+
+function doBounce(element, times, distance, speed) {
+    for(var i = 0; i < times; i++) {
+        element.animate({marginTop: '-='+distance}, speed)
+            .animate({marginTop: '+='+distance}, speed);
+    }        
+}
+    console.log("alert");
+}
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+************************************************************** PrettyPhoto Utilisation du module externe **************************************************
+
+
+/**** paramétrage js -->>
+**/
+<script>
+$(document).ready(function(){
+    $("a[rel^='prettyPhoto']").prettyPhoto({
+        autoplay_slideshow: false, /* true/false */
+        theme: 'pp_default',
+        modal: true,
+        changepicturecallback: function(){console.log('changement image')}, /* Called everytime an item is shown/changed */
+		callback: function(){console.log('fermeture lightbox')}
+        });
+  });
+
+</script>
+
+
+
+
+
+/**************************************************************    Compteur start et end value  count value and duration parameter ***************************************/
+<script type="text/javascript">
+
+(function($) {
+	$.fn.jQuerySimpleCounter = function( options ) {
+	    var settings = $.extend({
+	        start:  0,
+	        end:    100,
+	        easing: 'swing',
+	        duration: 400,
+	        complete: ''
+	    }, options );
+
+	    var thisElement = $(this);
+
+	    $({count: settings.start}).animate({count: settings.end}, {
+			duration: settings.duration,
+			easing: settings.easing,
+			step: function() {
+				var mathCount = Math.ceil(this.count);
+				thisElement.text(mathCount);
+			},
+			complete: settings.complete
+		});
+	};
+
+}(jQuery));
+
+</script>
+
+
+
+
+
+
+***************************************** compteur animé via valeur situé dans la propriété data-count  *******************************************
+<script>
+var style =  {display:'table-cell',margin:'1.5%',fontSize:'50px',backgroundColor:'#FF6F6F',width:'200px',borderRadius:'50%',height:'200px', verticalAlign: 'middle'}
+$('.counter').each(function() {
+  $(this).css(style);
+  var $this = $(this),
+  countTo = $this.attr('data-count'); 
+  $({ countNum: $this.text()}).animate({
+    countNum: countTo},{
+      duration: 4000,
+      easing:'linear',
+      step: function() {
+        $this.text(Math.floor(this.countNum));
+      },
+      complete: function() {
+        $this.text(this.countNum);
+        console.log("compteur finalisé");
+      }
+  });  
+});
+</script>
+<style>
+body {
+    background-color: #68bbff;
+    color:#fff;
+    max-width:700px;
+    margin: 100px auto 0;
+    text-align: center;
+    display: table;
+  }
+</style>
+
+
+
+
+
+
+****************************************************************** case à cocher décocher l'élément autre que celui en checked et cacher les champs en fonction du choix gravity form *****************
+<script>
+setTimeout(function(){
+    $('#choice_21_26_1').click(function(){
+        $('#field_21_27').fadeIn(300);
+         $('#field_21_14, #field_21_15, #field_21_24, #field_21_1, #field_21_19, #field_21_17, #field_21_21, #field_21_22, #field_21_23').fadeOut(300);
+        if ($('#choice_21_26_2').is(":checked") === true) $('#choice_21_26_2').attr('checked', false);
+        $('#choice_21_26_1').attr('checked',false);
+        if ($('#choice_21_26_1').is(":checked") === false)$('#choice_21_26_1').attr('checked', true);
+    });
+    $('#choice_21_26_2').click(function(){
+        $('#field_21_27').fadeOut(300);
+        $('#field_21_14, #field_21_15, #field_21_24, #field_21_1, #field_21_19, #field_21_17, #field_21_21, #field_21_22, #field_21_23').fadeIn(300);
+        if ($('#choice_21_26_1').is(":checked") === true) $('#choice_21_26_1').attr('checked', false);
+        $('#choice_21_26_1').attr('checked',false);
+        if ($('#choice_21_26_2').is(":checked") === false)$('#choice_21_26_2').attr('checked', true);
+    });
+    },600);
+</script>
+
+
+
+
+
+****************************************************************** Modification du lien d'un bouton d'appel en fonction de la taille de l'écran page contact sur pc telephone sur mobile *****************
+<script>
+var valueBtnTel;
+if($(window).width()<1600){valueBtnTel = 'tel:0546932807';}else{valueBtnTel='/contact/';}
+$('.btnTel a').attr('href',valueBtnTel);$('.telMenu').attr('href',valueBtnTel);
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ********************************************************************** Charger plusieurs fichiers js de façon Asynchrone ( import multiple scripts Async ) *********************************************
 <script type="text/javascript">
 
@@ -915,12 +2063,12 @@ for (var id in scriptList) {
   script.src = scriptList[id];
   scripts.parentNode.insertBefore(script, scripts);
 }
-
+</script>
 
 
 
 ********************************************************************** envoyer un paramètre dans l url  *********************************************
-
+<script>
 function getParameterByName(name){
   name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
   var regexS = "[\\?&]" + name + "=([^&#]*)";
@@ -932,12 +2080,6 @@ function getParameterByName(name){
     return decodeURIComponent(results[1].replace(/\+/g, " "));
 }
 
-
-
-
-
-
-
 </script>
 
 
@@ -945,7 +2087,7 @@ function getParameterByName(name){
 
 
 
-********************************************************************************** tracking google analytics click  ********************************************************************
+********************************************************************************** tracking bouton mobile google analytics click  ga ********************************************************************
 <script>
 
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -961,6 +2103,29 @@ function getParameterByName(name){
   </script>
 
 <input type= "button" value ="Click Me" onclick="ga('send', 'event', { eventCategory: 'Book button', eventAction: 'Click', eventLabel: 'enquiry home page'});"/>
+
+mobileButton
+click
+tracking-phone-actionBar
+
+
+Ajout d'un tracking google analytics via l'ajout de l'attribut onclick comportant les événements ici on ajoute l'attribut seulement si la valeur de a href commence par tel:
+
+<script>
+
+$('a[href^="tel:"]').each(function(){
+   $(this).attr("onclick","ga('send','event','mobileButton','click','tracking-phone-actionBar')");//les conditions sont reliées à un objectif de conversion situé dans google analytics
+});
+</script>
+
+autre méthode : 
+<script>
+$("#gform_submit_button_1").attr("onclick","ga('send', 'event', { eventCategory: 'click-contact-button', eventAction: 'Click', eventLabel: 'Click to submit button form'});");
+$("#ctasldier").attr("onclick","ga('send', 'event', { eventCategory: 'Contact button', eventAction: 'Click', eventLabel: 'Click to phone button home slider'});");
+</script>
+
+Tuto complet à cette adresse : http://ludismedia.com/tuto-suivi-devenements-et-dobjectifs-avec-google-analytics/
+
 
 ********************************************************************************************************************************************************************************************
 
@@ -1032,7 +2197,7 @@ a, a:hover,a:link, .vc_btn3:hover,button:hover {cursor: url("/wp-content/uploads
 
 
 /******* Ball suiveuse avec 
-
+<script>
 var ball = '<div class="cursor js-cursor"><div class="cursor__ball js-cursor__big""><svg height="30" width="30" class="cursor-circle js-cursor-circle"><circle cx="15" cy="15" r="12" stroke="transparent" stroke-width="0" class="cursor-circle__inner"></circle></svg></div><div class="cursor__ball js-cursor__small"><svg height="10" width="10" class="cursor-circle js-cursor-circle"><circle cx="5" cy="5" r="4" stroke="transparent" stroke-width="0" class="cursor-circle__inner"></circle></svg></div></div>';
 
 $('#Content').append(ball);
@@ -1048,7 +2213,7 @@ $("a")
   .on("mouseenter", function() {TweenMax.to($('.js-cursor__big'),.5,{scale:3.8,ease:Back.easeOut});})
   .on("mouseleave", function() {TweenMax.to($('.js-cursor__big'),.5,{scale:1,ease:Back.easeIn});});
 
-
+</script>
 
 
 
@@ -1158,7 +2323,27 @@ function deleteFancyB (){
 
 
 
+/********************************* detect Mac et safari **********************/
+if (navigator.appVersion.indexOf("Mac")!=-1) OSName="MacOS";    
 
+var isOpera = !!window.opera || navigator.userAgent.indexOf('Opera') >= 0;
+    // Opera 8.0+ (UA detection to detect Blink/v8-powered Opera)
+    var isFirefox = typeof InstallTrigger !== 'undefined';   // Firefox 1.0+
+    var isSafari = Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0;
+    // At least Safari 3+: "[object HTMLElementConstructor]"
+    var isChrome = !!window.chrome;                          // Chrome 1+
+    var isIE = /*@cc_on!@*/false;                            // At least IE6
+
+    if(OSName === "MacOS" && isChrome === true) 
+    {
+        console.log("is Mac to Chrome");
+        $('h1, h2, h3, h4, .text-logo #logo').css({'font-family': '"dinregular", Arial, Tahoma, sans-serif, -apple-system,system-ui,BlinkMacSystemFont;'});
+    }
+    else if(OSName === "MacOS" && isSafari === true) 
+    {
+        console.log("is Mac to safari");
+        $('h1, h2, h3, h4, .text-logo #logo').css({'font-family': '"dinregular", Arial, Tahoma, sans-serif, -apple-system,system-ui,BlinkMacSystemFont;'});
+    }
 
 
 
@@ -1171,6 +2356,48 @@ if($.browser.chrome){
 
 }
 </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+*********** detection si une page est en anglais 
+<script>
+if(window.location.href.indexOf("/en/") > -1) 
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1287,6 +2514,55 @@ $('#element').on('touchmove', function(event) {
 
 
 
+/**************************************************************************************   garder en mémoire une variable Local storage (LocalStorage) pour lancer la lecture d'une vidéo une seule fois par session ****************/
+<script>
+var nb = 0;
+setTimeout(testVisite,300);
+console.log('value nb storage test1 >> '+parseInt(localStorage.getItem('visiteHome'),10));
+function testVisite(){
+    if(location.pathname === '/'){
+			if( isNaN(parseInt(localStorage.getItem('visiteHome'),10))){
+				nb=0;//on lui donne une nouvelle valeur
+				console.log('nb after fist if >>'+nb);//test de la la vraiable local qui ne sera joué que si la variable de session vaut NaN
+				localStorage.setItem('nbVisiteHome', nb);//on redefini la valeur de la vriable du local storage avec la variable local pour quelle ne valle plus NaN
+				console.log('nb >>'+nb,"localStorage.setItem('nbVisiteHome', nb) >>"+ localStorage.setItem('visiteHome', nb));//tes variable de session
+				console.log(localStorage.getItem('nbVisiteHome'));
+		}else if(isNaN(parseInt(localStorage.getItem('visiteHome'),10))=== false){
+			console.log("2emme visite !!!!!!!!!!!");
+			 $("#home-video").addClass( "nonevideo" );//ici on ajoute la classe nonevideo sur la vidéo pour la cacher
+		}
+	}
+}
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /********************************************** Enregistrer des clés :  id>>valeur dans localStorage ******************************************/
 <script type="text/javascript">
 
@@ -1297,10 +2573,11 @@ localStorage.setItem('testObject', JSON.stringify(testObject));
 // Retrieve the object from storage
 var retrievedObject = localStorage.getItem('testObject');
 console.log('retrievedObject: ', JSON.parse(retrievedObject));
-
+</script>
 
 
 *** methode getter setter avec prototypage ****
+<script>
 Storage.prototype.setObject = function(key, value) {
     this.setItem(key, JSON.stringify(value));
 }
@@ -1309,10 +2586,11 @@ Storage.prototype.getObject = function(key) {
     var value = this.getItem(key);
     return value && JSON.parse(value);
 }
-
+</script>
 
 
 *** autre methode getter setter 
+<script>
 var data = {
 	set: function(key, value) {
 		if (!key || !value) {return;}
@@ -1339,49 +2617,120 @@ data.set({ labelStorage: 'LocalStorage', valueStorage: 'true'});
 
 
 
+*******************************************************  relier un élément cliqué avec une liste déroulante gravity form --> select option *******************
+
+<script>
+var idUse;
+$('.btn-date').each(function(i,t){
+    $(this).find('a').attr('id','date-'+i);
+});
+var id;
+var sepa;
+$('.btn-date a').on('click',function(me){
+    var el= me.target||event.srcElement;
+    id =  el.id;
+    sepa = id.lastIndexOf('-');
+    idUse =parseInt(id.substr(sepa+1,id.length),10);
+    console.log('id >> '+id,'idUse >> ' + idUse);
+    $('.gform_body').find('select option:eq('+idUse+')').prop('selected', true);
+});
+</script>
+
+
+
+/************************ Ajout telephone dans la top bar après le logo et avant le menu  **********************************************
+**/
+<script>
+$('#Header #Top_bar .logo').after('<div class="phoneBtn"><span class="titlePhone">Agences Nomécourt et Saint-Dizier</span><span class="contactPhone"><i class="icon-phone"></i><a class="telMenu" href="tel:0325941655">03 25 94 16 55</a</span></div>');
+</script>
+<style>
+#Wrapper .telMenu {
+    color: #dd3333;
+    font-weight:600;
+}
+@media screen and (min-width:1515px){
+    .phoneBtn a, .phoneBtn i {
+        font-size: 1.4em;
+    }
+    .phoneBtn {
+        position: absolute;
+        display: flex;
+        flex-direction: row;
+        float: left;
+        top: 50%;
+        left: 200px;
+        transform: translateY(-50%);
+    }
+}
+@media screen and (min-width:1240px) and (max-width:1514px){
+    .phoneBtn {
+        position: absolute;
+        flex-direction: column;
+        align-items: center;
+        right: 1%;
+        top: 98%;
+        height: 44px;
+        transform: translate(-0%,-50%);
+    }
+    .phoneBtn a, .phoneBtn i,.titlePhone {white-space: nowrap;}
+    #Top_bar #logo {padding: 0 0 15px 0;}
+}
+@media screen and (max-width: 1239px){
+    .phoneBtn {
+        position: absolute;
+        display: inline-block;
+        flex-direction: row;
+        align-items: center;
+        top: 91%;
+        left: 50%;
+        height: auto;
+        width: auto;
+        transform: translate(-50%,-50%);
+    }
+    .phoneBtn a, .phoneBtn i,.titlePhone {white-space: nowrap;}
+}
+/***********************************************************************/
+
+</style>
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-*******************************************************  Creation bouton tel animé avec gestion sticky dans Top_bar *******************
+*******************************************************  Creation bouton tel animé avec gestion sticky dans Top_bar telephone dans le menu *******************
 <script type="text/javascript">
 
 //Ajout du tel dans la top_bar
-$('#Header #Top_bar').append("<a class='telMenu' href='tel:0556295641'>05 56 29 56 41</a>");
+
+$('#Header #Top_bar').append('<div class="phoneBtn"><i class="icon-phone"></i><a class="telMenu" href="tel:0467240440">04 67 24 04 40</a></div>');
 </script>
 <style type="text/css">
-  #Header #Top_bar .telMenu {
-    color: white;
-    font-size: 3em;
+    #Header #Top_bar .telMenu {
+    color: #060606;
+    font-size: 1.2em;
     line-height: 1;
-    position: absolute;
-    right: 1%;
-    top: 31%;
     font-weight: 100;
-    border-bottom: solid 0px transparent;
+    border-bottom: solid 0 transparent;
     transition: all .6s;
+    text-decoration: none;
 }
-#Header #Top_bar .telMenu:hover {
-    right: 1.3%;
-    top: 31%;
+#Header #Top_bar .phoneBtn{
+    position: absolute;
+    right: 2%;
+    top: 57%;  
+}
+#Header #Top_bar .phoneBtn:hover {
+    right: 1.9%;
+    padding-bottom: 6px;
     text-decoration: none;
     transition: all .6s;
-    border-bottom: solid 1px white;
+    border-bottom: solid 1px #373737;
 }
-#Header #Top_bar.is-sticky .telMenu {
+#Header #Top_bar.is-sticky .phoneBtn {
+    top:25%;
     font-size: 26px;
 }
-@media screen and (max-width: 1450px) {.tel-menu {display: none; }}
+/*@media screen and (max-width: 1450px) {.tel-menu {display: none; }}*/
 
 </style>
 /*****************************************************************************************************************************************************/
@@ -1389,6 +2738,597 @@ $('#Header #Top_bar').append("<a class='telMenu' href='tel:0556295641'>05 56 29 
 
 
 
+
+
+
+
+
+******************************************************** ajout un lien sur les images du module prolive (boucle sur l'ensemble des éléments )
+<script>
+setTimeout(detectProlive,500);
+function detectProlive(){
+    if( $('.pj-prolive-hc .panel').length > 0 ){
+        $('.pj-prolive-hc .panel').each(function(i,t){
+            var $img = $(this).find('.single-img');
+            $img.wrap('<a href="'+$img.attr('src')+'"></a>');
+        });
+    }
+} 
+</script>
+
+
+
+
+
+
+
+
+************************************* Ajout numero de téléphone en Top_bar sur menu moderne (cadre dans header) ****************************************
+<script>
+$('#Header #Top_bar .logo').after('<div class="phoneBtn"><span class="contactPhone"><i class="icon-phone"></i><a class="telMenu" href="tel:0664939742">06 64 93 97 42</a</span></div>');
+</script>
+
+<style>
+#Wrapper .telMenu {
+    color: #188D59;
+    font-weight:600;
+}
+@media screen and (min-width:1515px){
+    .phoneBtn a, .phoneBtn i {
+        font-size: 1.4em;
+    }
+    .phoneBtn {
+        position: absolute;
+        display: flex;
+        flex-direction: row;
+        align-items: flex-end;
+        float: left;
+        top: 100%;
+        right: 0;
+        transform: translateY(-50%);
+        background: white;
+        padding: 5px 4px;
+        border-radius: 10px;
+        height: 50px;
+        width: 165px;
+    }
+    .phoneBtn .contactPhone {
+        height: 20px;
+    }
+}
+@media screen and (min-width:1240px) and (max-width:1514px){
+    .phoneBtn {
+        position: absolute;
+        flex-direction: column;
+        align-items: center;
+        right: 1%;
+        top: 98%;
+        height: 44px;
+        transform: translate(-0%,-50%);
+    }
+    .phoneBtn a, .phoneBtn i,.titlePhone {white-space: nowrap;}
+    #Top_bar #logo {padding: 0 0 15px 0;}
+}
+@media screen and (min-width:769px) and (max-width:1239px){
+    .phoneBtn {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%,-50%);
+        font-size: 1.7em;
+    }
+}
+@media screen  and  (max-width:768px){
+    .phoneBtn {
+        position: absolute;
+        top: 100%;
+        left: 5px;
+        font-size:1.5em;
+        transform: translate(0,-125%);
+    }
+}  
+@media screen and (max-width:470px) {
+    .phoneBtn {
+        position: relative;
+        top: 100%;
+        left: 50%;
+        width: 130px;
+        right: inherit;
+        font-size: 1.2em;
+        transform: translate(-50%,0%);
+    }
+}  
+.contactPhone {
+    height: 20px;
+}
+</style>
+
+Style pour le menu static -->
+<script>
+$('#Header #Top_bar .container').before('<div class="phoneBtn"><span class="contactPhone"><i class="icon-phone"></i><a class="telMenu" href="tel:0232695471">02 32 69 54 71</a</span></div>');
+</script>
+
+<style>
+#Wrapper .telMenu {
+    color: #ffffff;
+    font-weight: 600;
+}
+.contactPhone i {
+    color: #ffa404;
+}
+
+.phoneBtn a, .phoneBtn i {
+    font-size: 1.4em;
+    color: #f79f04;
+}
+.phoneBtn {
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    float: left;
+    top: 30px;
+    right: 0;
+    transform: translateY(-50%);
+    background: #184b83;
+    padding: 5px 4px;
+    border-radius: 0 0 10px 10px;
+    height: 50px;
+    width: 165px;
+    z-index: 999;
+}
+#Top_bar.is-sticky .phoneBtn {
+    top: 15px;
+}
+.phoneBtn .contactPhone {
+    height: 20px;
+}
+
+@media screen and (min-width:1240px) and (max-width:1530px){
+   .phoneBtn {
+        position: absolute;
+        flex-direction: column;
+        align-items: center;
+        right: 0;
+        top: 15%;
+        height: auto;
+        transform: translate(-0%,-50%);
+    }
+    #Top_bar:not(.is-sticky) .phoneBtn {top: 105px;}
+    #Top_bar.is-sticky .phoneBtn {
+        position: absolute;
+        flex-direction: column;
+        align-items: center;
+        right: 0;
+        top: 75px;
+        height: auto;
+        transform: translate(-0%,-50%);
+    }
+    .phoneBtn a, .phoneBtn i,.titlePhone {white-space: nowrap;}
+    #Top_bar #logo {padding: 0 0 15px 0;}
+}
+@media screen and (min-width:769px) and (max-width:1239px){
+   .phoneBtn {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%,-50%);
+        font-size: 1.1em;
+        height: auto;
+    }
+    .home .phoneBtn {
+        position: absolute;
+        left: 50%;
+        top: 10%;
+    }
+}
+@media screen  and  (max-width:768px){
+    .phoneBtn {
+        position: absolute;
+        top: 22px;
+        left: 5px;
+        font-size: 1.5em;
+        transform: translate(0,-90%);
+        background: transparent;
+        height: auto;
+    }
+    /*.home .phoneBtn {
+        top: 82%;
+    }
+    */
+    .phoneBtn a, .phoneBtn i {
+        font-size: 1em;
+        color: #f79f04;
+    }
+}  
+@media screen and (max-width:470px) {
+    .phoneBtn {
+        position: relative;
+        top: 100%;
+        left: 50%;
+        width: 130px;
+        right: inherit;
+        font-size: 1.2em;
+        transform: translate(-50%,0%);
+    }
+    .phoneBtn a, .phoneBtn i {
+        font-size: 1em;
+        color: #f79f04;
+    }
+}  
+.contactPhone {
+    height: 20px;
+}
+</style>
+
+
+pour la top_bar fixed
+<script>
+$('#Header #Top_bar .container').before('<div class="phoneBtn"><span class="contactPhone"><i class="icon-phone"></i><a class="telMenu" href="tel:0232695471">02 32 69 54 71</a</span></div>');
+</script>
+<style>
+#Header #Top_bar .menu > li > a, #Header #Top_bar #menu ul li.submenu .menu-toggle {color: #ffffff!important;}
+#Wrapper .telMenu {color: #ffffff;font-weight: 600;}
+.phoneBtn a, .phoneBtn i {font-size: 1.4em;color: #03cfdd;}
+.phoneBtn .contactPhone {height: 20px;}
+.phoneBtn {
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    float: left;
+    top: 105px;
+    right: 0;
+    padding: 0 10px 10px 10px;
+    transform: translateY(-50%);
+    background: #2c3138;
+    border-radius: 0 10px 10px 10px;
+    height: auto;
+    width: auto;
+    z-index: 999;
+}
+
+@media screen and (min-width:1240px) and (max-width:1530px){
+   .phoneBtn {
+        position: absolute;
+        flex-direction: column;
+        align-items: center;
+        right: 0;
+        top: 15%;
+        height: auto;
+        transform: translate(-0%,-50%);
+    }
+    #Top_bar:not(.is-sticky) .phoneBtn {top: 105px;}
+    #Top_bar.is-sticky .phoneBtn {
+        position: absolute;
+        flex-direction: column;
+        align-items: center;
+        right: 0;
+        top: 75px;
+        height: auto;
+        transform: translate(-0%,-50%);
+    }
+    .phoneBtn a, .phoneBtn i,.titlePhone {white-space: nowrap;}
+    #Top_bar #logo {padding: 0 0 15px 0;}
+}
+@media screen and (min-width:769px) and (max-width:1239px){
+    .phoneBtn {
+        position: absolute;
+        right: 0;
+        top: 50%;
+        min-width: 155px;
+    }
+}
+@media screen  and  (max-width:768px){
+   .phoneBtn {
+        position: absolute;
+        top: 50%;
+        left: 5px;
+        font-size: 1.5em;
+        transform: translate(0,-50%);
+        background: transparent;
+        height: auto;
+    }
+    .phoneBtn a, .phoneBtn i {
+        font-size: 1em;
+        color: #f79f04;
+    }
+    #Header .mfn-main-slider {
+        margin-top: 0;
+    }
+}  
+@media screen and (max-width:470px) {
+    .phoneBtn {
+        position: absolute;
+        top: 50%;
+        left: 5px;
+        width: 130px;
+        right: inherit;
+        font-size: 1.2em;
+        transform: translate(0%,-50%);
+        background: #2c3138;
+        padding: 0;
+    }
+    .phoneBtn a, .phoneBtn i {
+        font-size: 1em;
+    }
+}
+</style>
+
+
+************ Pour un menu à gauche #Header_creative :
+<script>
+$('#Header_creative .top_bar_left').after('<div class="phoneBtn"><span class="contactPhone"><i class="icon-phone"></i><a class="telMenu" href="tel:0610437084">06 10 43 70 84</a</span></div>');
+</script>
+<style>
+.phoneBtn {
+    text-align: center;
+    font-size: 1.3rem;
+    padding: 15px 0;
+}
+.phoneBtn i {
+    color: #ff3bdf;
+}
+</style>
+
+
+
+
+
+
+*************************************** Création de barre de contact rapide personnalisé **************************************
+<script>
+$("#Header_wrapper #Top_bar .container").before('<div class="contact-rapide"><div class="phoneBtn"><span class="contactPhone"><i class="icon-phone"></i><a class="telMenu" href="tel:0610437084">06 10 43 70 84</a></span></div><div class="rdvBtn"><a class="telMenu" href="tel:0610437084"><span class="contentRdv"><i class="icon-calendar"></i></span></a><a class="linkRdv" href="https://deu1.xplore.fr/xaportaildiffusion/" target="_blank">Prendre un rendez-vous</a></div></div>');
+</script>
+<style>
+.contact-rapide {
+    position: relative;
+    background: #e4e4e4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.rdvBtn, .phoneBtn {
+    background: rgba(255, 255, 255, 0.74);
+    padding: 5px 10px;
+    margin: 5px 0 5px 5px;
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0.4);;
+}
+#Top_bar.is-sticky {
+    height: 70px!important;
+    top: 42px!important;
+}
+#Top_bar.is-sticky .contact-rapide {
+    position: absolute;
+    top: -42px;
+    width: 100%;
+    height: 42px;
+}
+#Header #Top_bar {
+    height: auto!important;
+}
+#Top_bar:not(.is-sticky) .contact-rapide {
+    top: 0;
+    position: relative;
+}
+</style>
+ -----------------------------------------------------------------
+<script>
+ $("#Wrapper #Header_wrapper").before(
+    '<div class="contact-rapide">'+
+        '<div class="phoneBtn">' +
+            '<span class="contactPhone"><i class="icon-phone"></i><a class="telMenu" href="tel:0254609393">02 54 60 93 934</a></span>'+
+        '</div>'+
+        '<div class="contactBtn">'+
+            '<span class="contentContact"><i class="icon-mail"></i></span></a><a class="linkContact" href="/contact/">Nous contacter</a>'+
+        '</div>'+
+    '</div>');
+</script>
+<style>
+.contact-rapide {
+    position: relative;
+    background: #e4e4e4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.contactBtn, .phoneBtn {
+    background: rgba(255,255,255,.74);
+    padding: 5px 10px;
+    margin: 15px 0 15px 15px;
+    box-shadow: 0 0 1px rgba(0,0,0,.4);
+}
+#Top_bar.is-sticky {
+    height: 70px!important;
+    top: 42px!important;
+}
+#Top_bar.is-sticky .contact-rapide {
+    position: absolute;
+    top: -42px;
+    width: 100%;
+    height: 42px;
+}
+#Header #Top_bar {
+    height: auto!important;
+}
+#Top_bar:not(.is-sticky) .contact-rapide {
+    top: 0;
+    position: relative;
+}
+@media only screen and (max-width: 1239px){
+    body #Wrapper {
+        padding-top: 98px!important;
+    }
+}
+@media only screen and (max-width: 1239px){
+    #Header_creative #Top_bar .action_button {
+        display: none;
+    }
+}
+</style>
+
+
+
+
+
+
+************************************** Ajout d'une barre de conatct rapide s'adaptant sur un menu à gache, elle prend en compte le 1239px
+<script>
+if (window.matchMedia("(min-width: 1240px)").matches) {
+    console.log('min-width 1240px');
+    $("#Wrapper #Header_wrapper").before(
+        '<div class="contact-rapide">'+
+            '<div class="phoneBtn">' +
+                '<span class="contactPhone"><i class="icon-phone"></i><a class="telMenu" href="tel:0254609393">02 54 60 93 934</a></span>'+
+            '</div>'+
+            '<div class="contactBtn">'+
+                '<span class="contentContact"><i class="icon-mail"></i></span></a><a class="linkContact" href="/contact/">Nous contacter</a>'+
+            '</div>'+
+        '</div>'
+    );
+}
+if (window.matchMedia("(max-width: 1239px)").matches) {
+    console.log('max-width 1239px');
+    $("#Header_creative #Top_bar > div").before(
+        '<div class="contact-rapide">'+
+            '<div class="phoneBtn">' +
+                '<span class="contactPhone"><i class="icon-phone"></i><a class="telMenu" href="tel:0254609393">02 54 60 93 934</a></span>'+
+            '</div>'+
+            '<div class="contactBtn">'+
+                '<span class="contentContact"><i class="icon-mail"></i></span></a><a class="linkContact" href="/contact/">Nous contacter</a>'+
+            '</div>'+
+        '</div>'
+    );
+}
+</script>
+
+**********************Ajouter deux contact rapide concernant deux agence, celle-ci sont ajouté dans le menu de gauche sous le bouton contact *******************************
+
+<script>$('.top_bar_right_wrapper').append('<div class="contact-rapide"><span class="agence-1">Agence de Mehun-sur-Yèvre</span><a href="tel:0254609393" class="action_button">02 48 57 37 38</a><span class="agence-2">Agence de Vierzon</span><a href="tel:024871004" class="action_button">02 48 71 04 04</a></div>');
+</script>
+<style>
+.contact-rapide {
+    position: relative;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: inherit;
+    justify-content: space-evenly;
+    height: 137px;
+}
+.agence-1, .agence-2 {
+    color: white;
+    font-size: 0.9em;
+}
+.agence-2 {
+    padding-top: 8px;
+    margin-top: 17px;
+    border-top: solid 1px;
+}
+@media only screen and (min-width: 1240px){
+body #Header_creative #Top_bar .action_button {
+        display: inline-block;
+        float: none;
+        top: 2px;
+        margin: 0;
+        padding: 2px 5px;
+        font-size: 1em;
+    }
+}
+</style>
+
+
+
+
+
+
+
+
+
+
+/*********************** Barre de contact rapide pour un theme avec menu à gauche, celui-ci s'adapte en fonction de la résolution d'écran.
+ La barre se  detatache du Header pour aller dans le Wrapper en dessus de 1240px et inversement en dessous de 1239ox ***********************/
+<script>
+$("#Wrapper #Header_wrapper").before(
+            '<div class="contact-rapide">'+
+                '<div class="phoneBtn">' +
+                    '<span class="contactPhone"><i class="icon-phone"></i><a class="telMenu" href="tel:0254609393">02 54 60 93 934</a></span>'+
+                '</div>'+
+                '<div class="contactBtn">'+
+                    '<span class="contentContact"><i class="icon-mail"></i></span></a><a class="linkContact" href="/contact/">Nous contacter</a>'+
+                '</div>'+
+            '</div>'
+);
+$(window).on("resize",function(re){
+    if (window.matchMedia("(max-width: 1239px)").matches) {
+        if($('#Wrapper > div').hasClass('contact-rapide') ){
+            $($("#Wrapper").find(".contact-rapide").detach()).prependTo("#Header_creative");
+        }
+    }else if(window.matchMedia("(min-width: 1240px)").matches){
+        if($('#Header_creative > div').hasClass('contact-rapide') ){
+            $($('#Header_creative').find('.contact-rapide').detach()).prependTo("#Wrapper");
+        }
+    }
+});
+</script>
+<style>
+/******************************************************************************* Greg --> service modif ********************************************************/
+/************************ Barre de contact rapide -->
+**/
+.contact-rapide {
+    position: relative;
+    background: #e4e4e4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.contactBtn, .phoneBtn {
+    background: rgba(255,255,255,.74);
+    padding: 5px 10px;
+    margin: 15px 0 15px 15px;
+    box-shadow: 0 0 1px rgba(0,0,0,.4);
+}
+#Top_bar.is-sticky {
+    height: 70px!important;
+    top: 42px!important;
+}
+#Top_bar.is-sticky .contact-rapide {
+    position: absolute;
+    top: -42px;
+    width: 100%;
+    height: 42px;
+}
+#Header #Top_bar {
+    height: auto!important;
+}
+#Top_bar:not(.is-sticky) .contact-rapide {
+    top: 0;
+    position: relative;
+}
+.home #mfn-rev-slider {
+    margin-top: 62px;
+}
+body:not(.home) #Content {
+    margin-top: 62px;
+}
+@media only screen and (max-width: 1239px){
+    body #Wrapper {
+        padding-top: 98px!important;
+    }
+}
+@media only screen and (max-width: 1239px){
+    #Header_creative #Top_bar .action_button {
+        display: none;
+    }
+}
+@media only screen and (min-width: 1239px){
+    .contact-rapide {
+        position: fixed;
+        width:calc(100% - 250px);
+        z-index:999;
+    }
+}
+/****************************** End Greg *****************************/
+</style>
 
 
 
@@ -1561,11 +3501,12 @@ watermark(['/img/field.jpg'])
 
 <script type="text/javascript">
   
-
+/*
 C65h:function(e,t,i){"use strict";var n=function(){var e=this.$createElement,t=this._self._c||e;return t("div",{staticClass:"cursor js-cursor"},[t("div",{staticClass:"cursor__ball js-cursor__big"},[t("svg",{staticClass:"cursor-circle js-cursor-circle",attrs:{height:"30",width:"30"}},[t("circle",{staticClass:"cursor-circle__inner",attrs:{cx:"15",cy:"15",r:"12",stroke:"transparent","stroke-width":"0"}})])]),t("div",{staticClass:"cursor__ball js-cursor__small"},[t("svg",{staticClass:"cursor-circle js-cursor-circle",attrs:{height:"10",width:"10"}},[t("circle",{staticClass:"cursor-circle__inner",attrs:{cx:"5",cy:"5",r:"4",stroke:"transparent","stroke-width":"0"}})])])])};n._withStripped=!0;var s={render:n,staticRenderFns:[]};t.a=s},Cm6l:function(e,t,i){"use strict";var n=i("UDoj"),s=i("X0nh");t.a={name:"logo",mixins:[s.a],mounted:function(){this.$store.state.isMobile||this.initMagnetic()},methods:{initMagnetic:function(){this.magneticLogo=new n.a("[data-magnetic-logo]"),this.magneticLogo.init()}}}},Gu7T:function(e,t,i){"use strict";t.__esModule=!0;var n,s=i("c/Tr"),r=(n=s)&&n.__esModule?n:{default:n};t.default=function(e){if(Array.isArray(e)){for(var t=0,i=Array(e.length);t<e.length;t++)i[t]=e[t];return i}return(0,r.default)(e)}},LGuY:function(e,t){e.exports=function(){throw new Error("define cannot be used indirect")}},Ma2J:function(e,t,i){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var n=i("wU0i"),s=i("STrE"),r=!1;var o=function(e){r||i("A/hp")},a=i("VU/8")(n.a,s.a,!1,o,null,null);a.options.__file="layouts\\default.vue",t.default=a.exports},ONfb:function(e,t,i){"use strict";var n=i("+Uzz"),s=(i.n(n),i("Lri4")),r=(i.n(s),i("X0nh"));t.a={name:"desktop-nav",mixins:[r.a],props:["slugs"]}},RSGG:function(e,t,i){(e.exports=i("FZ+f")(!1)).push([e.i,".loader,body,html{height:100%}.loader{position:absolute;top:0;left:0;width:100%;background-color:#17181a;z-index:2000}",""])},S9WF:function(e,t,i){(e.exports=i("FZ+f")(!1)).push([e.i,".cursor{pointer-events:none}.cursor__ball{position:fixed;top:0;left:0;mix-blend-mode:difference;z-index:1000}.cursor-circle__inner{fill:#f7f8fa}.no-blend .cursor__ball{mix-blend-mode:normal;opacity:.25}.no-blend .cursor-circle__inner{-webkit-transition:fill .35s ease;transition:fill .35s ease}.no-blend .app--white .cursor-circle__inner{fill:#17181a}.no-blend .app--black .cursor-circle__inner{fill:#f7f8fa}",""])},STrE:function(e,t,i){"use strict";var n=function(){var e=this.$createElement,t=this._self._c||e;return t("div",{staticClass:"app",class:"app"+this.$store.state.color},[t("site-header"),t("nuxt"),this.$store.state.isMobile?this._e():t("custom-cursor"),t("div",{staticClass:"loader js-loader"}),t("transition-mask")],1)};n._withStripped=!0;var s={render:n,staticRenderFns:[]};t.a=s},UDoj:function(e,t,i){"use strict";var n=i("Zrlr"),s=i.n(n),r=i("wxAW"),o=i.n(r),a=i("+Uzz"),l=i.n(a),T=function(){function e(t){s()(this,e),this.elem=document.querySelector(t),this.cursor={x:0,y:0},this.bounds=this.elem.getBoundingClientRect(),this.size={height:this.bounds.height,width:this.bounds.width},this.center={x:0,y:0},this.x=0,this.y=0,this.dist=0,this.threshold=50,this.isHover=0,this.state=!1}return o()(e,[{key:"cursorPosition",value:function(e){this.cursor={x:e.clientX,y:e.clientY}}},{key:"listener",value:function(){this.bounds=this.elem.getBoundingClientRect(),this.center={x:this.bounds.left+this.size.width/2,y:this.bounds.top+this.size.height/2},this.x=this.cursor.x-this.center.x,this.y=this.cursor.y-this.center.y,this.dist=Math.sqrt(this.x*this.x+this.y*this.y),this.isHover=this.dist<this.size.width/2+this.threshold,this.isHover?this.on():this.state&&!this.isHover&&this.off()}},{key:"on",value:function(){l.a.to(this.elem,.5,{x:.5*this.x,y:.5*this.y,skewX:this.x>0?.125*this.x:-.125*this.x,scale:1.1,rotation:.05*this.x,ease:Power2.easeOut}),this.state=!0}},{key:"off",value:function(){l.a.to(this.elem,1,{x:0,y:0,rotation:0,skewX:0,skewY:0,scale:1,ease:Elastic.easeOut.config(1.2,.4)}),this.state=!1}},{key:"init",value:function(){var e=this;window.addEventListener("mousemove",function(t){e.cursorPosition(t),e.listener()},!1)}}]),e}();t.a=T}
 
 
 t.a={name:"custom-cursor",mounted:function(){var e=document.querySelector(".js-cursor"),t=e.querySelector(".js-cursor__big"),i=e.querySelector(".js-cursor__small"),n=(t.getBoundingClientRect(),[].concat(s()(document.querySelectorAll("a"))),!1);window.addEventListener("mousemove",function(e){o.a.to(t,1,{x:e.clientX-15,y:e.clientY-15,ease:Expo.easeOut}),o.a.set(i,{x:e.clientX-5,y:e.clientY-7.5})
+*/
 </script>
 
 
@@ -1776,8 +3717,9 @@ var scene = new ScrollMagic.Scene({triggerElement: "#trigger2", duration: 300})
 
 
 			  
-			  
-			  ou >>>
+            </script>			  
+              ou >>>
+            <script>
 			  
 			  
 if(location.pathname === '/2-2/'){
@@ -1803,7 +3745,7 @@ var scene = new ScrollMagic.Scene({triggerElement: "#trigger4", duration: 300})
 
 
 
->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+/*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
 
 //animation de plusieurs élément en cascade
 // build tween
@@ -1830,9 +3772,9 @@ var scene = new ScrollMagic.Scene({triggerElement: "#trigger4", duration: 300})
 					.setTween(tween2)
 					.addTo(controller);
 
->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+/*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
 // Link Ancor Link animation
-import scroll plugin >> https://rawcdn.githack.com/artkabis/Wordpress-Framework/master/js/ScrollToPlugin.min.js
+//import scroll plugin >> https://rawcdn.githack.com/artkabis/Wordpress-Framework/master/js/ScrollToPlugin.min.js
 
 // init controller
   var controller = new ScrollMagic.Controller();
@@ -2026,7 +3968,14 @@ function f() {
 
 
 
-
+$('.condolence_books').each(function(i,t){
+    setTimeout(function(){
+        $($(this).find(".actions-container").detach()).insertBefore($(this).find(".content"));
+    },300);
+    $(this).find('.name').before('<i class="icon-user"></i>');
+    $(this).find('.info p').wrapInner('<div class="location"></div>');
+    $(this).find('.info p .location').before('<i class="icon-location"></i>');
+});
 
 
 
@@ -2103,8 +4052,31 @@ window.onload = function() {
 
 
 
+if(document.location.pathname === '/'){
+	var pattern = /\b(AVANTAGES |SARL MAÏA)/gi; //darkTitle
+	var replaceWith = '<span class="darkTitle">$1</span>'; // wrap in the tag you want
+	$('h1,h2,h3').each(function(){
+		$(this).html($(this).html().replace(pattern,replaceWith));//remplacement des patterne par un wrap de darkTitle
+	});
+    var pattern2 = /\b(PHILOSOPHIE)/gi; //redTitle
+    var replaceWith2 = '<span class="redTitle">$1</span>'; // wrap in the tag you want
+    $('h1,h2,h3').each(function(){
+		$(this).html($(this).html().replace(pattern2,replaceWith2));//remplacement des patterne par un wrap de redTitle
+	});
+}
 
 
+
+var patt,patt2;
+var replaceWith = '<span class="darkTitle">$1</span>'; // wrap in the tag you want
+var replaceWith2 = '<span class="redTitle">$1</span>'; // wrap in the tag you want
+$('h1,h2,h3').each(function(){
+	if(document.location.pathname === '/'){
+        patt = /\b(AVANTAGES |SARL MAÏA)/gi;patt2 = /\b(PHILOSOPHIE)/gi;
+    }
+		$(this).html($(this).html().replace(patt,replaceWith));//remplacement des patterne par un wrap de darkTitle
+		$(this).html($(this).html().replace(patt2,replaceWith2));//remplacement des patterne par un wrap de redTitle
+});
 
 
 
@@ -2134,8 +4106,41 @@ console.log(result);
 
 
 
-
-
+/************** Récupération et liaison d'élément via leur class ou leur id ************************************************/
+/************** utilisation de prettyPhoto, lorsque l'on clique sur un a href comportant un id qui commence par link-inline- 
+on recupère son chiffre unique pour lancer la fonction click de la class du même nom avec l'
+<script>
+// Dans la page /monte-escaliers/
+if(window.location.pathname === '/monte-escaliers/'){
+    var $sizeW = $(window).innerWidth()/1.2;// Attribution d'un modal ayant une largeur égale à la taille de la fenêtre divisé par 1.2
+    //Au click des a ayant un comportement lié à prettyPhoto
+    $("a[rel^='prettyPhoto']").prettyPhoto({
+        //paramètrage global
+        autoplay_slideshow: false, 
+        theme: 'pp_default',
+        modal: false,
+        default_width: $sizeW,// Attribution de notre variable window.width/1.2
+        allow_resize: false,//pas de redim
+        changepicturecallback: function(){console.log($(this).attr('class'));console.log('changement image');$('body').css('cursor', 'auto');}, /* Callback des qu'un élément et affiché/chargé */
+        callback: function(){$('body').css('cursor', 'none');},//Callback une fois le modal fermé
+		    social_tools: '<div class="pp_social"></div>' /* le social_tool peu bugger, je le vide donc */
+    });
+    // Ajout d'un comportement sur les images lié à l'affichage des modal
+    // Le but étant de leurs ajouter un 'a href' qui sera relié à leur identifiant unique
+    //ici le nombre finale situé après inline-
+    $('.img-inline-1 img').wrap('<a href="#" id="inline-1" rel="prettyPhoto"></a>');//' + window.location.pathname+ '
+    $('.img-inline-2 img').wrap('<a href="#inline-2" id="link-inline-2" rel="prettyPhoto"></a>');//' + window.location.pathname+ '
+    
+    //au click d'un élément comportant un id qui commence par link-inline-
+    $("a[id^='link-inline-']").on('click',function(me){
+        var id = $(this).attr('id');//on récupère l'id en entier (avec le chiffre situé après le-)
+        var indexSeparate = id.lastIndexOf('-');//on recherche le dernier '-' celui qui précède le chiffre final
+        var idInline =id.substring(indexSeparate+1,id.length+1);//récupération du chiffre unique en fonction de la position du dernier séparateur
+        console.log('class='+id,'index de séparation = '+indexSeparate,'id final ='+idInline);
+        $('.link-inline-'+idInline.toString()).trigger('click');//on génère un click sur la classe .link-inline- + le nombre commun récupéré
+    });
+}
+</script>
 
 
 
@@ -2304,7 +4309,7 @@ $.fn.wrapStart = function (numWords) {
 $(".myH1").wrapStart(nbWordsH1);// Découpe le nombre de mots defini via la class themeColor(id du theme color)_word-(nb du nombre de mot)
 $(".myH2").wrapStart(nbWordsH2);// Découpe le nombre de mots defini via la class themeColor(id du theme color)_word-(nb du nombre de mot)
 
-
+</script>
 
 
 
@@ -2833,7 +4838,7 @@ class Person {
     }
 
     toString() {
-        return `Hi I'm ${this.name} and I'm ${this.age} years old!`;
+        return "Hi I'm ${this.name} and I'm ${this.age} years old!";
     }
 }
 
@@ -2843,7 +4848,7 @@ console.log(p.toString());
 
 
 
---------------------------------   Puis Developer heritant de Person >> 
+//--------------------------------   Puis Developer heritant de Person >> 
 
 
 
@@ -2855,7 +4860,7 @@ class Developer extends Person {
     }
 
     toString() {
-        return super.toString() + ` :: I'm a Developer who likes ${this.language}`;
+        return super.toString() + " :: I'm a Developer who likes +${this.language}";
     }
 }
 
@@ -2896,8 +4901,9 @@ function random(min, max) {
   if (max == null) { max = min; min = 0; }
   return Math.random() * (max - min) + min;
 }
-/***************************************************************************************************************************************************************/
 </script>
+/***************************************************************************************************************************************************************/
+
 
 
 
@@ -2945,9 +4951,20 @@ $(".myH1").wrapStart(nbWords);
 
 
 
+*************** ajoute une span sur la premiere lettre ( first-letter)***************
+<script type="text/javascript">
+$(document).ready(function () { 
+    var elem = $("p").contents().filter(function () { return this.nodeType == 3 }).first(),
+        text = elem.text().trim(),
+        first = text.slice(0, 1);
 
+    if (!elem.length)
+        return;
 
-
+    elem[0].nodeValue = text.slice(first.length);
+    elem.before('<span>' + first + '</span>');
+});
+</script>
 
 
 
@@ -2961,14 +4978,17 @@ $(".myH1").wrapStart(nbWords);
 
 *************** Detect si un element est visible dans son conteneur ***************
 <script type="text/javascript">
-    // Helper visible check funtion
-    function isVisible(elem, container) {
-      var isVisible = typeof container !== 'undefined' && container !== null ? $(elem).visible(false, false, 'both', container) : $(elem).visible();
-  }
-
-$('button').click(function(e){
-  isVisible('#item1', '#container');// #item1 >> element à detecter , container >> bloc conteneur 
+// Helper visible check funtion
+function isVisible(elem, container) {
+    var isVisible = typeof container !== 'undefined' && container !== null ? $(elem).visible(false, false, 'both', container) : $(elem).visible();
 }
+
+/*
+$('button').on('click',function(e){
+  isVisible('#item1', '#container');
+  // #item1 >> element à detecter , container >> bloc conteneur 
+}
+*/
 
 </script>
 /*******************************************************************************************************************************************************/
@@ -2990,7 +5010,7 @@ $('button').click(function(e){
 
 
 
-****************************************************** Mathematique TOOLS  *************************************************************************
+//****************************************************** Mathematique TOOLS  *************************************************************************
 <script type="text/javascript">
 
 const _DEG2RAD = Math.PI / 180,
@@ -3062,31 +5082,13 @@ jQObject[0].hasAttribute("name");
 
 ****************************************************** url contenant '' *************************************************************************
 <script type="text/javascript">
-
 if(window.location.href.indexOf("franky") > -1) {
     alert("your url contains the name franky");
 }
-ou
+//ou
 if (location.href.match(/franky/)) { }
 /****************************************************************************************************************************************************/
 </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -3180,8 +5182,9 @@ $('.icoHover figure')
         setTimeout(function(){img.attr('src',imgOut)},100);
         return false;
   });
-  /******************************************************************************************* END Picto Rotation viewer ********************************************************************/
 
+  /******************************************************************************************* END Picto Rotation viewer ********************************************************************/
+</script>
 
 
 
@@ -3189,6 +5192,7 @@ $('.icoHover figure')
 
 
 ****************************************************************************** // Animation lettre du titre dans le slider revolution (une fois celui-ci chargé) \\ *********************************************************
+<script>
 var sliderR = $('#rev_slider_3_1');
 sliderR.on('revolution.slide.onloaded', function() {
     console.log('slider loaded');
@@ -3197,13 +5201,14 @@ sliderR.on('revolution.slide.onloaded', function() {
     tl.staggerFrom(chars, 1, {opacity:0, scale:0, y:80, rotationX:360, transformOrigin:"0% 50% -50",  ease:Back.easeOut}, 0.1, "+=0");
 });
 /***********************************************************************************************************************************************************************************************/
-
+</script>
 
 
 
 
 
 ***************************************************************** // Inclure un fichier js dans la page html \\ **********************************************
+<script>
 function include(file) {
     var oScript =  document.createElement("script");
     oScript.src = file;
@@ -3218,24 +5223,26 @@ include("fichier.js");
 
 
 
-******************************************* // Gestion attributs sur pseudo element :before \\**********************************************************************
+//******************************************* // Gestion attributs sur pseudo element :before \\**********************************************************************
 // recupération de l'attribut color du pseudo élément >> .element:before
 var color = window.getComputedStyle(document.querySelector('.element'), ':before').getPropertyValue('color');
 
 // recupération de l'attribut content du pseudo élément >> .element:before
 var content = window.getComputedStyle(document.querySelector('.element'), ':before').getPropertyValue('content');
-/*****************************************************************************************************************************************************************/
-
-
-
-
-
-
-
-
-
-
+/*****************************************************************************************************************************************************************
 </script>
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -3319,7 +5326,7 @@ $(function() {
 
     //Ajout de l'écouteur d'évéement attrchange
     $('body *').attrchange(function(attrName) {
-        if(attrName=='class'){console.log('class changed');}else if(attrName=='id'){console.log('id changed');}else{/*Autre changement d'attribut*/}
+        if(attrName=='class'){console.log('class changed');}else if(attrName=='id'){console.log('id changed');}
     });
 });
 </script>
@@ -3349,7 +5356,7 @@ var getUrlParameter = function getUrlParameter(sParam) {
         sParameterName,
         i;
 
-    for (i = 0; i < sURLVariables.length; i++) {
+        for (i = 0; i < sURLVariables.length; i++) {
         sParameterName = sURLVariables[i].split('=');
 
         if (sParameterName[0] === sParam) {
@@ -3363,11 +5370,11 @@ var getUrlParameter = function getUrlParameter(sParam) {
 $('#testform').find('select:last-child').after('<select class="offres" name="filter[offre]"><option value="">type d\'offre</option><option value="1">vente</option><option value="2">location</option></select>');
 var offre = getUrlParameter("offre");
 if(offre){
-    if(offre== 1 || offre == 2){
-        if(offre== 1){/*Ventes*/}
-        if(offre== 2){/*Locations*/}
-    }
+  
+    if(offre === 1 || offre === 2)offre = (offre ===1) ? return 1 : return 2;
+          
 }
+
 </script>
 
 /****************************************************************************************************************************************************************************************************************************/
@@ -3391,11 +5398,11 @@ if(offre){
 
 
 
+//********************************************************************* // Affichage de la date en francais et de l'heure complète \\******************************************
 
 
 <script type="text/javascript">
 
-********************************************************************* // Affichage de la date en francais et de l'heure complète \\******************************************
 
 
  //On crée un objet de type date stockant la date actuelle
@@ -3430,6 +5437,7 @@ alert('Le ' +jour[dday]+' '+ddate+' '+mois[dmo]+' '+dy+
 if( jour[dday] === 'lundi' && ddate === '14' && mois[dmo] === 'mai' && dy === '2018' ){
     $('.widgetOpen').fadeOut(0);
 }
+</script>
 /*********************************************************************************************************************************************/
 
 
@@ -3440,10 +5448,69 @@ if( jour[dday] === 'lundi' && ddate === '14' && mois[dmo] === 'mai' && dy === '2
 
 
 
+/*************************************************************  au clic d'un bouton afficher un élément sur 3 situé dans une colonne via hide et show avec class dynamique (site tavenaux - 50720632 ) *****************************/
+<script>
+$('.rowBtn .vc_btn3-inline').each(function(i,t){$(this).addClass('btn-'+i);});
+$('.rowContent').find('.wpb_raw_code ').parent().parent().parent().each(function(i,t){$(this).addClass('content-'+i);});
+
+// Reset
+$('.content-1,.content-2').hide(300);
+$('.content-0').show(300);
+setTimeout(function(){ $('.content-0').css('width','100%');console.log('setTimeout start')},300);
+
+$('.rowBtn .vc_btn3-inline').each(function(i,t){
+    $(this).on('click',function(me){
+        id = ($(this).attr('class')).toString().substr($(this).attr('class').toString().length -1,$(this).attr('class').toString().length+1);
+        if(id==='0'){ $('.content-1,.content-2').hide(300);$('.content-0').show(300);setTimeout(function(){ $('.content-0').css('width','100%');console.log('setTimeout start')},300);}
+        if(id==='1'){ $('.content-0,.content-2').hide(300);$('.content-1').show(300);setTimeout(function(){ $('.content-1').css('width','100%');console.log('setTimeout start')},300);}
+        if(id==='2'){$('.content-0,.content-1').hide(300);$('.content-2').show(300);setTimeout(function(){ $('.content-2').css('width','100%');console.log('setTimeout start')},500);}
+    });
+    
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*********************************************** Afficher un element jusqu'à une date précise ici noël   ***************************************/
+<script>
+var date = new Date();
+var day = date.getDate(); //entre 1 et 31
+var month = date.getMonth(); // entre 0 et 11
+var year = date.getFullYear(); // 4 chiffres
+var vacancesFA = [26, 12, 2018];
+
+console.log((vacancesFA !== null) );
+if (vacancesFA !== null) {
+        //console.log('day >>'+(day <= vacancesFA[0]),', mois >> '+(month == vacancesFA[1] - 1),', year >> '+(year == vacancesFA[2]));
+        if ((day <= vacancesFA[0]) && (month == vacancesFA[1] - 1) && (year == vacancesFA[2])) {
+            var decoLogoImgStyle = {'width': '48%'};
+            var decoLogoStyle = {'position': 'absolute','top': '-26px','left': '-50px', 'transform':' rotate(-57.5deg) scale(0.75,0.8)'};
+            $('#logo').after("<span class='decoLogoNoel'><img src='/wp-content/uploads/sites/4444/2018/12/bonet-de-noel.png' /></span>");
+            $('.decoLogoNoel').css(decoLogoStyle);
+            $('.decoLogoNoel img').css(decoLogoImgStyle);
+        }
+}
+</script>
+/*********************************************************************************************************************************************/
+
+
 
 
 /************************************** Actualités avec date d'affichage******************************************************************************/
-
+<script>
 //On crée un objet de type date stockant la date actuelle
 var d = new Date();
 
@@ -3462,7 +5529,7 @@ var mois = ['janvier', 'février', 'mars', 'avril', 'mai','juin', 'juillet', 'ao
 var jour = ['dimanche', 'lundi', 'mardi', 'mercredi','jeudi', 'vendredi', 'samedi'];
 // Condition pour faire disparaitre un élément à un jour précis
 if( jour[dday] === 'dimanche' && ddate === '15' && mois[dmo] === 'juillet' && dy === '2018' && dh > 22){$('.ballon, .actuFoot, .drapeau').fadeOut(0);}
-
+</script>
 /*********************************************************************************************************************************************/
 
 
@@ -3476,6 +5543,7 @@ if( jour[dday] === 'dimanche' && ddate === '15' && mois[dmo] === 'juillet' && dy
 
 
 ********************************************************************* // Affichage element en fonction des heures ouvertures \\******************************************
+<script>
 function dateFr(){
     var jour,mois;
      var joursTab = new Array("dimanche", "lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi");
@@ -3549,10 +5617,9 @@ dateFr();
 
 
 <script type="text/javascript">
-
-
 /************************************************************************* Gestion des :not **************************************************************************/
 //Gestion des selecteurs d'une classe non associée à une autre qui est spécifique 
+/*
 [class *= "foo"] not([class *= "bar"]){
    //l'élement garantie qu'elle est liée à la class 'foo' et sans l'être à 'bar' 
    content: "Do stuff";
@@ -3560,7 +5627,8 @@ dateFr();
 
 // Utiliser plusieurs classe non associées à la classe foo
 .foo:not(.bar, .baz, .qux);
-
+*/
+</script>
 /*********************************************************************************************************************************************************************/
 
 
@@ -3569,7 +5637,7 @@ dateFr();
 
 
 /***************************************************************************** Effet zoom sur background-image de vc_column-inner et redirection vers url au clic ********************************************************/
-
+<script>
 var tabBgImgs = [$('.bgImg0'),$('.bgImg1'),$('.bgImg2'),$('.bgImg3'),$('.bgImg4'),$('.bgImg5')];
 //var linkImgsHome = ['scenes-echafaudages/','tribunes/','stands/','decoration/','securite/'];
 
@@ -3605,7 +5673,7 @@ $('.imgBg').each(function(i,t) {
         });
     }*/
 });
-
+</script>
 /******************************************************************************************************************************************************************************************************/
 
 
@@ -3624,8 +5692,9 @@ $('.imgBg').each(function(i,t) {
 
 
 ************************************************************************* Suppression des <p> vide *********************************************************************
-$( 'p:empty' ).each(function(i,t){$(this).remove();});
-
+<script>
+    $( 'p:empty' ).each(function(i,t){$(this).remove();});
+</script>
 /********************************************************************************************************************************************************************/
 
 
@@ -3654,11 +5723,13 @@ $( 'p:empty' ).each(function(i,t){$(this).remove();});
 
 
 ***************************************************************************** Cacher Action_bar si Top_bar is-sticky ********************************************************
+<script>
 var tb = $('#Top_bar');
 var ab = $('#Action_bar');
 $(window).scroll(function(){
     tb.hasClass('is-sticky') ? ab.fadeOut() : ab.fadeIn();
 });
+</script>
 /******************************************************************************************************************************************************************************************/
 
 
@@ -3686,7 +5757,9 @@ $(window).scroll(function(){
 
 
 ***************************************************************************** Vider un champs texte ********************************************************
+<script>
 $('.montext').empty();
+</script>
 /******************************************************************************************************************************************************************************************/
 
 
@@ -3719,9 +5792,11 @@ $('.montext').empty();
 
 
 ****************************************************************************** affiche la valeur contenue dans chaque paragraphe du document ***************************************************
+<script>
 $('p').text(function(index,actuel) {
   alert('Paragraphe ' + (index+1) + ' : '+actuel);
 });
+</script>
 /******************************************************************************************************************************************************************************************/
 
 
@@ -3739,6 +5814,7 @@ $('p').text(function(index,actuel) {
 
 ***************************************************************************Elastic button ***********************************************************************************************
 https://cdnjs.cloudflare.com/ajax/libs/gsap/1.12.1/TweenMax.min.js
+<script>
 var $button = document.querySelector('.button');
 $button.addEventListener('click', function() {
   var duration = 0.3,
@@ -3747,12 +5823,13 @@ $button.addEventListener('click', function() {
   TweenMax.to($button, duration, {scaleX: 1.2, scaleY: 1, ease: Back.easeOut, easeParams: [3], delay: delay});
   TweenMax.to($button, duration * 1.25, {scaleX: 1, scaleY: 1, ease: Back.easeOut, easeParams: [6], delay: delay * 3 });
 });
-
+</script>
 CSS >> 
+<style>
 .button { background: #3498db; width: 180px; padding: 4px 0; position: absolute; left: 50%; top: 50%; transform: translateX(-50%) translateY(-50%); border-radius: 3px; }
 .button p { font-family: 'Roboto'; text-align: center; text-transform: uppercase; color: #FFF; user-select: none; } .button:hover { cursor: pointer; } 
 .button:after { content: ""; display: block; position: absolute; width: 100%; height: 10%; border-radius: 50%; background-color: #927608; opacity: 0.4; bottom: -30px; } 
-
+</style>
 
 html >>
 <div class="button">
@@ -3785,9 +5862,10 @@ html >>
 <script type="text/javascript">
 
 
-******************************************************************************* paramètrage des attributs du logo **************************************************************
+//******************************************************************************* paramètrage des attributs du logo **************************************************************
     $('#logo[title]').removeAttr('title');// Suppression Title
     $('#logo').find('img').attr('alt','alt du logo');// Ajout de l'attribut alt
+</script>
 /******************************************************************************************************************************************************************************/
 
 
@@ -3816,6 +5894,7 @@ html >>
 
 
 ************************************************************************* Positionnement du texte à gauche pour les screen < 1024 sauf pour le footer *****************************
+<script>
 if($w.width() <= 1024 ){
     $('.wpb_wrapper p').each(function(){
         var t = $(this);
@@ -3829,9 +5908,10 @@ if($w.width() <= 1024 ){
           t.css({'text-align':'center'});
     });
 }
-
+</script>
 *******Methode avancé ******************
-/**************************** Gestion alignement texte en screen <1024 ***********************************/
+/**************************** Gestion alignement texte en screen < 1024 ***********************************/
+<script>
 if($w.width() <= 1024 ){
     $('.wpb_wrapper p').each(function(){
         var $t = $(this);
@@ -3842,6 +5922,7 @@ if($w.width() <= 1024 ){
         }
     });
 }
+</script>
 /**********************************************************************************************************************************************************************************/
 
 
@@ -3871,10 +5952,11 @@ if($w.width() <= 1024 ){
 
 
 *************************************** Ajout du bouton supplemenatire au menu pour créer un effet de chevauchement au hover ****************************************
+<script>
 var titleBtn;
 $('#Header #Top_bar .menu>li>a span:not(.description)').each(function(){titleBtn = $(this).text();$(this).after('<span class="moverBtn">'+titleBtn+'<span>');});
 if($('.moverBtn').children().is('span')){$('.moverBtn span').remove();}
-
+</script>
 /**********************************************************************************************************************************************************************************/
 
 
@@ -3891,6 +5973,7 @@ if($('.moverBtn').children().is('span')){$('.moverBtn span').remove();}
 
 
 ********************************** Changer le premier picto animé lié a une colonne (dans une rangée ) *********************
+<script>
 setTimeout(changePicto,800);
 
 var firstPicto = $('.colPicto:eq(0) img');
@@ -3904,6 +5987,7 @@ function changePicto (){
         
     });
 }
+</script>
 /********************************************************************************/
 
 
@@ -3932,6 +6016,51 @@ function changePicto (){
 
 
 
+/********************************* -------- Gestion zoom scroll de la carte Mappy  (-------------------------- >>
+*/
+<script>
+/*map scroll*/
+//on active l'événement pointer-events au click de la map
+$(".vc_mappy-map").parent().click(function () {$(".vc_mappy-map, .leaflet-control").css("pointer-events", "auto");});
+// on désactive l'évenemtn pointer-events lorsque la souris quitte la zone de la map
+$( ".vc_mappy-map" ).parent().mouseleave(function() {$(".vc_mappy-map, .leaflet-control").css("pointer-events", "none");});
+$( ".vc_mappy-map" ).parent().trigger('mouseleave');
+
+</script>
+
+/*****************************************************    Gestion scroll zoom Mappy avancé avec texte caché **********************************************//
+Version complète --> Ajout d'un bloc before avec message et activation des interaction au clic
+<script>
+/*********** add mappy message and toogle scroll activation*****************/
+$('.vc_mappy-map').parent().addClass('lacarte');
+$('.wpb_wrapper').on('click',function(){$('.vc_mappy-map').css('pointer-events','auto');$('.wpb_wrapper .lacarte').removeClass('lacarte');});
+$('.vc_mappy-map').parent().on('mouseleave',function(){$('.vc_mappy-map').css('pointer-events','none');$('.vc_mappy-map').parent().addClass('lacarte');});
+/************ End Add Mappy message ************/
+</script>
+Style css pour la création du after laCarte permettant d'afficher le message et de bloquer les interaction au scroll -->
+<style>
+.lacarte:after {
+    content: 'Cliquer pour activer la carte';
+    position: absolute;
+    display: inline-block;
+    top: 50%;
+    left: 50%;
+    font-size: 1.75em;
+    font-weight: 400;
+    line-height: 1.3em;
+    z-index: 30000;
+    text-align: center;
+    color: white;
+    text-shadow: 0 0 4px black;
+    filter: drop-shadow(0 0 3px black);
+    opacity: 0;
+    transition: .25s ease-in-out all;
+    transform: translate(-50%,-50%);
+    cursor: pointer;
+}
+.lacarte:hover:before,.lacarte:hover:after{opacity:1}
+.vc_mappy-map{max-height:60vh}
+</style>
 
 
 
@@ -3939,18 +6068,18 @@ function changePicto (){
 
 
 
-
-
-
-
-
-
-
+text-shadow pour text 3d angle haut droite
+<style>
+  text-shadow: 0px 0px 0 rgb(255, 255, 255), 1px 0px 0 rgb(255, 255, 255), 2px 0px 1px rgba(0,0,0,1), 2px 0px 1px rgba(0,0,0,0.5), 0px 0px 1px rgba(0,0,0,.2);
+  }
+</style>
 
 
 
 
 ****************************************************************************** Animation info contact sur mappy ******************************
+<script>
+
 if($w.width() > 767 ){
     $(".contactInfo").slideUp( 10 );
     $(".contactInfo").css({pointerEvents:'none',position:"absolute"});
@@ -3967,6 +6096,7 @@ if($w.width() > 767 ){
             $(this).children().css({position:"relative",left:'0', width:'100%',transition:'all .3s'});
     });
 }
+</script>
 /*********************************************************************************************************************************************/
 
 
@@ -3983,11 +6113,40 @@ if($w.width() > 767 ){
 
 
 
+/*****************************************************    Animation des trois points pour un effet de prechargement via :after et la fonction css animation  **********************************************//
+<style>
+    /**** chargement simulation page  loaded ************************/
+.preloding {
+    font-size: 1.5em;
+    text-align: center;
+    width: 100%;
+    padding: 15px 0;
+}
+.preloadTitle:after {
+  content: ' .';
+  animation: dots 1.3s steps(5, end) infinite;}
 
-
-
-
-
+@keyframes dots {
+  0%, 20% {
+    color: rgba(0,0,0,0);
+    text-shadow:
+      .25em 0 0 rgba(0,0,0,0),
+      .5em 0 0 rgba(0,0,0,0);}
+  40% {
+    color: black;
+    text-shadow:
+      .25em 0 0 rgba(0,0,0,0),
+      .5em 0 0 rgba(0,0,0,0);}
+  60% {
+    text-shadow:
+      .25em 0 0 black,
+      .5em 0 0 rgba(0,0,0,0);}
+  80%, 100% {
+    text-shadow:
+      .25em 0 0 black,
+      .5em 0 0 black;}
+}
+</style>
 
 
 
@@ -3999,8 +6158,10 @@ if($w.width() > 767 ){
 
 
 *********************************** Ajout d élements dans la page mentions légales **************************************************************** 
+<script>
 //Ajouter la classe mentions dans le bloc de texte contenant les mentions
 $('.mentions').find('h2').first().before('<p class="newMentions"> ici les nouvelle<br /> mentions légales</p>');
+</script>
 /*********************************************************************************************************************************************/
 
 
@@ -4044,6 +6205,7 @@ $('.mentions').find('h2').first().before('<p class="newMentions"> ici les nouvel
 
 
 *************************************************************** Detect bottom position scrolling ******************************************************
+<script>
 $(window).scroll(function() {
 	   if($(window).scrollTop() + $(window).height() == $(document).height()) {
 		   console.log("scroll position is bottom");
@@ -4060,8 +6222,9 @@ $(window).scroll(function() {
 		   $($("#wpr-contact-bar").detach()).appendTo("#Wrapper");
 		   $('#wpr-contact-bar').removeClass('is-bottom');
 	   }
-	});
-	******************************************************************************************************************************************************************
+    });
+</script>
+******************************************************************************************************************************************************************
 	
 	
 	
@@ -4091,8 +6254,8 @@ $(window).scroll(function() {
 
 
 
-************************************************* Récupérer une valeur numerique dans une chaine de caractères puis traduire le result-cound de woocomerce en fr sans perdre la valeur **************************************************
-
+//************************************************* Récupérer une valeur numerique dans une chaine de caractères puis traduire le result-cound de woocomerce en fr sans perdre la valeur **************************************************
+<script>
 setTimeout(tradCount,300);
 
 
@@ -4103,13 +6266,13 @@ function tradCount(){
     $('.woocommerce-result-count').text(newTxtCount);
     console.log('number to result count =  '+nbCount, 'newTextCount =  '+ newTxtCount);
 } 
-
+</script>
 /*********************************************************************************************************************************************/
 
 
 
-************************************************* rechercher et remplacer mail des mentions légales une valeur *************************************************
-
+//************************************************* rechercher et remplacer mail des mentions légales une valeur *************************************************
+<script>
 
 setTimeout(searchMail,300);
 function searchMail(){
@@ -4119,13 +6282,15 @@ function searchMail(){
         }
     });
 }
+</script>
 ********************************************************************************************************************************************************************************
 
 
 
 
 
-************************************************************** Debug Prolive problème description vidé **************************************
+//************************************************************** Debug Prolive problème description vidé **************************************
+<script>
 var id =  [];
 var idNb = [];
 var descProlive;
@@ -4151,7 +6316,7 @@ $('.accordion').on('click',function(e){
         });
     });
 }
-
+</script>
 /*********************************************************************************************************************************************/
 
 
@@ -4191,9 +6356,10 @@ $('.accordion').on('click',function(e){
 
 
 ********************************************************************************************** Gestion formulaire de contact (injection mentions et animation li)*******************************
+<script>
 var nbElemForm = 0;
 // Mention legales
-ml = "<div class='mentionsLegales'><span class='requiredML'>*</span> Mentions obligatoires<p class='contentML'><em>« Conformément à la loi Informatique et Libertés du 6 janvier 1978 modifiée, vous disposez de droits d'accès, de modification et d’opposition aux données qui vous concernent. Vous pouvez exercer ces droits à tout moment sous réserve de justifier de votre identité par courrier électronique à l’adresse email de contact[at]capexconseilsmlv.fr ou par voie postale à l’adresse suivante Capex Conseils, 14 AVENUE DE SARIA 77700 SERRIS, France. »</em></p></div>";
+var ml = "<div class='mentionsLegales'><span class='requiredML'>*</span> Mentions obligatoires<p class='contentML'><em>« Conformément à la loi Informatique et Libertés du 6 janvier 1978 modifiée, vous disposez de droits d'accès, de modification et d’opposition aux données qui vous concernent. Vous pouvez exercer ces droits à tout moment sous réserve de justifier de votre identité par courrier électronique à l’adresse email de contact[at]capexconseilsmlv.fr ou par voie postale à l’adresse suivante Capex Conseils, 14 AVENUE DE SARIA 77700 SERRIS, France. »</em></p></div>";
 if( location.pathname === " /contact-plan/ "){
 
    $(".box:eq(1)").css("width","32.4px ");
@@ -4219,6 +6385,7 @@ function lancementAnimForm (){
        if($('.gform_fields li:eq('+lth+')').hasClass('gfield_visibility_visible')) { $w.off("scroll", sH );}
     });
 }
+</script>
 /**********************************************************************************************************************************************************************************/
 
 
@@ -4255,11 +6422,13 @@ function lancementAnimForm (){
 
 
 
-******************************************************Changement du lien de la home si positionné dessus ***********************************************************
+//******************************************************Changement du lien de la home si positionné dessus ***********************************************************
+<script>
 if(location.pathname === '/'){
     $("#menu li:eq(0) a span").text(" Pôles Capex ");
      $('#menu li:eq(0) a').attr('href','/poles-capex/');
 }
+</script>
 /*******************************************************************************************************************************************************************/
 
 
@@ -4275,6 +6444,7 @@ if(location.pathname === '/'){
 
 
 /*************************************** Cherche un couleur et la remplace *************************************/
+<script>
 function colorReplace(findHexColor, replaceWith) {
   // Convert rgb color strings to hex
   function rgb2hex(rgb) {
@@ -4305,7 +6475,7 @@ function colorReplace(findHexColor, replaceWith) {
     });
   });
 }
-
+</script>
 
 
 
@@ -4323,6 +6493,7 @@ function colorReplace(findHexColor, replaceWith) {
 
 
 **************************************************** Change la couleur du premier mot (ou lettre) des title en fonction de la classe detecté **************************************************************
+<script>
 $('.myH1,.myH2,.myH3,.myH4').each(function() {
     var h = $(this).html();
     var index = h.indexOf(' ');
@@ -4336,10 +6507,12 @@ $('.myH1,.myH2,.myH3,.myH4').each(function() {
     if($(this).hasClass('firstLRed') ){$(this).html('<span class="titleBloc"><span class="red1">' + h.substring(0, 1) + '</span>' + h.substring(1, h.length)+'</span>');}
     if($(this).hasClass('firstLWhite') ){$(this).html('<span class="titleBloc"><span class="white">' + h.substring(0, 1) + '</span>' + h.substring(1, h.length)+'</span>');}
 });
+</script>
 /******************************************************************************************************************************************************************************************/
 
 
-**************************************************** Change la couleur du premier mot (ou lettre) des title en fonction de la classe detecté **************************************************************
+//**************************************************** Change la couleur du premier mot (ou lettre) des title en fonction de la classe detecté **************************************************************
+<script>
 $('.myH1').each(function() {
     var h = $(this).html();
     var index = h.indexOf(' ');
@@ -4348,12 +6521,14 @@ $('.myH1').each(function() {
     if($(this).hasClass('firstWThemeColor') ){$(this).html('<span class="titleBloc"><span class="themeColor">' + h.substring(0, index) + '</span>' + h.substring(index, h.length)+'</span>');}
     if($(this).hasClass('firstLThemeColor') ){$(this).html('<span class="titleBloc"><span class="themeColor">' + h.substring(0, 1) + '</span>' + h.substring(1, h.length)+'</span>');}
 });
+</script>
 /******************************************************************************************************************************************************************************************/
 
 
 
 
-********************************************************* Recuperation premier caractère pour intergration lettrine **************************************************************
+//********************************************************* Recuperation premier caractère pour intergration lettrine **************************************************************
+<script>
 $('.lettrine').each(function(){
     var needle = $(this).find('p').text().substring(0,1);
     console.log(needle);
@@ -4367,13 +6542,15 @@ $('.lettrine2').each(function(){
     $(this).find('decolttrine2').css({'position':'absolute','font-size':'1500%','line-height':'1em','opacity':'.2','left':'0','top':'0','color':'orange','border-left':'solid 9px #020202','height':'20%','font-family':'sans-serif'});
     //$(".lettrine-"+needle+':before').css({"content":needle.toString(),"position":"absolute","font-size": "800%","opacity": ".5","left": "0","color": "yellow", "border-left":" solid 9px white","height": "20%"});
 });
+</script>
 /********************************************************************************************************************************************************************************/
 
 
 
-*************************************************************** Lettrine dynamique via end "caractere class" **************************************************************
+//*************************************************************** Lettrine dynamique via end "caractere class" **************************************************************
 // .txtStyle comporte une classe composé de lettrine- "lettre à mettre en valeur"
 // Une classe decoLettrine sera ajouté avant le bloc et se verra attribué la lettre indué en fin de classe
+<script>
 var haystack = document.querySelectorAll(".txtStyle");
 if($(".txtStyle")){
     for (var h=0; h<haystack.length; h++) {
@@ -4388,6 +6565,7 @@ if($(".txtStyle")){
       }
     }
 }
+</script>
 /*************************************************************************************************************************************************************/
 
 
@@ -4397,7 +6575,8 @@ if($(".txtStyle")){
 
 
 
-*************************************************************** Generateur de degradé **************************************************************
+//*************************************************************** Generateur de degradé **************************************************************
+<script>
 var rgbR = {r:255,g:0,b:0};
 function randomArbitraire(min, max) {
   return Math.round(Math.random() * (max - min) + min);
@@ -4430,7 +6609,7 @@ function listItemsHandler($index, $item, $data){
     //$item.eq('.activebgColorAuto').addClass($data[$index]);
 }
 /*************************************************************************************************************************************************************/
-
+</script>
 
 
 
@@ -4438,7 +6617,7 @@ function listItemsHandler($index, $item, $data){
 
 
 /**** Tooltip animate */
-
+<script>
 // Appliquer la classe tooltipO sur les "image seule"
 var applyTooltip = function(){
     console.log('function applyTooltip lancé !!!');
@@ -4463,7 +6642,7 @@ $('.tooltipO:hover > figure > .myTooltip').css({'width': '98.3%','left': '50%','
 $('.tooltipO > figure > .myTooltip').css({'background': 'rgba(0, 0, 0, 0.5)','height': '30px','width': '120%','position': 'absolute','left': '0','bottom': '-30px','color': 'white','line-height': '30px','text-align': 'center','opacity': '1','transition': 'all .6s'});
                                             
 applyTooltip();
-
+</script>
 
 
 
@@ -4486,6 +6665,7 @@ applyTooltip();
 
 
 ****************************************** ELEMENT SLIDOWN & up ********************************************** *
+<script>
 if($w.width() <= 765 && actif === 0){
         console.log("ouverture menu");
         $('.blocAnim').slideDown();
@@ -4513,9 +6693,9 @@ $(".myH3").each(function(i,e){
     $(this).addClass('btnAnim');
     $(this).next().addClass('blocAnim');
 });
-
+</script>
 CSS >>
-
+<style>
 .myH3 {
     font: normal normal 700 semi-condensed 16px/20px 'Josefin Sans',serif;
     text-transform: uppercase;
@@ -4601,7 +6781,7 @@ CSS >>
 .blocAnim div ul {
     list-style-image:url(/wp-content/uploads/sites/3410/2017/04/liPoint.svg#pointList);
 }
-
+</style>
 /**************************************************************************************************************************/
 
 
@@ -4616,7 +6796,18 @@ CSS >>
 
 
 
-
+/******************** Navigation vers les zones les plus important (passer le slider des PA, demande client) *****/
+<script>
+var pa_1="/vente-maison-appartement/",pa_2="/location-maison-appartement/",pa_3='/gestion-location/',pa_4='/estimation-bien-immobilier/';
+setTimeout(navigate,300);
+function navigate(){
+if(location.pathname === pa_1){$('#pj-annonces-wrap > div').attr('id','nav-vente');navigToAncre('#nav-vente')}
+if(location.pathname === pa_2){$('#pj-annonces-wrap > div').attr('id','nav-location');navigToAncre('#nav-location')}
+if(location.pathname === pa_3){$('.the_content_wrapper > .vc_row:first-child').attr('id','nav-gestion');navigToAncre('#nav-gestion')}
+if(location.pathname === pa_4){$('.the_content_wrapper > .vc_row:first-child').attr('id','nav-estimation');navigToAncre('#nav-estimation')}
+function navigToAncre($hash){var hash = $hash;$('html, body').stop().delay( 300 ).animate({scrollTop: $($hash).offset().top-60}, 1000 );}
+}
+</script>
 
 
 
@@ -4629,6 +6820,7 @@ CSS >>
 
 ************************************************* SUB MENU TOP_BAR SMOOTHSCROLL ANCRE ****************************************
 /******************************** SUB Menu *************************************/
+<script>
 if(location.pathname === "/gamme-actifas/") {
     $("#Top_bar").after("<div class='sous-menu'><span class='liens'><a href='#actixane'><span class='element'>Actixane</span></a><a href='#actiquartz'><span class='element'>Actiquartz</span></a><a clas='last-lien' href='#actifuge'><span class='element'>Actifuge</span></a></span></div>");
 }
@@ -4648,9 +6840,10 @@ $('a[href*="#"]:not([href="#"])').click(function() {
     }
   //}
 }); 
-
+</script>
 CSS >>
 /************************************** SUB-MENU *****************************************/
+<style>
 .sous-menu {
     position: relative;
     z-index: 2;
@@ -4659,7 +6852,6 @@ CSS >>
     height: 45px;
     box-shadow: 1px 1px 8px rgba(0,0,0,0.3);
 }
-
 .sous-menu .liens a:hover::before {
     content: '';
     position: absolute;
@@ -4725,7 +6917,7 @@ span.liens {
 }
 .liens a .last-lien:after{display:none;}
 a.last-lien:after {display: none;}
-
+</style>
 /*************************************************************************************************************************************************************************************/
 
 
@@ -4757,9 +6949,11 @@ a.last-lien:after {display: none;}
 
 
 ****************************************************************************** Deco titre footer ***********************************************************************
+<style>
 .titleFooter:first-letter {color: yellow;font-weight: 600;font-size: 150%;text-decoration: inherit;}
 .titleFooter:after {border-bottom: solid 1px white;position: absolute;height: 33px;width: 51%;content: '';left: 50%;transform: translateX(-50%);}
 .titleFooter {font-size: 120%;letter-spacing: .3em;color: white;}
+</style>
 /**********************************************************************************************************************************************************************/
 
 
@@ -4780,6 +6974,7 @@ a.last-lien:after {display: none;}
 
 
 **************************************************************************************Creation de tooltip sur vc grid *************************************************************
+<script>
     // Ajout de tootltip en recupérant les alt des images
     var to  = setTimeout(applyTooltip,2000);
     var applyTooltip = function(){clearTimeout(applyTooltip);$('.vc_grid-item-mini').each(function(e){$(this).find('.vc_gitem-animated-block').after('<div class="myTooltip">'+$(this).find('img').attr('alt')+'</div>');});};
@@ -4787,7 +6982,7 @@ $('.vc_grid-item').css({padding: '0'});
 $('.vc_grid-item-mini > div').css('position','relative');
 $('.vc_grid-item-mini:hover > div.myTooltip').css({background:'rgba(0, 0, 0, 0.5)',height: 'auto',width: '94.7%',position:'absolute',left: '0',bottom:'5px',color:'white',lineHeight:'30px',textAlign:'center',opacity:'1',transition:'all .6s'});
 $('.vc_grid-item-mini > div.myTooltip').css({background: 'rgba(0, 0, 0, 0.5)',height: 'auto',width: '94.7%',position: 'absolute',left: '0',bottom: '-30px',color: 'white',lineHeight: '30px',textAlign: 'center',opacity: '0',transition: 'all .6s'});
-
+</script>
 
 /**********************************************************************************************************************************************************************************/
 
@@ -4797,10 +6992,30 @@ $('.vc_grid-item-mini > div.myTooltip').css({background: 'rgba(0, 0, 0, 0.5)',he
 
 
 
+************************* Animation bouton coulissant toggle (appel d'urgence) *******************************
+<script>
+var cmp=0;
+$('.contact-bloc .phone').on('click',function() {
+  if(cmp===0){
+    $('.contact-bloc').animate({"right":"0px"});
+    setTimeout(function(){cmp=1},20);
+  }else{
+    $('.contact-bloc').animate({"right":"-200px"});
+    cmp=0;
+  }
+}); 
 
 
+ou
 
-
+$('.contact-bloc .phone').toggle(function(e){
+    e.preventDefault();
+    $('.contact-bloc').animate({right: '0px'}, 300);
+},function(event){  
+    e.preventDefault();    
+    $('.contact-bloc').animate({right: '-200px'}, 300); 
+}); 
+</script>
 
 
 
@@ -4809,6 +7024,7 @@ $('.vc_grid-item-mini > div.myTooltip').css({background: 'rgba(0, 0, 0, 0.5)',he
 
 
 ********************************************************************* Bouton show hide element **********************************************************************************
+<script>
 if($w.width() < 768){
     $('.blocAvantage,.blocAnim').slideDown();
 }else if($w.width() >= 768){
@@ -4831,17 +7047,13 @@ if($w.width() < 768){
     $(this).removeClass('actif');
     actif=0;
 }
+</script>
 /*********************************************************************************************************************************************************************************/
 
 
 
-
-
-
-
-
-
-*************************************** Traitement de tableaux et objet via la boucle each ***********************************************
+<script>
+//*************************************** Traitement de tableaux et objet via la boucle each ***********************************************
 var substr = [1, 2, 3, 4];
 $.each(substr , function(index, val) { 
   console.log(index, val)
@@ -4851,6 +7063,7 @@ var myObj = { firstName: "skyfoot"};
 $.each(myObj, function(propName, propVal) {
   console.log(propName, propVal);
 });
+</script>
 **********************************************************************************************************************************************************
 
 
@@ -4864,11 +7077,12 @@ $.each(myObj, function(propName, propVal) {
 
 
 *********************************************** REMPLACEMENT DU H4 GEBERE DANS LES COLONNES DU FOOTER *****************************************************************************
+<script>
 var h4Content = $(".one-third").find("h4").each(function(){
 $(this).replaceWith("<span class='myH4'>"+$(this).text()+"</span>");
 });
 /********************************************************************************************************************************************************************************/
-
+</script>
 
 
 
@@ -4892,12 +7106,15 @@ $(this).replaceWith("<span class='myH4'>"+$(this).text()+"</span>");
 
 
 ****************************** ajout de classe pour la premiere lettre du h1 et h2 evite l ajout d un :first-letter pour ne pas interagir avec le before **************************
+<script>
 var x= $(".myH1:eq(0)").text();
 var y = $(".myH2:eq(0)").text();
 var textH1='<span class="firstL-H1">'+x.charAt(0)+'</span>';
 var textH2='<span class="firstL-H2">'+x.charAt(0)+'</span>';
 $(".myH1:eq(0)").html(textH1 + x.slice(1,x.length));
 $(".myH2:eq(0)").html(textH2 + x.slice(1,x.length));
+</script>
+
 /********************************************************************************************************************************************************************************/
 
 
@@ -4942,12 +7159,14 @@ $(".myH2:eq(0)").html(textH2 + x.slice(1,x.length));
 
 
 ****************************************************  modification du premier h2 en h1 si page pack immo *****************************************************************************
+<script>
 if(location.pathname === "/location-immobilier/" || location.pathname === "/vente-immobilier/"){
     console.log('page vente');
     $("#Content").find('h2').eq(0).replaceWith(function() {
          return '<h1 class="myH1">' + $(this).text() + '</h1>';
      });
 }
+</script>
 /***************************************************************************************************************************************************************************************/
 
 
@@ -4991,11 +7210,13 @@ if(location.pathname === "/location-immobilier/" || location.pathname === "/vent
 
 
 ****************************************************Remplacement separateur des horaires ****************************************************************************
+<script>
 $('.tabHours td').each(function(){
     var txt = $(this).text();
     txt.replace('00  14h00','00 / 14h00');
      console.log('texte horraires remplacé >> ' + txt);
 });
+</script>
 /*******************************************************************************************************************************************************************/
 
 
@@ -5036,6 +7257,8 @@ $('.tabHours td').each(function(){
 
 
 ********************************************************* Generateur de couleur degradé sur colonne **************************************************************
+<script>
+
 var colorCalc;
 var rgbR = {r:255,g:0,b:0};
 function randomArbitraire(min, max) {
@@ -5069,6 +7292,7 @@ function listItemsHandler($index, $item, $data){
 }
 /******************************************************************************************************************************************************************/
 
+</script>
 
 
 
@@ -5098,15 +7322,18 @@ function listItemsHandler($index, $item, $data){
 
 
 
-****************************** Creation de nth-of-type en jquery **************************
+//****************************** Creation de nth-of-type en jquery **************************
+<script>
 
 $.expr[':']['nth-of-type'] = function(elem, i, match) {
     var parts = match[3].split("+");
     return (i + 1 - (parts[1] || 0)) % parseInt(parts[0], 10) === 0;
 };
 
-Utilisation >> 
-$("textarea:nth-of-type(4n)") pour choisir le 4eme textarea
+//Utilisation >> 
+$("textarea:nth-of-type(4n)") //pour choisir le 4eme textarea
+</script>
+
 /****************************************************************************************/
 
 
@@ -5116,13 +7343,14 @@ $("textarea:nth-of-type(4n)") pour choisir le 4eme textarea
 
 
 
-
+/*
 function(){
     p=prompt(Images%20Search:','');
     if(p){
      document.location.href='http://images.google.com/images?query='+escape(p)+'&as_rights=cc_publicdomain';
     };
   }
+*/
 
 
 
@@ -5130,8 +7358,9 @@ function(){
 
 
 
+//****************************************** Bookmark ***********************************************
+<script>
 
-****************************************** Bookmark ***********************************************
 $("a#Bookmark").click(function () {
                var bookmarkUrl = this.href;
                var bookmarkTitle = this.title;
@@ -5157,6 +7386,7 @@ $("a#Bookmark").click(function () {
                }
                return false;
            });
+        </script>
 
 
 
@@ -5173,6 +7403,7 @@ $("a#Bookmark").click(function () {
 
 
 ****************************************** Chercher si une chaine de caractère est presente ou non **********************************************************************************************************
+<script>
 
 //$('.facebook a').attr("href","https ://www.facebook.com/Permis-de-Conduire-265893070217181/");
 //setTimeout(changeFB,1500);
@@ -5202,6 +7433,7 @@ var sentence = 'Je m\'appelle Sébastien';
 var result = sentence.replace(/Sébastien/, 'Johann');
 alert(result); // Affiche : « Je m'appelle Johann »
 /************************************************************************************************************************************************************************************************/
+</script>
 
 
 
@@ -5209,6 +7441,8 @@ alert(result); // Affiche : « Je m'appelle Johann »
 
 
 /****** rechercher un mot et l'entourer d'une span  ***/
+<script>
+
 $("h1:contains('A3S')").html(function(_, html) {return html.replace(/(A3S)/g, '<span class="styliz">$1</span>');});
 $("h2:contains('A3S')").html(function(_, html) {return html.replace(/(A3S)/g, '<span class="styliz">$1</span>');});
 
@@ -5217,12 +7451,14 @@ $("h2:contains('A3S')").html(function(_, html) {return html.replace(/(A3S)/g, '<
 /*** Autre methode ***/
  var text = $('#id1 p:contains("dogsss")').text();
  $('#id1 p:contains("dogsss")').text(text.replace('dog', 'doll')); 
+</script>
 
 
 
 
 
 /************* Replacement images ***/
+<script>
 var phoneUrl = "/wp-content/uploads/sites/2648/2018/05/affiche_EB_action_printempsFHD-1.jpg";
 function adjustImage(){
 if($(window).width() <= 900) {
@@ -5241,7 +7477,7 @@ $(document).ready(function(){
 $( window ).resize(function() {
   adjustImage();
 }); 
- 
+</script> 
 /*********************************************************************************************/
 
 
@@ -5258,15 +7494,15 @@ $( window ).resize(function() {
 
 /********************************************************************** Creation objets anime si visible ****************************************************/
 //
+<script>
+
 for( var i=0; i<3; i++){
   nb= i+1;
   $('.bloc'+nb).after("<div class='img"+nb+"'></div>");
   $('.bloc'+nb);
 }
 
-
-//
-$('.uniqclasses').addClass('wpb_animate_when_almost_visible')}
+$('.uniqclasses').addClass('wpb_animate_when_almost_visible');
 $(document).bind('scroll', function(e) {
         if($('.uniqclasses').hasClass('animated')){
             var tl2 = new TimelineLite;
@@ -5376,7 +7612,7 @@ $("#menu-item-244").attr('title','CSPS');
 
 
 
-********************************************************************** Animation colonne si visible à l écran *********************************************************************
+//********************************************************************** Animation colonne si visible à l écran *********************************************************************
 //
 var sH;
 var $w = $(window);
@@ -5423,7 +7659,7 @@ CSS :
 
 
 
-********************************************************************************** Paralax element *******************************************************************************
+//********************************************************************************** Paralax element *******************************************************************************
 var tof = $('.photo2');
 tof.css({"transform":"translateY(0px)"});
 
@@ -5446,7 +7682,7 @@ tof.css("transform","translateY(-"+hScroll+"px)");
 
 
 
-********************************************** Parallax mouse multi-image  ****************************************************************************************
+//********************************************** Parallax mouse multi-image  ****************************************************************************************
 
 $('#Parallax').mousemove(
 		function(e){
@@ -5549,7 +7785,7 @@ $(window).scroll(function(){
 
 
 
-*** ************************************************************Ajout de champs dans le module get_in_touch conteneur contact ***************************************************
+//*** ************************************************************Ajout de champs dans le module get_in_touch conteneur contact ***************************************************
 var viss;
 var $h3;
 var i = 0;
@@ -5574,6 +7810,8 @@ $('.git2 .desc-wrapper').html('Étanchéité, Zinguerie, Toit-terrasse');
 
 
 
+/***************************** Ajout d'horraires d'ouverture au module conteneur de contact ( get_in-touch) ************************************************************/
+$('.get_in_touch ul li:last-child' ).after('<li class="address"><span class="icon"><i class="icon-clock"></i></span><span class="horraires_ouverture">Horraires d\'ouverture<br>De 8h00 à 12 et de 14h à 18h</span></li>');
 
 
 
@@ -5595,7 +7833,12 @@ $('.git2 .desc-wrapper').html('Étanchéité, Zinguerie, Toit-terrasse');
 
 
 
-********************************* Suppression des h4 de FlatBox par des span formatés avec la classe titleFlatBox **************
+
+
+
+
+
+//********************************* Suppression des h4 de FlatBox par des span formatés avec la classe titleFlatBox **************
 $('.desc_wrapper').each(function() {
      var h4 = $(this).find('h4');
      h4.replaceWith('<span class="titleFlatBox blue1">' + h4.text() + '</span>');
@@ -5626,7 +7869,7 @@ $('.desc_wrapper').each(function() {
 
 
 
-**************************************************** Gestion du module Actualités ***************************************************
+//**************************************************** Gestion du module Actualités ***************************************************
 if(location.pathname === "/actualites/"){
     console.log('page Actu visité !!!');
     jQuery("#Wrapper").find('h2').filter(":empty").remove();// suppression de h2 si celui-ci est vide (generé par actualité)
@@ -5669,7 +7912,7 @@ console.log( $w.width() );// Sortie en console de notre position en scrollTop
         lancementFonction (); 
       }
 	});
-	lancementFonction (){
+	function lancementFonction (){
 			console.log("fonction lancé et condition remplis");
 	} 
 /*******************************************************************************************************************************************/
@@ -5845,7 +8088,7 @@ if (location.pathname === "/realisations/" || location.pathname === "/photos/") 
 
 
 
-************************************************************* Smooth Scroll amélioré *************************************************
+//************************************************************* Smooth Scroll amélioré *************************************************
 /* SMOOTH SCROLL */
 $('a[href*="#"]:not([href="#"])').click(function() {
   if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
@@ -5888,7 +8131,7 @@ $('a[href*="#"]:not([href="#"])').click(function() {
 
 
 
-***************************** Animation slideDown avec easing complet et screen detect de l élément à l écran **********************************************************************************
+//***************************** Animation slideDown avec easing complet et screen detect de l élément à l écran **********************************************************************************
 $('.blocPart .p1,.blocPart .p2,.blocPart .p3').slideUp(10);
 $('.blocPart').addClass('wpb_animate_when_almost_visible ');
 
@@ -5929,7 +8172,7 @@ function detectWAV(){
 
 
 
-************************************************************************************************* Picto rotation viewer *********************************************************************************
+//************************************************************************************************* Picto rotation viewer *********************************************************************************
 var img, imgSrc, urlImg, tween, imgOut,imgOver;
 $('.icoHover figure').each(function(){ 
      $(this).children().css({pointerEvents:'none'});
@@ -5973,7 +8216,7 @@ $('.icoHover figure').hover(
 
 
 
-************************************************************************** Del admin plus précis, avec utilisation de addStyle **********************************************************
+//************************************************************************** Del admin plus précis, avec utilisation de addStyle **********************************************************
 if($('body').hasClass('admin-bar')){
     $('body').addClass('replaceTopBody');
     if($('#Top_bar').css('top')=== '32px'){console.log('top === 32');addStyles('#Header #Top_bar',{top : '0!important'});}
@@ -6040,7 +8283,7 @@ function getAppStylesheet() {
 
 
 
-************************************************ Changer le type de lien sous-menu ancre en curent-item si la position est == à l id  ********************************************
+//************************************************ Changer le type de lien sous-menu ancre en curent-item si la position est == à l id  ********************************************
 var position = $('#actualites').offset(); 
 $(document).scroll(function () {
     var y = $(this).scrollTop();
@@ -6077,7 +8320,7 @@ $(document).scroll(function () {
 
 
 
-************************************************************* EFEETS BOUTON ************************************************************************************************************
+//************************************************************* EFEETS BOUTON ************************************************************************************************************
 // rendre un lien ouvrable dans un nouvel onglet
 $('#menu-item-180 a').attr('target','_blank');
 
@@ -6125,7 +8368,7 @@ $('.btn1').hover(function() {
 
 
 
-******************************************************** ajouter une animation et remplacement de texte avec TweenMax****************************************************************
+//******************************************************** ajouter une animation et remplacement de texte avec TweenMax****************************************************************
 var styleTitleFb = {
     position: 'relative',
     color: '#961e1a',
@@ -6180,29 +8423,247 @@ $('.social .facebook a').hover(function() {
 
 
 
+/*********************** Remplacement du numero de téléphone à vollée boucle a href   ***************************************/
+// Modification du numero de téléphone à la vollée 
+$('a').each(function(i,t){
+      if($(this).attr('href') === "tel:0232441030"){
+          $(this).attr('href',"tel:0278887102");
+          $(this).text("02 78 88 71 02");
+      }
+});
 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/****************************************** Avis pages jaunes mode carroussel  avec fleches de navigation***********************************************************************/
+
+// Version finale -->
+setTimeout(creatCarrousselAvis,400);//lancement de la creation du carroussel après 400 milliseconde (temps d'affichage des avis)
+//ajout des boutons du carroussel
+$('.pj-reviewslist').before("<div class='cont-arrows'><span class='left-arrow'><span class='icoLeft'><</span></span><span class='right-arrow'><span class='icoRight'>></span></span></div><div class='contPagination'><span class='pagination'>1</span><span> / </span><span class='totalAvis'>0</span></div>");
+
+var clickCmp=1;//variable compteur de click
+var cmp=0;// compteur nombre d'avis
+var tabHeightAvis = [];//tableau contenant la hauteur de chaque bloc d'avis
+var maxHeightAvis;//hauteur maximal de l'ensemble des avis
+var margeAvisHeight = 50;//marge de décallage si la fenêtre est plus petite que 600px
+// fonction permettant de récupérer la valeure maximal des éléméents d'un tableau
+function maxVal(tab){
+    return Math.max.apply(Math,tabHeightAvis);
+}
+//fonction de création du carroussel
+function creatCarrousselAvis  (){
+    $('.pj-reviewslist').css('overlow','hidden');//on cache les éléments sortant du bloc parent
+    $('.pj-reviewslist li').each(function(i,t){
+        cmp+=1;//on incrémente la variable cmp de 1 à chaque itération (une itteration par avis
+        $(this).addClass('avis-'+cmp);//on ajoute une classe pour chaque avis avec cette nomenclature avis- + son identifiant unique 1,2,3
+        $(this).fadeOut(0);//on cache l'ensemble des avis
+        $(this).css({'position':'absolute','left':0 });//on positionne les avis les uns sur les autres
+        tabHeightAvis.push(parseInt($(this).css('height').toString().substr(0,$(this).css('height').toString().length-2),10));//on ajoute les hauteur de chaque bloc avis dans le tableau
+        maxHeightAvis = maxVal(tabHeightAvis);//on applique la bonne hauteur au bloc parent
+		if (window.matchMedia("(max-width: 600px)").matches) {
+			//si la largeur de la fenêtre est plus petite que 600 on ajoute une marge
+            maxHeightAvis =maxVal(tabHeightAvis)+margeAvisHeight;
+        }
+    });
+  $('.avis-1').fadeIn();// on affiche le premier avis
+}
+setTimeout(replaceHeightAvis,500);// on applique la hauteur maximal à tous les avis pour pouvoir les lire sans coupure
+function replaceHeightAvis(){
+    $('#reviews').css('height',maxHeightAvis);//on applique la bonne hauteur au bloc parent
+    $('.totalAvis').text(cmp);//on implémente le nombre d'avis total dans le champs texte totalAvis
+}
+//action click flêche navigation gauche
+$('.cont-arrows .left-arrow').on('click',function(me){
+    clickCmp--;
+    if(clickCmp<1){clickCmp=cmp}//on force la variable à ne pas dscendre sous 0
+    $('.pagination').text(clickCmp);//Affiche le numero d'avis en cours dans le champs texte pagination
+    $('.pj-reviewslist li').each(function(i,t){
+        $(this).fadeOut(0);//on cache tous les avis
+        $(this).parent().find('.avis-'+clickCmp).fadeIn(0);//sauf celle relié à la variable click Cmp
+    });
+});
+//action fleche de navigation droite
+$('.cont-arrows .right-arrow').on('click',function(me){
+    clickCmp++;//on incrémente la variable clickCmp de 1
+    if(clickCmp>cmp){clickCmp=1}//on bloque la variable ppour ne pas dépasser le nombre d'avis
+    $('.pagination').text(clickCmp);//Affiche le numero d'avis en cours dans le champs texte pagination
+    $('.pj-reviewslist li').each(function(i,t){
+        $(this).fadeOut(0);//on cache l'ensemble des avis
+        $(this).parent().find('.avis-'+clickCmp).fadeIn(0);//on affiche l'avis en cours
+    });
+});
+</script>
+<style>
+.cont-arrows {
+    position: relative;
+    left: 0;
+    top: -40px;
+    z-index: 3;
+    display: inline-block;
+    float: left;
+}
+.cont-arrows > span {
+    cursor: pointer;
+    pointer-events: auto;
+}
+.cont-arrows > span > span {
+    font-size: 1.2em;
+    background: #3b6f83;
+    border-radius: 50%;
+    margin: 10px 5px;
+    padding: 0 10px;
+    pointer-events: none;
+    user-select: none;
+}
+.contPagination {
+    position: relative;
+    display: inline-block;
+    float: left;
+    top: -40px;
+    left: 10px;
+    color: #3b6f83;
+    font-weight: 700;
+    font-size: 1em;
+    font-family: Arial;
+}
+.contPagination span {
+    user-select: none;
+}
+@media screen and (max-width:768px){
+    .avisForm{
+        margin-top:35px;
+    }
+}
+</style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+************************************************* Remplacer texte dans l'ensemble du site sans modifier le html ou javascript *************************************************
+<script>
+$('body :not(script)').contents().filter(function() {
+    return this.nodeType === 3;
+  }).replaceWith(function() {
+      return this.nodeValue.replace('NEF','MDF');
+  });
+  
+
+$('img').attr('src').contents().filter(function() {
+    return this.nodeType === 2;
+  }).replaceWith(function() {
+      return this.nodeValue.replace('NEF','MDF');
+  });
+</script>
+
+
+
+
+
+  /*** Debug du module barre de contact (des antislashs apparaissent lors de l'utilisation de guillemets simples)
+ * ***/
+<script>
+
+ $('body :not(script)').contents().filter(function() {
+    var title = $(this).find('.wpr-contact-button');
+    return this.nodeType === 3;
+  }).replaceWith(function() {
+     return this.nodeValue.replace(/\\/g, '');
+     $(this).find('.wpr-contact-button a').attr('title').replace(/\\/g, '');
+  });
+/** correction des titles ***/
+  $('.wpr-contact-button a').each(function(i,t){
+      $(this).attr('title',$(this).attr('title').replace(/\\/g, ''));
+  });
+</script>
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
 
 ********************************************************recherche et remplace texte dans une page (mentions légales)****************************************************************
+<script>
 $('.page-id-132 .vc_custom_1435138638284 span').each(function() {
     var text = $(this).text();
     $(this).text(text.replace('MATH PREVARIS', 'MATH-PREVARIS')); 
 }); 
 //******************************************************************************** Fin modification h1***************************************************************************************
+</script>
+
+
+
+
+/************************************************** Remplacer l'attribut src d'une ou plusieurs images *****************************************************************/
+<script>
+
+$('#Content').find('img').each(function(i,t){
+    if($(this).attr('src') === '/wp-content/uploads/sites/6830/2014/10/42168-700x500.jpg'){
+        $(this).attr('src',"test");
+    }
+ });
+</script>
 
 
 
 
 
+<a id="logo" href="https://www.entreprise-nef-nancy.fr"  data-height="90" data-padding="10"><img class="logo-main scale-with-grid" src="/wp-content/uploads/sites/3698/2018/10/logo-mdf.png" data-retina="" data-height="184" alt="logo mdf"><img class="logo-sticky scale-with-grid" src="/wp-content/uploads/sites/3698/2018/10/logo-mdf.png" data-retina="" data-height="184" alt="logo mdf"><img class="logo-mobile scale-with-grid" src="/wp-content/uploads/sites/3698/2018/10/logo-mdf.png" data-retina="" data-height="184" alt="logo mdf"><img class="logo-mobile-sticky scale-with-grid" src="/wp-content/uploads/sites/3698/2018/10/logo-mdf.png" data-retina="" data-height="184" alt="logo mdf"></a>
 
 
 
 
 
-
-***********************************************************************Remplacement de copyright pj**************************************************************************************
+//***********************************************************************Remplacement de copyright pj**************************************************************************************
+<script>
 $('.pj-shortcode').each(function() {
     var text = $(this).text();
     console.log(text);
@@ -6210,7 +8671,9 @@ $('.pj-shortcode').each(function() {
 });  
 
 $('.pj-shortcode').after("<a class afterCopyright'>mon new texte</a>");
-//******************************************************************************** Fin modification h1***************************************************************************************
+</script>
+
+//******************************************************************************** Fin modification copyright***************************************************************************************
 
 
 
@@ -6223,8 +8686,12 @@ $('.pj-shortcode').after("<a class afterCopyright'>mon new texte</a>");
 
 
 *************************************************************************** paramètrage des attributs du logo *************************************************************************
+<script>
+
 $('#logo[title]').removeAttr('title');// Suppression Title
 $('#logo').find('img').attr('alt','alt du logo');// Ajout de l'attribut alt
+</script>
+
 //******************************************************************************** Fin modification h1***************************************************************************************
 
 
@@ -6236,8 +8703,10 @@ $('#logo').find('img').attr('alt','alt du logo');// Ajout de l'attribut alt
 
 
 ********************************************************* Ajout des agences dans le slogan et avant chaque numéro de téléphone*************************************************************
+<script>
 $('.contact_details li:nth-child(2)').prepend( '| Site Bergerac ' );
 $('.contact_details li:nth-child(3)').prepend( ' Site Marsac : ' );
+</script>
 //******************************************************************************** Fin modification h1***************************************************************************************
 
 
@@ -6247,8 +8716,10 @@ $('.contact_details li:nth-child(3)').prepend( ' Site Marsac : ' );
 
 
 ***************************************************************Suppression d un h3 invisible généré par les formulaire d avis***************************************************************
+<script>
 var h3Avis = $(".comment-respond").find("h3")
 h3Avis.replaceWith("<span>"+h3Avis.text()+"</span>")
+</script>
 //******************************************************************************** Fin modification h1***************************************************************************************
 
 
@@ -6265,14 +8736,101 @@ h3Avis.replaceWith("<span>"+h3Avis.text()+"</span>")
 
 
 ********************************************************gestion du retour de ligne du h1 de la page d accueil pour ajouter un saut de ligne *************************************************
-var titleAccueil = $(".cutH1");
+<script>var titleAccueil = $(".cutH1");
 var newtitleAccueil="Christophe levage manutention <br /> Caen / La Haye-du-Puits";
 titleAccueil.html(newtitleAccueil);
+</script>
 //******************************************************************************** Fin modification h1***************************************************************************************
 
 
 
 
+
+
+
+************************************************* Rechercher si une partie de chaine existe ******************************************
+<script>
+var a  = "Test String";
+
+if(a.search("ring")!=-1){
+     //exist 
+} else {
+     //not found 
+}
+
+
+autres méthodes -->
+
+var stringVariable = "some text";
+var findString = "text";
+
+//using `indexOf()`
+var containResult1 = stringVariable.indexOf(findString) != -1;
+document.write(containResult1+', ');
+
+//using `lastIndexOf()`
+var containResult2 = stringVariable.lastIndexOf(findString) != -1;
+document.write(containResult2+', ');
+
+//using `search()`
+var containResult3 = stringVariable.search(findString) != -1;
+document.write(containResult3+', ');
+     
+//using `split()`
+var containResult4 = stringVariable.split(findString)[0] != stringVariable;
+document.write(containResult4+'');
+
+
+
+// Méthode avec match
+var stringData ="anyString Data";
+var subStringToSearch = "any";
+// This will give back the substring if matches and if not returns null
+var doesContains = stringData.match(subStringToSearch);
+if(doesContains !=null) {
+    alert("Contains Substring");
+}
+</script>
+
+
+
+
+
+
+
+
+
+*************************** Fusionner deux objets *********************************
+<script>
+const obj1 = { food: 'pizza', car: 'ford' };
+const obj2 = { animal: 'dog' };
+
+const obj3 = { ...obj1, ...obj2 };
+console.log(obj3);
+
+
+//autre méthode -->
+var clone = Object.assign({}, obj);
+//La méthode Object.assign () est utilisée pour copier les valeurs de toutes les propriétés propres énumérables d'un ou plusieurs objets source vers un objet cible.
+Ex :
+var o1 = { a: 1 };
+var o2 = { b: 2 };
+var o3 = { c: 3 };
+
+var obj = Object.assign(o1, o2, o3);
+console.log(obj); // { a: 1, b: 2, c: 3 }
+console.log(o1);  // { a: 1, b: 2, c: 3 }, target object itself is changed.
+
+
+
+Ajouter un objet dans un autre -->
+Object.extend = function(destination,source) {
+    for (var property in source)
+        destination[property] = source[property];
+    return destination;
+}
+//obj1.extend(obj2) fera ce que vous voulez.
+</script>
 
 
 
@@ -6286,6 +8844,7 @@ titleAccueil.html(newtitleAccueil);
 
 
 ******************************************************** Modification retour à la ligne h1 avec detection de page target ********************************************************
+<script>
 //gestion du retour de ligne du h1 de la page d'accueil pour ajouter un saut de ligne après la virgule
 
   if(location.pathname === "/"){
@@ -6309,6 +8868,7 @@ titleAccueil.html(newtitleAccueil);
 	console.log( "taille fenetre >> "+$(window).width() );
     modifieH1(); 
   });
+  </script>
   //------------------------------ Fin modification h1------------------------------------------------
 
 
@@ -6330,6 +8890,7 @@ titleAccueil.html(newtitleAccueil);
 
 
 ******************************************************** Fonction permettant de créer une animation de défilement vers une ancre ************************************************
+<script>
 $('a[href^="#"]').click(function(){
 var the_id = $(this).attr("href");
   console.log(the_id);
@@ -6341,6 +8902,7 @@ var the_id = $(this).attr("href");
   	return false;
   }
 });
+</script>
 /**********************************************************************************************************************************************************************************/
 
 
@@ -6362,13 +8924,15 @@ var the_id = $(this).attr("href");
 
 
 ********************************************************Remplacement de h2 du TS image overlay par un h3 ********************************************************
-  $('.mask').each(function() {
+<script>
+$('.mask').each(function() {
      var h2Overlay = $(this).find('h2');
      h2Overlay.replaceWith('<h3>' + h2Overlay.text() + '</h3>');
     var titleH3 =  $(this).children();
      titleH3.css("cssText", "color: #ffffff!important;");
      console.log('h2Overlay >> '+h2Overlay+',       this.children() >>'+$(this).children().attr('class') );
   });
+  </script> 
 /***************************************************************************** END REPLACE H2 ******************************************************************/
 
 
@@ -6382,8 +8946,10 @@ var the_id = $(this).attr("href");
 
 
 ********************************************************Suppression d un h3 invisible généré par les formulaire d avis *****************************************
+<script>
 var h3Avis = $(".comment-respond").find("h3")
 h3Avis.replaceWith("<span>"+h3Avis.text()+"</span>");
+</script>
 /**********************************************************************************************************************************************************************************/
 
 
@@ -6397,7 +8963,8 @@ h3Avis.replaceWith("<span>"+h3Avis.text()+"</span>");
 
 
 ***************************************************gestion du retour de ligne du h1 de la page d accueil pour ajouter un saut de ligne après la virgule************************************
-  if(location.pathname === "/"){
+<script>
+if(location.pathname === "/"){
        var titleAccueil = $(".title");
       var textTitle = titleAccueil.text();
       var ancienTextAccueil = "Piscines Magiline Water-Ric, maître d'oeuvre des piscines en Dordogne";
@@ -6417,6 +8984,7 @@ h3Avis.replaceWith("<span>"+h3Avis.text()+"</span>");
 console.log( "taille fenetre >> "+$(window).width() );
     modifieH1(); 
   });
+  </script>
 /**********************************************************************************************************************************************************************************/
 
 
@@ -6430,7 +8998,8 @@ console.log( "taille fenetre >> "+$(window).width() );
 
 
 *****************************Fonction permettant de créer une animation de défilement vers une ancre : la fonction détecte et applique automatiquement l animation sur les liens ***********
-  $('a[href^="#"]').click(function(){
+<script>
+ $('a[href^="#"]').click(function(){
   	var the_id = $(this).attr("href");
   
   	$('html, body').animate({
@@ -6438,6 +9007,7 @@ console.log( "taille fenetre >> "+$(window).width() );
   	}, 'slow');
   	return false;
   });
+  </script>
 /********************************************************************************************** FIN SMOOTH ANIM CLICK BTN *************************************************************************/
 
 
@@ -6451,6 +9021,7 @@ console.log( "taille fenetre >> "+$(window).width() );
 
 
 *************************************************************************** remplacement de h2 du TS image overlay par un h3 ***************************************************************
+<script>
 $('.mask').each(function() {
      var h2Overlay = $(this).find('h2');
      h2Overlay.replaceWith('<h3>' + h2Overlay.text() + '</h3>');
@@ -6458,6 +9029,7 @@ $('.mask').each(function() {
      titleH3.css("cssText", "color: #ffffff!important;");
      console.log('h2Overlay >> '+h2Overlay+',       this.children() >>'+$(this).children().attr('class') );
 });
+</script>
 /********************************************************************************************** FIN SMOOTH ANIM CLICK BTN *************************************************************************/
 
 
@@ -6470,12 +9042,14 @@ $('.mask').each(function() {
 
 
 *************************************************************************Remplacement h3 de la page contact ********************************************************************************
+<script>
 if(location.pathname === "/contact"){
     var h3Contact= $(".get_in_touch").find('h3');
     var txtH3Contact = h3Contact.text();
     h3Contact.remove();
     // h3Contact.replaceWith("<span>"+txtH3Contact+"</span>")
 }
+</script>
 /********************************************************************************************** FIN SMOOTH ANIM CLICK BTN *************************************************************************/
 
 
@@ -6490,6 +9064,7 @@ if(location.pathname === "/contact"){
 
 
 ************************************************************** Fonction permettant de charger une classe externe et de l utiliser dans une fonction  ******************************************
+<script>
 function loadScript(url, callback)
 {
     // Adding the script tag to the head as suggested before
@@ -6519,6 +9094,7 @@ var reflectImg = function() {
     $.getScript( url, function() {
 
 });
+</script>
 /********************************************************************************************** END LOAD CLASS *************************************************************************/
 
 
@@ -6533,6 +9109,7 @@ var reflectImg = function() {
 
 ************************************************************************************* Clone css *********************************************************************************************
 // Fonction de copie CSS, possibilité de save l'ensemble des propriétés style et de les réappliquer par la suite à une autre classe    
+<script>
 function css(a) {
     var sheets = document.styleSheets, o = {};
     for (var i in sheets) {
@@ -6567,6 +9144,7 @@ function css2json(css) {
 
 //--------------------------- Utilisation >>
 $('.get_in_touch').find(".spanH3").css(style);
+</script>
 /**********************************************************************************************************************************************************************************/
 
 
@@ -6582,6 +9160,8 @@ $('.get_in_touch').find(".spanH3").css(style);
 
 
 ****************************************************************************** Lancement fonction dans une partie spécifique du site via scrollTop *****************************************
+<script>
+
 var $window = $(window);
 var affiche = false;
 var scrollHandler = $window.scroll( function () {
@@ -6593,7 +9173,9 @@ console.log( $window.scrollTop() );// Sortie en console de notre position en scr
                 $(window).off("scroll", scrollHandler );// On arrête l'écoute du window.scroll
                 lancementFonction (); 
           }
-	});
+    });
+</script>
+    
 /**********************************************************************************************************************************************************************************/
 
 
@@ -6625,6 +9207,8 @@ console.log( $window.scrollTop() );// Sortie en console de notre position en scr
 
 
 ********************************************************Recherche le premier caractère d un href qui commence par '' et le supprimer *********************************************
+<script>
+
 var str="";
 $("a").each(function(){
      str= $(this).attr('href');
@@ -6642,11 +9226,15 @@ $("a").each(function(){
 
 
 
+$('div').each(function() {
+     var h4 = $(this).find('h4');
+     h4.replaceWith('<h3 >' + h4.text() + '</h3>');
+     console.log('h4'+h4.text);
+  });
 
 
 
-
-*************************************************************** Technique remplacement des titres H par span stylisé ********************************************************************
+//*************************************************************** Technique remplacement des titres H par span stylisé ********************************************************************
 $('.how_it_works').each(function() {
      var h4 = $(this).find('h4');
      h4.replaceWith('<span class="myH4">' + h4.text() + '</span>');
@@ -6672,7 +9260,7 @@ var h3Info = $('.infobox h3');
 
 
 
-************************************************************* Gestion logo Top_bar *****************************************************************************
+//************************************************************* Gestion logo Top_bar *****************************************************************************
 $('.logo a').attr('alt','Mutualia Alliance Santé');
 $('.logo a').removeAttr('title');
 $('.logo a img').attr('alt', 'Logo Mutualia Alliance Santé');
@@ -6683,7 +9271,7 @@ $('.logo a img').attr('alt', 'Logo Mutualia Alliance Santé');
 
 
 
-***************************************************************Gestion du zoom de la map de la page contact********************************************************/
+//***************************************************************Gestion du zoom de la map de la page contact********************************************************/
 $('.map_canvas1').addClass('scrolloff'); // le style css scrolloff est lié à map_canvas
  $('.canvas1').on('click', function () {
 	$('.map_canvas1').removeClass('scrolloff'); // au clic le style est supprimé
@@ -6698,7 +9286,7 @@ $(".map_canvas1").mouseleave(function () {
 
 
 
-******************************************Fonction permettan de remettre les texte justifié en alignement left sur mobile*************************************************
+//******************************************Fonction permettan de remettre les texte justifié en alignement left sur mobile*************************************************
 $('p').each(function() {
     if($(window).width() < 768 && $('p').css({'text-align' : 'justify'}) ){
         console.log('paragraphe justifié');
@@ -6715,7 +9303,7 @@ $('p').each(function() {
 
 
 
-********************************************Scroll clic via ancre avec recupération de l id et nettoyage de l url**************************************************************
+//********************************************Scroll clic via ancre avec recupération de l id et nettoyage de l url**************************************************************
 $("footer a").click(function(e) {
 		e.preventDefault();
 		
@@ -6737,6 +9325,8 @@ $("footer a").click(function(e) {
 			});
 		}
 });
+</script>
+
 /**********************************************************************************************************************************************************************************/
 
 
@@ -6744,7 +9334,9 @@ $("footer a").click(function(e) {
 
 
 
-********************************************************** RATIO IMAGE ****************************************************************************************
+//********************************************************** RATIO IMAGE ****************************************************************************************
+<script>
+
  function objectResize(obj, baseWidth, baseHeight, originalWidth, originalHeight )
         {
             var imageRatio,
@@ -6771,6 +9363,8 @@ $("footer a").click(function(e) {
             
             obj.css({width: newImgWidth, height: newImgHeight, marginTop: newImgTop, marginLeft: newImgLeft});
         }
+</script>
+
 /**********************************************************************************************************************************************************************************/
 
 
@@ -6781,7 +9375,9 @@ $("footer a").click(function(e) {
 
 
 
-************************************************************************   GESTION LANCEMENT VIDEO IFRAME ***********************************************************************
+//************************************************************************   GESTION LANCEMENT VIDEO IFRAME ***********************************************************************
+<script>
+
 $(document).ready(function() {
     $('#play-video').on('click', function(ev) {
         $("#video")[0].src += "&autoplay=1";
@@ -6794,7 +9390,7 @@ $(document).ready(function() {
 /********************************************** Lecture d'une video *************************************************************/
 $('#videoId').get(0).play();
 
-au click
+//au click
 jQuery( document ).ready(function($) {
     $('.myHTMLvideo').click(function() {
         this.paused ? this.play() : this.pause();
@@ -6808,18 +9404,27 @@ $("video").each(function(){
 $('video').click(function(){
     this[this.paused ? 'play' : 'pause']();
 });
+</script>
+
 /**********************************************************************************************************************************************************************************/
 
 
 
+/*********************************** Bloquer lecture continue d'une vidéo daylimotion *********************************/
+
+Aller dans intégrer la video et recuperer le lien embed, il faut aussuite ajouter ?queue-enable=false  
+
+Exemple : https:/www.dailymotion.com/embed/video/xl1km0?queue-enable=false  
 
 
 
 
 
+//************************************************************** Controler slider revolution ***************************************************
+<script>
 
-************************************************************** Controler slider revolution ***************************************************
 // revapi + id du slider (dans all slider)
+var sliderR = $('.rev_slider');
 var left; 
 var right; 
 var totalSlides;
@@ -6865,7 +9470,7 @@ $('#rev_slider_3_1_wrapper').on('revolution.slide.onvideostop', function(event, 
 
 
 
-***********************************************************************Cacher admin-bar  et replacer body*****************************************************************************
+//***********************************************************************Cacher admin-bar  et replacer body*****************************************************************************
 if($('body').hasClass('admin-bar')){
      //$("<style type='text/css'> .replaceTopBody{  position:relative!important; top:-32px;} </style>");
      $('body').addClass('replaceTopBody');
@@ -6875,7 +9480,7 @@ if($('body').hasClass('admin-bar')){
 
 
 
-************************************************************************* DIVERS ******************************************************************************************
+//************************************************************************* DIVERS ******************************************************************************************
 
 //fonction _blank utilisé dans les composants boutons onclick après avoir coché "Advanced on click action
 window.open('http://www.atp-pesage.fr/balances_analyse/index.php', '_blank')
@@ -6886,10 +9491,12 @@ $('.searchAgence').click(
         $(this).val('');
     });
 $('.pj-shortcode').text('Mutualia alliance santé');
+</script>
 
 
 // Test pour admin bar
 /*
+<script>
 var $w= $(window);
 $('#Wrapper').css({'position': 'relative!important','top':'-32px!important'});
 $('html').css({'margin': '0!important'});
@@ -6932,9 +9539,12 @@ $('html body').delay(2000).css('position','relative!important');
 $('html body').delay(3000).css('top','-32px!important');
 console.log($('html').css('margin-top'));
 */
+</script>
 
 
-TEST 2 ADMIN BAR
+// ------------------------------ TEST 2 ADMIN BAR ---------->>
+<script>
+
 var screenMob = 782;
 var windowsize = $(window).width();
 var admH = $('#wpadminbar').height();
@@ -6949,10 +9559,12 @@ if($('body').hasClass('admin-bar')){
     else  if(windowsize > screenMob){$("<style type='text/css'> .replaceTopBody{position:relative!important; top:-32px!important;}</style>");}
     $('<style type="text/css">.replaceTopBody{position:relative!important; top:-46px!important;}</style>');
 }
+</script>
 
 
 
-***** Test mouseScroll page externe vers autre page avec ancre */
+/* **** Test mouseScroll page externe vers autre page avec ancre */
+<script>
 var target;
 var url      = window.location.href;  
 var strUrl = "https://piscines-vaucluse.site-privilege.pagesjaunes.fr";
@@ -6992,17 +9604,19 @@ $(document).ready(function(){
     }
 });
 
+</script>
 
 
 
 
 
 
-
-var to 
+<script>
+var to;
 if (location.pathname === "/realisations/" || location.pathname === "/photos/") {
     var intervalId = setInterval(btnChange1, 1000);
     function btnChange1() {
+        
         ('.vc_grid-container-wrapper').each(function(){
             if ($(this).find('.vc_pageable-slide-wrapper .vc_visible-item').last().hasClass('animated')) {
                 btnMore = $(this).find('.vc_pageable-load-more-btn').find('.vc_grid-btn-load_more');
@@ -7013,6 +9627,8 @@ if (location.pathname === "/realisations/" || location.pathname === "/photos/") 
             }
         });
     }
+</script>
+<script>
     
     //var to = setTimeout(applyTooltip($('#MediaG1')), 2000);
     function applyTooltip(elem) { 
@@ -7046,10 +9662,11 @@ if (location.pathname === "/realisations/" || location.pathname === "/photos/") 
 </script>
 
 
-************************************************************** GREENSOCK ***********************************************************
+//************************************************************** GREENSOCK ***********************************************************
 
 
-Les import possibles >>
+// Les import possibles >>
+/*
 https://cdnjs.cloudflare.com/ajax/libs/gsap/latest/easing/EasePack.min.js
 https://cdnjs.cloudflare.com/ajax/libs/gsap/latest/jquery.gsap.min.js
 https://cdnjs.cloudflare.com/ajax/libs/gsap/latest/plugins/AttrPlugin.min.js
@@ -7069,6 +9686,7 @@ https://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TimelineLite.min.js
 https://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TimelineMax.min.js
 https://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenLite.min.js
 https://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenMax.min.js
+*/
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/latest/plugins/CSSPlugin.min.js" type="text/javascript" defer=""></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.11.5/plugins/CSSRulePlugin.min.js" type="text/javascript" defer=""></script>
@@ -7081,8 +9699,9 @@ https://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenMax.min.js
 
 
 
->> TimeLineLite :
+//>> TimeLineLite :
 
+<script>
 
 myTimeline.add( TweenLite.from(element, 1, {left:100, opacity:0.5}) );
 myTimeline.from(element, 1, {left:100, opacity:0.5});
@@ -7097,7 +9716,7 @@ tl.fromTo(element, 1, {left:0}, {left:-100})            // l'élément tween est
   .set(element, {opacity:0})                            // alors positionne element.opacity à 0.5 immédiatement 
   .call(otherFunction)                                  // puis appel à otherFunction ()
   .staggerTo([element1, element2, element3], 1.5, {rotation:45}, 0.25); // interpole finalement la rotation de element1, element2 et element3 sur 45 et décale les temps de départ de 0.25 secondes
-
+/*
 ::: FROM >>
 Ajoute une interpolation TweenLite.from () à la fin de la timeline (ou ailleurs en utilisant le paramètre "position") 
 - c est une méthode pratique qui accomplit exactement la même chose que ajouter (TweenLite.from (...)) mais avec moins de code. 
@@ -7105,7 +9724,7 @@ Ajoute une interpolation TweenLite.from () à la fin de la timeline (ou ailleurs
 ::: .fromTo : *
 Ajoute une interpolation TweenLite.fromTo () à la fin de la chronologie 
 - c est une méthode pratique qui accomplit exactement la même chose que ajouter (TweenLite.fromTo (...)) mais avec moins de code.
-
+*/
 
 tl.fromTo(element, 1, {left:0}, {left:100});  // ajoute à la fin de la timeline 
 tl.fromTo(element, 1, {left:0}, {left:100}, 2);  // l'ajoute à exactement 2 secondes dans la timeline (position absolue) 
@@ -7117,14 +9736,14 @@ tl.fromTo(element, 1, {left:0}, {left:100}, "myLabel+=2");  // le place 2 second
 
 
 
-:::::::::::::TweenLite filter >>
+//:::::::::::::TweenLite filter >>
 TweenLite.to(image, 1, {pixi:{colorize:"red", colorizeAmount:1}});
 TweenLite.to(image, 1, {pixi:{saturation:0}});
 TweenLite.to(image, 1, {pixi:{hue:180}});
 TweenLite.to(image, 1, {pixi:{brightness:3}});
 TweenLite.to(image, 1, {pixi:{contrast:3}});
 TweenLite.to(image, 1, {pixi:{blur:20}});
->>  RESET Filter
+//>>  RESET Filter
 TweenLite.to(image, 1, {pixi:{colorMatrixFilter:null, blur:0}});
 
 
@@ -7132,7 +9751,8 @@ TweenLite.to(image, 1, {pixi:{colorMatrixFilter:null, blur:0}});
 
 
 
----------Savoir si la tween est active
+//---------Savoir si la tween est active
+
 if(!tween.isActive()){}
 
 var endX = 300;
@@ -7149,14 +9769,14 @@ $("#tweenBox").click(function(){
 
 
 
-----------Progression animation
+//----------Progression animation
 var progress = myAnimation.progress(); //ecoute de la progression
 myAnimation.progress(0.25); //sets progression lorsque le quart de l'animation est lu
 
 
 
 
------------Se deplacer a un temps donné de l animation
+//-----------Se deplacer a un temps donné de l animation
 //jumps to exactly 2 seconds
 myAnimation.seek(2);
 
@@ -7166,11 +9786,11 @@ myAnimation.seek(2, false);
 
 
 
-:::::::::::::::::::::Time()
+/*:::::::::::::::::::::Time()
 Obtient ou définit la position locale de la tête de lecture (essentiellement l heure actuelle), 
 décrite en secondes (ou images pour les animations basées sur des cadres) qui ne sera 
 jamais inférieure à 0 ou supérieure à la durée de l animation.
-
+*/
 var currentTime = myAnimation.time(); //gets current time
 myAnimation.time(2); //sets time, jumping to new value just like seek().
 
@@ -7178,11 +9798,11 @@ myAnimation.time(2); //sets time, jumping to new value just like seek().
 
 
 
-
+/*
 :::::::::::::::reverse()
 Inverse la lecture de sorte que tous les aspects de l animation soient orientés 
 vers l arrière, y compris, par exemple, la facilité d une interpolation.
-
+*/
 // inverse la lecture depuis l'endroit où se trouve la tête de lecture: 
  myAnimation.reverse();
  
@@ -7209,22 +9829,24 @@ myAnimation.reversed( !myAnimation.reversed() );
 
 
 // Animer des pseudos éléments via CSSRulePlugin
-
-CSS >>
+</script>
+//CSS >>
+<style>
 .myClass {
-    color:#FF0000;
+    color: #FF0000;
 }
 .myClass:before {
     content:"This content is before.";
     color:#00FF00;
 }
-
-JS >>
+</style>
+//JS >>
+<script>
 var rule = CSSRulePlugin.getRule(".myClass:before"); //get the rule
 TweenLite.to(rule, 3, {cssRule:{color:"#0000FF"}});
-ou 
+//ou 
 TweenLite.to( CSSRulePlugin.getRule(":before"), 3, {cssRule:{color:"#0000CC"}});
-
+</script>
 
 
 
@@ -7832,10 +10454,10 @@ BlobWorld.init();</script>
 
 
 
-Sublime Text 3  change $ color var jQuery
+//Sublime Text 3  change $ color var jQuery
 
 
-Theme.tmTheme >>
+//Theme.tmTheme >>
 
     <dict>
         <key>name</key>
