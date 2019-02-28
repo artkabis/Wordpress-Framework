@@ -4095,6 +4095,9 @@ window.onload = function() {
 
 
 
+/***************************** Gestion des style de title en prenant une partie à décorer via un wrap de span dans le title *******************************/
+
+<script type="text/javascript">
 if(document.location.pathname === '/'){
 	var pattern = /\b(AVANTAGES |SARL MAÏA)/gi; //darkTitle
 	var replaceWith = '<span class="darkTitle">$1</span>'; // wrap in the tag you want
@@ -4121,6 +4124,7 @@ $('h1,h2,h3').each(function(){
 		$(this).html($(this).html().replace(patt2,replaceWith2));//remplacement des patterne par un wrap de redTitle
 });
 
+</script>
 
 
 
@@ -4128,8 +4132,7 @@ $('h1,h2,h3').each(function(){
 
 
 
-
-****************************************************** Filter gestion des données d'un Array *************************************************************************
+/****************************************************** Filter gestion des données d'un Array ************************************************************************/
 <script type="text/javascript">
 
 
