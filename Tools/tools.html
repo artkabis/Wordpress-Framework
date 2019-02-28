@@ -1,8 +1,8 @@
 /* ┌─────────────────────────────────────────────────────────────────────┐ \\
 // │ Artkabis 1.3 - JavaScript Library                                   │ \\
 // ├─────────────────────────────────────────────────────────────────────┤ \\
-// │ Copyright (c) 2015-2019 Gregory NICOLLE (http://urliss35.free.fr)   │ \\
-// │ Copyright (c) 20013-2019 Artkabis Lab                               │ \\
+// │ Copyright (c) 2015-2016 Gregory NICOLLE (http://urliss35.free.fr)   │ \\
+// │ Copyright (c) 20013-2016 Sencha Labs (http://sencha.com)            │ \\
 // │ Licensed under the MIT (http://artkabis.com/license.html) license   │ \\
 // └─────────────────────────────────────────────────────────────────────┘ \\
 
@@ -170,6 +170,48 @@ function l (a, b, d){
 	}
 }
 </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+******************************************************* Débugging concernant les href tel: -********************************************** 
+*******************ici on detect sur un lien comporte un tel:, si ceci est le cas on éffectue un window.open avec le href ****************
+<script>
+  // $(data).find('[href^=callto\\:]')  permet de filtrer dans les datas
+$("a[href^='tel:']").click(function(){
+  window.open($(this).attr('href'));
+  return false;
+}); 
+</script>
+
 
 
 
@@ -2742,9 +2784,9 @@ $('#Header #Top_bar').append('<div class="phoneBtn"><i class="icon-phone"></i><a
 
 
 
-
-******************************************************** ajout un lien sur les images du module prolive (boucle sur l'ensemble des éléments )
 <script>
+/******************************************************** ajout un lien sur les images du module prolive (boucle sur l'ensemble des éléments ) ****/
+
 setTimeout(detectProlive,500);
 function detectProlive(){
     if( $('.pj-prolive-hc .panel').length > 0 ){
@@ -2761,10 +2803,9 @@ function detectProlive(){
 
 
 
-
-
-************************************* Ajout numero de téléphone en Top_bar sur menu moderne (cadre dans header) ****************************************
+/************************************* Ajout numero de téléphone en Top_bar sur menu moderne (cadre dans header) ****************************************/
 <script>
+
 $('#Header #Top_bar .logo').after('<div class="phoneBtn"><span class="contactPhone"><i class="icon-phone"></i><a class="telMenu" href="tel:0664939742">06 64 93 97 42</a</span></div>');
 </script>
 
