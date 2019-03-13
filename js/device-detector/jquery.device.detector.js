@@ -1,21 +1,4 @@
-Skip to content
- 
-Search or jump to…
-
-Pull requests
-Issues
-Marketplace
-Explore
- @artkabis Sign out
-1
-1 1 exiguus/js.device.detector
- Code  Issues 0  Pull requests 0  Projects 0  Wiki  Insights
-js.device.detector/src/js/jquery.device.detector.js
- Simon Gattner fix potential security vulnerability found in the serve dependency
-7352ec6  on 28 Jul 2018
-1207 lines (1112 sloc)  32.1 KB
-    
-/**
+ /**
  * @fileOverview device detector
   jQuery Plugin to get Device and Browser informations
  * @author Simon Gattner <npm@0x38.de>
@@ -1221,15 +1204,3 @@ js.device.detector/src/js/jquery.device.detector.js
     }
   );
 }(jQuery));
-© 2019 GitHub, Inc.
-Terms
-Privacy
-Security
-Status
-Help
-Contact GitHub
-Pricing
-API
-Training
-Blog
-About
