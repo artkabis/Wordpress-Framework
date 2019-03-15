@@ -825,8 +825,26 @@ if(location.pathname === '/cuisine/'){
 
 
 
-
-
+****************************************** Lecteur video html5 ********************************************
+<video width="480" controls
+  poster="https://archive.org/download/WebmVp8Vorbis/webmvp8.gif" >
+    <source
+    src="https://archive.org/download/WebmVp8Vorbis/webmvp8.webm"
+    type="video/webm">
+    <source
+    src="https://archive.org/download/WebmVp8Vorbis/webmvp8_512kb.mp4"
+    type="video/mp4">
+    <source
+    src="https://archive.org/download/WebmVp8Vorbis/webmvp8.ogv"
+    type="video/ogg">
+    Votre navigateur ne permet pas de lire les vidéos.
+  Mais vous pouvez toujours 
+    <a href="fichiervideo.webm">la télécharger</a> !
+    <track kind="subtitles" src="toto.en.vtt" srclang="en"
+  label="Anglais">
+    <track kind="subtitles" src="toto.sv.vtt" srclang="sv"
+  label="Suédois">
+</video>
 
 
 
@@ -1309,6 +1327,63 @@ $(".home a[title|='ALERTE'] + div > div > div .wpb_single_image").append('<div i
 
 
 
+********************** Ouverture d'une popup au centre de la fenêtre celle-ci est géré sur mobile  ********************************
+****************************************** elle fonctionne aussi avec le module clickRDV ******************************************
+<script>
+function PopupCenter(url, title, w, h) {
+  var userAgent = navigator.userAgent,
+      mobile = function() {
+        return /\b(iPhone|iP[ao]d)/.test(userAgent) ||
+          /\b(iP[ao]d)/.test(userAgent) ||
+          /Android/i.test(userAgent) ||
+          /Mobile/i.test(userAgent);
+      },
+      screenX = typeof window.screenX != 'undefined' ? window.screenX : window.screenLeft,
+      screenY = typeof window.screenY != 'undefined' ? window.screenY : window.screenTop,
+      outerWidth = typeof window.outerWidth != 'undefined' ? window.outerWidth : document.documentElement.clientWidth,
+      outerHeight = typeof window.outerHeight != 'undefined' ? window.outerHeight : document.documentElement.clientHeight - 22,
+      targetWidth = mobile() ? null : w,
+      targetHeight = mobile() ? null : h,
+      V = screenX < 0 ? window.screen.width + screenX : screenX,
+      left = parseInt(V + (outerWidth - targetWidth) / 2, 10),
+      right = parseInt(screenY + (outerHeight - targetHeight) / 2.5, 10),
+      features = [];
+      
+  if (targetWidth !== null) {features.push('width=' + targetWidth);}
+  if (targetHeight !== null) {features.push('height=' + targetHeight);}
+  features.push('left=' + left);
+  features.push('top=' + right);
+  features.push('scrollbars=1');
+
+  var newWindow = window.open(url, title, features.join(','));
+
+  if (window.focus) {newWindow.focus();}
+  return newWindow;
+}
+setTimeout(function(){
+    $('.clicrdv-widget-link ').attr('target','_blank');//gestion du target
+    $('.clicrdv-widget-link ').attr('href','');// on vide le href pour ne pas ouvrir de nouveau lien
+    $('.clicrdv-widget-link ').on('click',function(me){
+      // au clic on ouvre la popup via la fonction popupCenter
+        PopupCenter('https://www.clicrdv.com/au-chapeau-gris?clicrdv_widget=1&widget_width=800&websource=https%3A%2F%2Fwww.restaurant-auchapeaugris.fr','Réserver une table','600','500');
+    });
+});
+
+</script>
+le bouton html lié au clickRDV -->
+<script type="text/javascript" src="//clicrdv-assets.s3.amazonaws.com/lib/clicrdv-widgets-v1/clicrdv-widgets-min.js"></script>
+<script type="text/javascript">CLICRDV.renderWidget('link','au-chapeau-gris',{"text":"Réserver une table"});</script>
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1532,11 +1607,34 @@ $('head').append('<meta name="google-site-verification" content="VlsubgsTVrKYWnZ
 
 
 
+********************************* Débuggage du logo facebook des spr *************************************************************
 
 
 
 
 
+
+
+
+
+
+
+
+
+<script>
+$('#Action_bar .social').html('<a href="https://www.facebook.com/GPAL-Groupement-pour-lAmélioration-du-135083680371467/">f</a>');
+</script>
+<style>
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+.social a {
+    font-family:'Roboto';
+    font-weight: 600;
+    color: #276aa5;
+    font-size: 2rem;
+    line-height: 2rem;
+    text-decoration: none;
+}
+</style>
 
 
 
@@ -1791,9 +1889,57 @@ function check(){
 
 
 
+Pour ceux qui auraient le fameux problème de clic gauche désactivé sur le bouton "écrire un avis" du module liste des avis pagesjaunes.
+Voici un petit bout de code qui permet de tester si un lien est externe comporte en partie cette url  "pagesjaunes.fr/contribution/"
+Dans le cas ou il y aurait des liens invalides dans le code, plusieurs tests évitent de générer des erreurs : 
+1°) vérifie si le lien n'est pas indéfini
+2°) Vérifie si le lien est bien externe avec le test comp
+3°) Vérifie si le lien contient bien l'url lié au avis pagesjaunes
+<script>
+/****************** Debug liens externes *********************/
+var comp = new RegExp(location.host);
+var url ='';
+$('a').each(function(i,t){
+   if(!comp.test($(this).attr('href'))){
+       if($(this).attr('href') !== undefined){
+           if($(this).attr("href").indexOf("pagesjaunes.fr/contribution/") != -1){
+            url=$(this).attr('href');
+            $(this).removeAttr('href');
+            $(this).on('click',function(me){
+                window.open(url, '_blank');
+            });
+           }
+       }
+   }
+});
 
+/*************** Debug lien externe pour le bouton des avis pages-jaunes ************/
+var comp = new RegExp(location.host);
+var url ='';
+if( window.location.pathname ==='/avis-clients/'){
+    var comp = new RegExp(location.host);
+    if(!comp.test($(this).attr('href'))){
+        url=$('.new-review.pj-link').attr("href");
+        $('.pj-link').on('click',function(me){
+            window.open(url, '_blank');
+        });
+    }
+}
 
+/***************** Debug pour les boutons redirigeant vers les pages Facebook des annonceurs **************/
+if(!comp.test($(this).attr('href'))){
+       if($(this).attr('href') !== undefined){
+           if($(this).attr("href").indexOf("facebook.fr") != -1){
+            url=$(this).attr('href');
+            $(this).removeAttr('href');
+            $(this).on('click',function(me){
+                window.open(url, '_blank');
+            });
+        }
+    }
+}
 
+</script>
 
 
 
@@ -1843,7 +1989,7 @@ $('.colCarre').each(function(i,t){
 
 
 /********************************* Effet de couleur sur carte Mappy ******************************/
-
+<style>
 .colonneMap > div > div > div > div:before {
     position: absolute;
     left: 15px;
@@ -1856,7 +2002,7 @@ $('.colCarre').each(function(i,t){
     mix-blend-mode: color;
 	ponter-events:none;
 } 
-
+</style>
 
 
 
@@ -1888,9 +2034,195 @@ invisible();
 
 
 
+/******************************************* Bulles animée (petites bulles blache avec opacité aléatoire)
+<div class="bubbles"></div>
+<script>
+ var bArray = [];
+    // Définition du nombre d'élément (entioté présente dans le tableau aisni que la taille de celles-ci (valeur numérique défini))
+    var sArray = [4,6,8,10];
+ 
+    for (var i = 0; i < $('.bubbles').width(); i++) {
+        bArray.push(i);
+    }
+     
+    function randomValue(arr) {
+        return arr[Math.floor(Math.random() * arr.length)];
+    }
+ 
+    setInterval(function(){  
+        var size = randomValue(sArray);
+        $('.bubbles').append('<div class="individual-bubble" style="left: ' + randomValue(bArray) + 'px; width: ' + size + 'px; height:' + size + 'px;"></div>');
+         
+        $('.individual-bubble').animate({
+            'bottom': '100%',
+            'opacity' : '-=0.7'
+        }, 3000, function(){
+            $(this).remove()
+        }
+        );
+ 
+    }, 350);
+ 
 
 
+</script>
+<style>
+.bubbles {
+  display: inline-block;
+  font-family: arial;
+  position: relative;
+  width:800px;/*défini la largeur du bloc parent des bulles */
+  height:200px;/*défini la heuteur du bloc parent des bulles */
+  }
+  
+  .bubbles h1 {
+  position: relative;
+  margin: 1em 0 0;
+  color: #fff;
+  z-index: 2;
+  }
+  
+  .individual-bubble {
+  position: absolute;
+  border-radius: 100%;
+  bottom: 10px;
+  background-color: #fff;
+  z-index: 1;
+  }
+  .bulles-images{
+    width:160px;
+    padding-left:20px;
+    position:absolute;
+    bottom:45px;
+    margin-left:-90px;
+    left:50%;
+    display:inline-block;
+   margin-bottom: 0px !important;
+}
 
+.bubble{
+    -webkit-animation:short-bubble 1500ms linear infinite;
+    animation:short-bubble 1500ms linear infinite;
+    -webkit-animation-fill-mode:forwards;
+    animation-fill-mode:forwards;
+    height:10px;
+    width:9px;
+    border:1px solid rgba(240,240,240,0.5);
+    border-radius:50%;
+}
+.b2{
+    -webkit-animation:medium-bubble 5000ms linear infinite;
+    animation:medium-bubble 5000ms linear infinite;
+    -webkit-animation-fill-mode:forwards;
+    animation-fill-mode:forwards;
+    margin-left:-7px;
+    margin-top:25px;
+    height:13px;
+    width:12px;
+}
+
+.b3{
+    -webkit-animation-duration:3500ms;
+    animation-duration:3500ms;
+    margin-left:-5px;
+    margin-bottom:10px;
+}
+
+.b4{
+    -webkit-animation-duration:2000ms;
+    animation-duration:2000ms;
+    -webkit-animation-fill-mode:forwards;
+    animation-fill-mode:forwards;
+    margin:0 0 40px -9px;
+    height:7px;
+    width:6px;
+}
+
+.b5{
+    -webkit-animation:medium-bubble 3000ms linear infinite;
+    animation:medium-bubble 3000ms linear infinite;
+    -webkit-animation-fill-mode:forwards;
+    animation-fill-mode:forwards;
+    margin-left:-1px;
+    margin-top:100px;
+    height:5px;
+    width:4px;
+}
+
+.b6{
+    -webkit-animation-duration:3000ms;
+    animation-duration:3000ms;
+    margin-left:-8px;
+    margin-bottom:50px;
+}
+
+.b7{
+    -webkit-animation-duration:6000ms;
+    animation-duration:6000ms;
+    margin-left:-3px;
+    margin-bottom:50px;
+    height:7px;
+    width:6px;
+}
+
+.b8{
+    -webkit-animation:medium-bubble 2000ms linear infinite;
+    -webkit-animation-fill-mode:forwards;
+    animation:medium-bubble 2000ms linear infinite;
+    animation-fill-mode:forwards;
+    margin-left:-13px;
+    margin-bottom:30px;
+}
+
+@-webkit-keyframes short-bubble{
+    0%{ -webkit-transform:translate3d(5px, 0, 0);opacity:0; }
+    13%{ -webkit-transform:translate3d(2px, -20px, 0); opacity:1; }
+    20%{ -webkit-transform:translate3d(5px, -40px, 0) scale(1.2); }
+    30%{ -webkit-transform:translate3d(0, -60px, 0); }
+    40%{ -webkit-transform:translate3d(8px, -80px, 0); }
+    50%{ -webkit-transform:translate3d(3px, -100px, 0); }
+    60%{ -webkit-transform:translate3d(8px, -120px, 0); }
+    70%{ opacity:0.4; }
+    80%, 100%{ -webkit-transform:translate3d(0,-200px, 0); opacity:0; }
+}
+
+@keyframes short-bubble{
+    0%{ transform:translate3d(5px, 0, 0);opacity:0; }
+    13%{ transform:translate3d(2px, -20px, 0); opacity:1; }
+    20%{ transform:translate3d(5px, -40px, 0) scale(1.2); }
+    30%{ transform:translate3d(0px, -60px, 0); }
+    40%{ transform:translate3d(8px, -80px, 0); }
+    50%{ transform:translate3d(3px, -100px, 0); }
+    60%{ transform:translate3d(8px, -120px, 0); }
+    70%{ opacity:0.4; }
+    80%, 100%{ transform:translate3d(0,-200px, 0); opacity:0; }
+}
+
+@-webkit-keyframes medium-bubble{
+    0%{ -webkit-transform:translate3d(0, 0, 0); opacity:0;}
+    5%{ -webkit-transform:translate3d(4px, -20px, 0); opacity:1;}
+    10%{ -webkit-transform:translate3d(2px, -40px, 0) rotate(10deg); }
+    20%{ -webkit-transform:translate3d(7px, -80px, 0) rotate(14deg) scale(0.7); }
+    30%{ -webkit-transform:translate3d(5px, -120px, 0) rotate(15deg); }
+    40%{ -webkit-transform:translate3d(1px, -160px, 0) rotate(20deg); }
+    50%{ -webkit-transform:translate3d(2px, -200px, 0) rotate(18deg) scale(1.1); }
+    60%{ -webkit-transform:translate3d(-3px, -240px, 0) rotate(22deg); opacity:0.4; }
+    100%{ -webkit-transform:translate3d(0, -400px, 0); opacity:0; }
+}
+
+@keyframes medium-bubble{
+    0%{ transform:translate3d(0, 0, 0); opacity:0;}
+    5%{ transform:translate3d(4px, -20px, 0); opacity:1;}
+    10%{ transform:translate3d(2px, -40px, 0) rotate(10deg); }
+    20%{ transform:translate3d(7px, -80px, 0) rotate(14deg) scale(0.7); }
+    30%{ transform:translate3d(5px, -120px, 0) rotate(15deg); }
+    40%{ transform:translate3d(1px, -160px, 0) rotate(20deg); }
+    50%{ transform:translate3d(2px, -200px, 0) rotate(18deg) scale(1.1); }
+    60%{ transform:translate3d(-3px, -240px, 0) rotate(22deg); opacity:0.4; }
+    100%{ transform:translate3d(0, -400px, 0); opacity:0; }
+}
+
+  </style>
 
 
 
@@ -2066,6 +2398,149 @@ $('.btnTel a').attr('href',valueBtnTel);$('.telMenu').attr('href',valueBtnTel);
 
 
 
+************************************* Detection mobile ********************************
+<script>
+var estMobile = window.matchMedia(only screen and (max-width: 760px));
+if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) && estMobile.matches){
+}
+//detection d'internet explorer 9
+function is_old_internet_explorer(){
+    var matches = navigator.userAgent.match(/(msie) ([\w.]+)/i);
+    if( matches[2] < 9 ){return true;}
+    return false;
+}
+</script>
+
+
+
+
+
+
+
+
+************************************* Detection de l'ensemble des informations sur le système de l'utilisateur :
+<script>
+/************************************* Type de navigateur, d'OS *************************************************/
+navigator.sayswho= (function(){
+    var ua= navigator.userAgent, tem, 
+    M= ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
+    if(/trident/i.test(M[1])){tem=  /\brv[ :]+(\d+)/g.exec(ua) || [];return 'IE '+(tem[1] || '');}
+    if(M[1]=== 'Chrome'){tem= ua.match(/\b(OPR|Edge)\/(\d+)/);
+        if(tem!== null) return tem.slice(1).join(' ').replace('OPR', 'Opera');
+    }
+    M= M[2]? [M[1], M[2]]: [navigator.appName, navigator.appVersion, '-?'];
+    if((tem= ua.match(/version\/(\d+)/i))!== null) M.splice(1, 1, tem[1]);
+    return M.join(' ');
+})();
+
+
+
+/***************** Récupération des coordonées géographique via la geolocalisation **************************************/
+var posLa,posLon;
+function geo_success(position) {posLa = position.coords.latitude;posLon =  position.coords.longitude;return posLa,posLon;}
+function geo_error() {console.log("Sorry, no position available.");}
+var geo_options = {enableHighAccuracy: true, maximumAge: 30000, timeout: 27000};
+var wpid = navigator.geolocation.watchPosition(geo_success, geo_error, geo_options);
+setTimeout(logInfos,500);// Délais pour la récupération des coordonnées
+
+
+var isMobileScreen = window.matchMedia("only screen and (max-width:768px)").matches;
+var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+var broswer = navigator.sayswho;// Nom du navigateur
+var broswerVersion = $.browser.version;// Version du navigateur
+var OS = navigator.platform;// os
+var regExp = /\(([^)]+)\)/;//regex pour récupérer l'element entre parantheses
+var appOS = regExp.exec(String(navigator.appVersion))[1];// Récupération du premier élément entre  parentheses (OS infos)
+function logInfos(){
+    console.log('Informations techniques -->',
+        '\n Dimensions : '+$(window).width()+'px',
+        '\n Support : '+navigator.userAgent,
+        '\n Navigateur : '+broswer +' version :'+ broswerVersion,
+        '\n OS : '+ appOS.toString().split(';')[0],
+        '\n Processeur : '+appOS.toString().split(';')[1].split('WOW')[1]+'bytes',
+        '\n Mobile detected : '+isMobile,
+        '\n Résolution mobile : '+isMobileScreen
+    );
+    console.log(
+        'Latitude:'+posLa+'°, Longitude:'+posLon+'°'
+        );
+}
+</script>
+
+
+
+
+
+
+
+
+
+
+/****** Detecte les informations concernant le système d'explotoition ---->
+ **/
+<script>
+function getOS() {
+  var userAgent = window.navigator.userAgent,
+      platform = window.navigator.platform,
+      macosPlatforms = ['Macintosh', 'MacIntel', 'MacPPC', 'Mac68K'],
+      windowsPlatforms = ['Win32', 'Win64', 'Windows', 'WinCE'],
+      iosPlatforms = ['iPhone', 'iPad', 'iPod'],
+      os = null;
+  if (macosPlatforms.indexOf(platform) !== -1) {os = 'Mac OS';} 
+  else if (iosPlatforms.indexOf(platform) !== -1) {os = 'iOS';} 
+  else if (windowsPlatforms.indexOf(platform) !== -1) {os = 'Windows';} 
+  else if (/Android/.test(userAgent)) {os = 'Android';} 
+  else if (!os && /Linux/.test(platform)) { os = 'Linux';}
+  return os;
+}
+
+
+
+/****************** Infos concernant la géolocalisation via Google map api 
+**/
+
+
+let GOOGLE_MAP_KEY = 'AIzaSyCQpovfq0aDobIA2F0OAyp-4AoPAKLYvd4';
+function ipLookUp () {
+    $.ajax('http://ip-api.com/json').then(function success(response) {
+        console.log('User\'s Location Data is ', response);
+        console.log('User\'s Country', response.country);
+        getAdress(response.lat, response.lon);
+    },function fail(data, status) {
+        console.log('Request failed.  Returned status of',status);
+    });
+}
+function getAddress (latitude, longitude) {
+  $.ajax('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + latitude + ',' + longitude + '&key=' + GOOGLE_MAP_KEY).then(function success (response) {
+      console.log('User\'s Address Data is ', response);
+    },function fail (status) {
+      console.log('Request failed.  Returned status of',status);
+      });
+}
+if ("geolocation" in navigator) {
+    // check if geolocation is supported/enabled on current browser
+    navigator.geolocation.getCurrentPosition(function success(position) {
+        // for when getting location is a success
+        console.log('latitude', position.coords.latitude, 'longitude', position.coords.longitude);
+        getAddress(position.coords.latitude, position.coords.longitude);
+        },function error(error_message) {
+            // for when getting location results in an error
+            console.error('An error has occured while retrievinglocation', error_message);
+            ipLookUp();
+    });
+} else {
+    // geolocation is not supported
+    // get your location some other way
+    console.log('geolocation is not enabled on this browser');
+    ipLookUp();
+}
+
+</script>
+
+
+
+
+
 
 
 
@@ -2121,7 +2596,6 @@ function getParameterByName(name){
   else
     return decodeURIComponent(results[1].replace(/\+/g, " "));
 }
-
 </script>
 
 
@@ -3095,7 +3569,116 @@ $('#Header #Top_bar .container').before('<div class="phoneBtn"><span class="cont
     }
 }
 </style>
+************ toujours en fixed le tel sera placé à gauche du logo -->
+<style>
 
+
+/************* Greg service modif ***************/
+#Wrapper #Top_bar {
+    background-color: #d6d6d6;
+}
+#Header #Top_bar .menu > li > a, #Header #Top_bar #menu ul li.submenu .menu-toggle {color: #ffffff!important;}
+#Wrapper .telMenu {color: #000;font-weight: 600;}
+.phoneBtn a, .phoneBtn i {font-size: 1.4em;color: #f72508;}
+.phoneBtn .contactPhone {height: 20px;}
+.phoneBtn {
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    float: left;
+    top: 33px;
+    left: 10px;
+    transform: translateY(-50%);
+    border-radius: 0 10px 10px 10px;
+    height: auto;
+    width: auto;
+    z-index: 999;
+}
+#Top_bar:not(.is-sticky) .phoneBtn {
+    top: 35px;
+}
+#Top_bar.is-sticky .phoneBtn {
+    top: 30px;
+}
+@media screen and (min-width:1240px) and (max-width:1530px){
+   .phoneBtn {
+        position: absolute;
+        flex-direction: column;
+        align-items: center;
+        right: 0;
+        top: 15%;
+        height: auto;
+        transform: translate(-0%,-50%);
+    }
+    #Top_bar:not(.is-sticky) .phoneBtn {
+        background: #d6d6d6;
+        top: 70px;
+        left: 50%;
+        width: 199px;
+        padding: 0 5px 8px 5px;
+        transform: translateX(-50%);
+        border-radius: 0 0px 10px 10px;
+    }
+    #Top_bar.is-sticky .phoneBtn {
+        position: absolute;
+        flex-direction: column;
+        align-items: center;
+        right: 0;
+        top: 75px;
+        height: auto;
+        transform: translate(-0%,-50%);
+    }
+    .phoneBtn a, .phoneBtn i,.titlePhone {white-space: nowrap;}
+    #Top_bar #logo {padding: 0 0 15px 0;}
+}
+@media screen and (min-width:769px) and (max-width:1239px){
+    .phoneBtn {
+        position: absolute;
+        right: 0;
+        top: 50%;
+        min-width: 155px;
+    }
+    #Top_bar:not(.is-sticky) .phoneBtn {
+        top: 35px;
+        left: 50%;
+    }
+}
+@media screen  and  (max-width:768px){
+   .phoneBtn {
+        position: absolute;
+        top: 50%;
+        left: 5px;
+        font-size: 1.5em;
+        transform: translate(0,-50%);
+        background: transparent;
+        height: auto;
+    }
+    .phoneBtn a, .phoneBtn i {
+        font-size: 1em;
+        color: #f72508;
+    }
+    #Header .mfn-main-slider {
+        margin-top: 0;
+    }
+}  
+@media screen and (max-width:470px) {
+    .phoneBtn {
+        position: absolute;
+        top: 50%;
+        left: 5px;
+        width: 130px;
+        right: inherit;
+        font-size: 1.2em;
+        transform: translate(0%,-50%);
+        background: #2c3138;
+        padding: 0;
+    }
+    .phoneBtn a, .phoneBtn i {
+        font-size: 1em;
+    }
+}
+</style>
 
 ************ Pour un menu à gauche #Header_creative :
 <script>
@@ -3213,7 +3796,7 @@ $("#Header_wrapper #Top_bar .container").before('<div class="contact-rapide"><di
 
 
 
-************************************** Ajout d'une barre de conatct rapide s'adaptant sur un menu à gache, elle prend en compte le 1239px
+************************************** Ajout d'une barre de conatct rapide s'adaptant sur un menu à gauche, elle prend en compte le 1239px
 <script>
 if (window.matchMedia("(min-width: 1240px)").matches) {
     console.log('min-width 1240px');
@@ -3243,9 +3826,85 @@ if (window.matchMedia("(max-width: 1239px)").matches) {
 }
 </script>
 
-**********************Ajouter deux contact rapide concernant deux agence, celle-ci sont ajouté dans le menu de gauche sous le bouton contact *******************************
 
-<script>$('.top_bar_right_wrapper').append('<div class="contact-rapide"><span class="agence-1">Agence de Mehun-sur-Yèvre</span><a href="tel:0254609393" class="action_button">02 48 57 37 38</a><span class="agence-2">Agence de Vierzon</span><a href="tel:024871004" class="action_button">02 48 71 04 04</a></div>');
+version avec deux agences toujours dans le menu de gauche adapté sur les dimension 1239 moins et plus et stylisé -->
+<script>
+
+if (window.matchMedia("(min-width: 1240px)").matches) {
+    console.log('min-width 1240px');
+    $('.creative-wrapper').after(
+        '<div class="contact-rapide">'+
+            '<div class="phoneContact">' +
+                '<span class="titlePhone">Agence Hérouville</span><span class="telBtn"><a href="tel:0231476414">02 31 47 64 14</a></span>'+
+            '</div>'+
+            '<div class="phoneContact">'+
+                '<span class="titlePhone">Agence Hérouville</span><span class="telBtn"><a href="tel:0233056106">02 33 05 61 06</a></span>'+
+            '</div>'+
+        '</div>'
+    );
+}
+if (window.matchMedia("(max-width: 1239px)").matches) {
+    console.log('max-width 1239px');
+    $("#Header_creative #Top_bar > div").before(
+        '<div class="contact-rapide">'+
+            '<div class="phoneContact">' +
+                '<span class="titlePhone">Agence Hérouville</span><span class="telBtn"><a href="tel:0231476414">02 31 47 64 14</a></span>'+
+            '</div>'+
+            '<div class="phoneContact">'+
+                '<span class="titlePhone">Agence Hérouville</span><span class="telBtn"><a href="tel:0233056106">02 33 05 61 06</a></span>'+
+            '</div>'+
+        '</div>'
+    );
+}
+$('.phoneContact').each(function(){
+    $(this).wrap('<a href="'+$(this).find('a').attr('href')+'"></a>');
+});
+</script>
+<style>
+.contactRapide {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+}
+.phoneContact {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background: #80808073;
+    margin: 5px 0;
+    color: white;
+    padding: 5px;
+    border: solid 1px;
+    border-width: 1px 0 1px 0;
+}
+.contact-rapide a {
+    text-decoration: none!important;
+}
+</style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+**********************Ajouter d'une barre de contact rapide avec deux bouton d'appel pour deux agences, celles-ci sont ajouté dans le menu de gauche sous le bouton contact *******************************
+
+<script>
+$('.top_bar_right_wrapper').append('<div class="contact-rapide"><span class="agence-1">Agence de Mehun-sur-Yèvre</span><a href="tel:0254609393" class="action_button">02 48 57 37 38</a><span class="agence-2">Agence de Vierzon</span><a href="tel:024871004" class="action_button">02 48 71 04 04</a></div>');
 </script>
 <style>
 .contact-rapide {
@@ -4009,8 +4668,8 @@ function f() {
 
 
 
-
-
+****************************** Ajout de style livre de condoléance *********************************
+<script>
 $('.condolence_books').each(function(i,t){
     setTimeout(function(){
         $($(this).find(".actions-container").detach()).insertBefore($(this).find(".content"));
@@ -4020,7 +4679,7 @@ $('.condolence_books').each(function(i,t){
     $(this).find('.info p .location').before('<i class="icon-location"></i>');
 });
 
-
+</script>
 
 
 
@@ -4058,7 +4717,7 @@ splitString(monthString, virgule);
 
 
 
-/********************** Recuperer les chiffres present dans une chaine ***********/
+/********************** Recuperer les chiffres présent dans une chaine ***********/
 var myString = "Hello 1 word. Sentence number 2.";
 var splits = myString.split(/(\d)/); /* Ce motif correspond à un chiffre et est équivalent à [0-9] */
 
@@ -4077,6 +4736,69 @@ console.log(splits);// renvoi : Hello ,1, word. Sentence number ,2,.
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+*************************************************** charger un formulaire dans une iframe via la fonction load (avec message de prechargement)
+Il faut créer une rangé avec la classe contentIframe pour la colonne 
+un bouton comportant la clickcalculateur2 doit être présent
+
+<script>
+if(window.location.pathname === '/page-avec-le-chargement/'){
+  $('.clickcalculateur2').on('click',function(me){
+    $('.contentIframe').before('<div class="preloding"><span class="preloadTitle"> Chargement du calculateur de devis</span></div>');
+    $('.contentIframe').load('https://www.artdecorenovation.fr/simulation/#formSimulation',function(){$('.preloding').fadeOut(300);});
+  });
+}
+</script>
+<style>
+/**** chargement simulation page  loaded ************************/
+/* loading dots */
+.preloding {
+    font-size: 1.5em;
+    text-align: center;
+    width: 100%;
+    padding: 15px 0;
+}
+.preloadTitle:after {
+  content: ' .';
+  animation: dots 1.3s steps(5, end) infinite;}
+
+@keyframes dots {
+  0%, 20% {
+    color: rgba(0,0,0,0);
+    text-shadow:
+      .25em 0 0 rgba(0,0,0,0),
+      .5em 0 0 rgba(0,0,0,0);}
+  40% {
+    color: black;
+    text-shadow:
+      .25em 0 0 rgba(0,0,0,0),
+      .5em 0 0 rgba(0,0,0,0);}
+  60% {
+    text-shadow:
+      .25em 0 0 black,
+      .5em 0 0 rgba(0,0,0,0);}
+  80%, 100% {
+    text-shadow:
+      .25em 0 0 black,
+      .5em 0 0 black;}
+}
+</style>
+
+
 /***************************** Fonction pour refresh une image regulièrement *******************************/
 
 <script type="text/javascript">
@@ -4090,6 +4812,28 @@ window.onload = function() {
   setInterval(refresh,1000);
  };
 </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -4132,6 +4876,25 @@ $('h1,h2,h3').each(function(){
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /****************************************************** Filter gestion des données d'un Array ************************************************************************/
 <script type="text/javascript">
 
@@ -4145,6 +4908,22 @@ console.log(result);
 
 </script>
 /***************************************************************************************************************************************************************/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -4190,6 +4969,26 @@ if(window.location.pathname === '/monte-escaliers/'){
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /*************** Recupération du nombre de mots à modifier dans un title *************************************************************************/
 <script type="text/javascript">
 
@@ -4216,6 +5015,20 @@ $(".myH1").wrapStart(nbWords);// Découpe le nombre de mots defini via la class 
 
 </script>
 /***************************************************************************************************************************************************************/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -4310,6 +5123,26 @@ $("[class*='firstWThemeColor-']").removeClass(function () { // Select the elemen
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /*************** changement de couleur des title h1 & h2 en fonction des nombres récuperer dans la classe 2_word-3 (ici le theme2 appliqué aux trois premiers mots) *************************************************************************/
 
 <script type="text/javascript">
@@ -4356,6 +5189,30 @@ $(".myH1").wrapStart(nbWordsH1);// Découpe le nombre de mots defini via la clas
 $(".myH2").wrapStart(nbWordsH2);// Découpe le nombre de mots defini via la class themeColor(id du theme color)_word-(nb du nombre de mot)
 
 </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -4412,6 +5269,16 @@ $(".myH1").wrapStart(nbWords);// Découpe le nombre de mots defini via la class 
 
 
 
+
+
+
+
+
+
+
+
+
+
 /*************** Recherche et remplace un texte  *****/
 
 <script type="text/javascript">
@@ -4425,6 +5292,23 @@ $('.wpb_text_column p').each(function(i,t){
 </script>
 
 /*********************************************************************************************************/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -4509,6 +5393,19 @@ TweenMax.staggerTo($(".cardWrapper .card"), 1, {rotationY:-180, repeat:1, yoyo:t
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 /*************** Color word in themeColor number and nb number word to last number class *************************************************************************/
 <script type="text/javascript">
 
@@ -4543,7 +5440,15 @@ $(".myH2").wrapStart(nbWordsH2);// Découpe le nombre de mots defini via la clas
 
 
 
-/****** Bon à imprimer ****************/
+
+
+
+
+
+
+
+
+/****** Bon à imprimer    ouvre une fenêtre d'une taille p^rédéfini qui sera ensuite envoyé à l'impression****************/
 <script type="text/javascript">
 
 $("#btnPrint").live("click", function () {
@@ -5530,6 +6435,125 @@ $('.rowBtn .vc_btn3-inline').each(function(i,t){
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/************************************** Desactivation du click sur les images d'un media grid ou masonery grid ****************/
+<script>
+if(window.location.pathname ==='/'){
+    setTimeout(removeHref,1000);
+    function removeHref(){$('.vc_gitem-link').each(function(i,t){$(this).css('pointer-events','none');});}
+} 
+</script>
+
+
+
+
+
+
+
+
+******************************************** Logo facebook PT Sans ***********************************
+<style>
+@import url('https://fonts.googleapis.com/css?family=PT+Sans+Narrow');
+.icoFB {
+    background: #3C5A99;
+    font-weight: 600;
+    font-size: 1.6em;
+    font-family: 'PT Sans Narrow';
+    width: 35px;
+    height: 35px;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px auto!important;
+    text-decoration: none!important;
+    border-radius: 5px;
+    padding: 2px;
+}
+.icoFB:hover {
+    color: white;
+}
+</style>
+
+
+
+
+
+*************************** triangle decoration 3D sur bandeau h2
+<style>
+h2 {
+    display: inline-block;
+    position: relative;
+    margin-bottom: 15px!important;
+    background-color: #070707;
+    border-top: solid 1px #070707;
+    border-bottom: solid 1px #070707;
+    color: #fff;
+    font-size: 26px;
+    padding: 10px 45px;
+    width: 100%;
+}
+h2:after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-top: 25px solid #8e8e8e;
+    bottom: -26px;
+    border-right: 45px solid transparent;
+    right: 0;
+}
+</style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /*********************************************** Afficher un element jusqu'à une date précise ici noël   ***************************************/
 <script>
 var date = new Date();
@@ -5555,7 +6579,7 @@ if (vacancesFA !== null) {
 
 
 
-/************************************** Actualités avec date d'affichage******************************************************************************/
+/************************************** Actualités avec date d'affichage ******************************************************************************/
 <script>
 //On crée un objet de type date stockant la date actuelle
 var d = new Date();
@@ -8719,6 +9743,15 @@ $('.pj-shortcode').each(function() {
 $('.pj-shortcode').after("<a class afterCopyright'>mon new texte</a>");
 </script>
 
+
+<script>
+$('.pj-shortcode').contents().filter(function() {
+    return this.nodeType === 3;
+  }).replaceWith(function() {
+      return this.nodeValue.replace('Grosfillex Fenêtres Alu Concept et PVC C','NANCY FENETRES');
+  });
+</script>
+
 //******************************************************************************** Fin modification copyright***************************************************************************************
 
 
@@ -10487,7 +11520,26 @@ function distanceBetween(b, e) {
         k = e.y - b.y;
     return Math.sqrt(i * i + k * k)
 }
-BlobWorld.init();</script>
+BlobWorld.init();
+
+</script>
+//************ Creation des élements html******************* -->
+<p>Double click to split. <a id="keyboardUp" href="#">Increase</a> / <a id="keyboardDown" href="#">decrease</a> size or <a id="keyboardLeft" href="#">Previous</a> / <a id="keyboardRight" href="#">Next</a> skin.</p>
+<canvas id='world'></canvas>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
