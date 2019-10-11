@@ -1,0 +1,12 @@
+{
+  "manifest_version": 2,
+
+  "name": "Solcoalms Beautifier",
+  "version": "0.1.0",
+  "description": "Solcoalms Content Managment System",
+  "content_scripts": [{
+    "css": ["style/styles.css", "style/dark_theme.css"],
+    "js":["jquery/jquery-3.4.1.min.js","jquery/jquery-ui.min.js","js/content.js"],
+    "matches": ["https://soprod.solocalms.fr/*"]
+  }]
+}
