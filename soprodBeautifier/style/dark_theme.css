@@ -1,0 +1,87 @@
+/*** Dark theme ***/
+.page-content-wrapper .page-content {
+    background-color: #494949;
+}
+.page-content-wrapper .portlet.box > .portlet-title {
+    background-color: #303030 !important;
+}
+
+.page-content-wrapper .table-scrollable > .table, .page-content-wrapper .form-control[disabled], .page-content-wrapper .form-control[readonly], .page-content-wrapper fieldset[disabled] .form-control {
+    background-color: #e3e3e3;
+    color: #303030;
+}
+.page-content-wrapper table.table, .page-content-wrapper .chats li .body {
+    color: #303030;
+}
+
+.page-content-wrapper .chats li .datetime {
+    color:#777777;
+}
+
+.page-content-wrapper .portlet.box > .portlet-body {
+    background-color: #777777;
+    color: #fff;
+}
+
+.page-content-wrapper .chats li .name {
+    font-weight: 600;
+}
+
+.page-content-wrapper .chats li.in .message.mine {
+    background: #fff;
+    border: 2px solid rgb(27, 188, 155);
+    border-left: 10px solid rgb(27, 188, 155);
+}
+.page-content-wrapper .chats li.in .message.mine .arrow {
+    border-right: 8px solid #fff;
+}
+.page-content-wrapper .chats li.in .message {
+        background-color: #eee;
+}
+
+.page-content-wrapper #recordsList tbody tr:hover, .page-content-wrapper .qualificationTr {
+    background-color: #fff;
+}
+
+.page-content-wrapper .WebLinks.badge {
+    font-weight: 400;
+}
+
+.page-content-wrapper .WebLinksA {
+    float: left;
+    padding: 5px 0;
+}
+.page-content-wrapper .WebLinks.badge {
+    height: auto;
+    font-weight: 400;
+    padding: 10px;
+}
+
+
+/*** Boutons liens externes ***/
+.page-content-wrapper .externalPortlet .portlet-body {
+    display: block;
+    background-color: #e3e3e3;
+}
+
+.page-content-wrapper div#linkref-18776 {
+    background-color: #e2cd00 !important;
+}
+
+.page-content-wrapper .externalPortlet .col-md-12 {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.page-content-wrapper .externalPortlet .WebLinksA {
+    min-width: 25%;
+    width: auto;
+    display: flex;
+    flex: 1 1 auto;
+    text-align: center;
+    position: relative;
+}
+
+.page-content-wrapper .externalPortlet a.WebLinksA:hover {
+    text-decoration: none;
+}

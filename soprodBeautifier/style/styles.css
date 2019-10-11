@@ -1,0 +1,79 @@
+table tbody tr td.actions div {
+	display : block !important;
+}
+ .operator-content > .row{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.form-horizontal .control-label {
+    text-align: right;
+    color: black;
+}
+
+table tbody tr td.actions div {
+    display : block !important;
+}
+
+.modal-dialog {
+    width: 70% !important;
+}
+
+
+/* Reduce modif */
+[data-completed="1"] .tdBlock > span {
+    line-height: 25px;
+}
+[data-completed="1"] .tdBlock .badge {
+    height: 15px;
+    padding-top: 0px;
+    font-size: 6px !important;
+}
+table tbody tr[data-completed="1"] td.actions .btn {
+    height: 30px;
+    width: 30px;
+    line-height: 30px;
+}
+
+.row {
+	list-style: none;
+	width: 100%;
+}
+
+.slide-placeholder {
+	background: #DADADA;
+	position: relative;
+}
+.slide-placeholder:after {
+	content: " ";
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	height: 15px;
+	background-color: #FFF;
+}
+
+.col-md-6 {
+	width: 100% !important;
+}
+
+.operatorHeader .col-md-6, .col-md-12 {
+	float: none !important;
+}
+span.btnDrag {
+    content: "X";
+    display: block;
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    height: 40px;
+    width: 50px;
+    transform: translateX(-50%);
+    color: white;
+    text-align: center;
+    font-size: 1.8em;
+    line-height: 40px;
+    background: black;
+}
