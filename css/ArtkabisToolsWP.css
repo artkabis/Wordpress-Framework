@@ -1,29 +1,3 @@
-/* ┌────────────────────────────────────────────────────────────────────────────────┐ \\
-// │ Artkabis 1.04 - CSS           Library                                          │ \\
-// ├────────────────────────────────────────────────────────────────────────────────┤ \\
-// │    Copyright (c) 2015-2019 Gregory NICOLLE (http://urliss35.free.fr)           │ \\
-// │    Copyright (c) 2013-2019 Artkabis Labs (http://sencha.com)                   │ \\
-// |    Mise à jour du : 25 Octobre    2019                                         | \\
-// |    Copyright (c) 2012-2019 CodePen Artkabis (https://codepen.io/artkabis/)     | \\
-// |    Copyright (c) 2017-2019 Github Artkabis (https://github.com/artkabis/)      | \\
-// │    Licensed under the MIT (http://artkabis.com/license.html) license           │ \\
-// └────────────────────────────────────────────────────────────────────────────────┘ \\
-
-
-/**** FRAMEWORK ******/
-/***** Git ->> <link rel="stylesheet" id="toolsCSS" href="https://raw.githubusercontent.com/artkabis/Wordpress-Framework/master/css/ArtkabisToolsWP.css" type="text/css" media="all">
-/** PROD OPTI V 1.04 >>
-   <link rel="stylesheet" id="toolsCSS-prod" href="https://rawcdn.githack.com/artkabis/Wordpress-Framework/4e1b58d2f01f0d2ab127c93cdd55ee9ecbbd9c58/css/ArtkabisToolsWP.css" type="text/css" media="all">
-
-** DEV >>
-   <link rel="stylesheet" id="toolsCSS-dv" href="https://raw.githack.com/artkabis/Wordpress-Framework/master/css/ArtkabisToolsWP.css" type="text/css" media="all">
-*/
-
-
-/* slow  --> 
-     @import url('https://fonts.googleapis.com/css?family=Advent+Pro:100,200,300,400,500,600,700|Asap:400,500,600,700|Barlow+Condensed:100,200,300,400,500,600,700,800,900|Cantarell:400,700|Caveat|Comfortaa:300,400,500,700|Courgette|Exo:100,200,300,400,500,600,700,800,900|Great+Vibes|Josefin+Sans:100,300,400,600,700|Josefin+Slab:100,300,400,600,700|Jura:300,400,500,600,700|Lato|Merienda|Montserrat:100,200,300,400,500,600,700,800,900|Open+Sans+Condensed:300,300i,700|Open+Sans:300,400,600,700,800|PT+Sans:400,700|Poiret+One|Poppins:100,200,300,400,500,600,700,800,900|Questrial|Quicksand:300,400,500,600,700|Raleway:100,200,300,400,500,600,700,800,900|Roboto+Mono:100,300,400,500,700|Roboto:100,300,400,500,700,900|Source+Code+Pro:200,300,400,500,600,700,900|Source+Sans+Pro:200,300,400,600,700,900|Titillium+Web:200,300,400,600,700,900|Ubuntu:300,400,500,700&display=swap');
-*/
-/* speed --> */
 @import url('https://fonts.googleapis.com/css?family=Josefin+Sans:100,100i,300,300i,400,400i,600,600i,700,700i|Lato:100,100i,300,300i,400,400i,700,700i,900,900i&subset=latin-ext');
 /*********************** --------------RESET----------------- ***************************/
 .noMargin,.resetImg,.resetImg figure div {margin: 0!important;}
