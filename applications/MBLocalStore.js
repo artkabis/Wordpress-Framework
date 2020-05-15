@@ -504,7 +504,7 @@ const modeles = {
               "image": "https://pavillons-galaxie.fr/assets/images/modele-maisons/maison-neptune1.jpg"
             }
           },
-          {//Terrain SAINT SYLVAIN -  60 900,00 € -	14190  SAINT SYLVAIN	49.0563595, -0.2169256	468	Terrain de 468 m2, 27 km de CAEN, 20 km de FALAISE		https://www.annuaire-mairie.fr/mairie-saint-sylvain.html
+    {//Terrain SAINT SYLVAIN -  60 900,00 € -	14190  SAINT SYLVAIN	49.0563595, -0.2169256	468	Terrain de 468 m2, 27 km de CAEN, 20 km de FALAISE		https://www.annuaire-mairie.fr/mairie-saint-sylvain.html
 
             "type": "Feature",
             "geometry": {
@@ -536,8 +536,8 @@ const modeles = {
             "geometry": {
               "type": "Point",
               "coordinates": [
-                -0.2169256,
-                49.0563595
+                -0.5189443,
+                49.2340027
               ],
               "zoom": 13.4
             },
@@ -562,8 +562,8 @@ const modeles = {
             "geometry": {
               "type": "Point",
               "coordinates": [
-                -0.2169256,
-                49.0563595
+                -0.7451689,
+                49.2434942
               ],
               "zoom": 13.4
             },
@@ -588,8 +588,8 @@ const modeles = {
             "geometry": {
               "type": "Point",
               "coordinates": [
-                -0.2169256,
-                49.0563595
+                0.1820625,
+                49.1819395
               ],
               "zoom": 13.4
             },
@@ -610,8 +610,7 @@ const modeles = {
             }            
           }
         ]
-      };
-      
+      };    
       /**
        * Attribuez un identifiant unique à chaque store. 
        * Vous utiliserez cet identifiant plus tard pour associer 
