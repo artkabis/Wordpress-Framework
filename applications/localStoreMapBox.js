@@ -557,8 +557,8 @@ const modeles = {
             "geometry": {
               "type": "Point",
               "coordinates": [
-                -0.2169256,
-                49.0563595
+                -0.5189443,
+                49.2340027
               ],
               "zoom": 13.4
             },
@@ -583,8 +583,8 @@ const modeles = {
             "geometry": {
               "type": "Point",
               "coordinates": [
-                -0.2169256,
-                49.0563595
+                -0.7451689,
+                49.2434942
               ],
               "zoom": 13.4
             },
@@ -609,8 +609,8 @@ const modeles = {
             "geometry": {
               "type": "Point",
               "coordinates": [
-                -0.2169256,
-                49.0563595
+                0.1820625,
+                49.1819395
               ],
               "zoom": 13.4
             },
