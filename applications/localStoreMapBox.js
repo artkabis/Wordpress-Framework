@@ -124,7 +124,7 @@ const modeles = {
             }
           },
           {
-            //  Terrain BANNEVILLE LA CAMPAGNE	 80 000,00 € 14940 BANNEVILLE LA CAMPAGNE	49.168119, -0.2190716	581	Terrain de 581 m2, 15 km de CAEN		https://www.annuaire-mairie.fr/mairie-banneville-la-campagne.html
+            //  Terrain BANNEVILLE LA CAMPAGNE	 80 000,00 € 14940 BANNEVILLE LA CAMPAGNE	49.168119, -0.2190716	581	Terrain de 581 m2, 15 km de CAEN		https://www.annuaire-mairie.fr/mairie-banneville-la-campagne.html
 
             "type": "Feature",
             "geometry": {
@@ -789,11 +789,11 @@ var createModels = function( mods){
   var str=``;//création template string
   // On préparre la boucle avec les datas pour générer les option du select dans le DOM
   for (const property in mods) {
-    var modeles = property; // la property créée comporte le nom de l'objet(ici le modèle), mods est rattaché à l'objet modeles
+    var modele = property; // la property créée comporte le nom de l'objet(ici le modèle), mods est rattaché à l'objet modele
     urlImages=mods[property][1];// mods[property] renvoi donc la valeur lié au nom de l'élément dans l'objet, le [1] à l'url de l'image
     console.log('urlImages>>>>>>>>>',urlImages);
     var prices=mods[property][0];// mods[property] renvoi donc la valeur lié au nom de l'élément dans l'objet, le [0] aux prix
-    str += `<option data-img="${urlImages}" data-price="${prices}" value="${modeles}">${modeles.toUpperCase()}</option>`;
+    str += `<option data-img="${urlImages}" data-price="${prices}" value="${modele}">${modele.toUpperCase()}</option>`;
   }
   return str;//on retourne la chaine créée à chaque itération de la boucle dans le DOM
 }
