@@ -786,7 +786,7 @@ function createPopUp(currentFeature) {
   var popup = new mapboxgl.Popup({closeOnClick: false})
   .setLngLat(currentFeature.geometry.coordinates)
   .setHTML(`
-            <h4><a href="${currentFeature.properties.link}">${currentFeature.properties.title}</a></h4>
+            <h4><a title="Visiter le site de la ville d'${currentFeature.properties.city}" href="${currentFeature.properties.link}">${currentFeature.properties.title}</a></h4>
             <div class="poster"><a data-fancybox="images" class="fancy" href="${imgBig}"><img src="${imgThumb}" /></a></div>
             <div class="description">${currentFeature.properties.description}</div>
             <div class="listeModel">
