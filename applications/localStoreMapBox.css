@@ -230,3 +230,12 @@
     color: #100f0f;
     font-weight: 900;
 }
+.mapboxgl-popup-anchor-top .mapboxgl-popup-tip {
+    position: absolute;
+    -webkit-align-self: center;
+    align-self: center;
+    border-top: none;
+    border-bottom-color: #fff;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
