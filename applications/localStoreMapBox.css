@@ -243,5 +243,68 @@
 .mapboxgl-popup.mapboxgl-popup-anchor-top {
     max-width: inherit!important;
 }
-
+/**** Menu map styles **/
+#menu {
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding: 10px 20px;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 9;
+}
+.radio {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  line-height: 20px;
+  font-size: 14px;
+  margin: 0 10px;
+  color: white;
+}
+.radio .label {
+  position: relative;
+  display: block;
+  float: left;
+  margin-right: 10px;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #c8ccd4;
+  border-radius: 100%;
+  -webkit-tap-highlight-color: transparent;
+}
+.radio .label:after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 10px;
+    height: 10px;
+    border-radius: 100%;
+    background: #f7ed7e;
+    transform: scale(0) translate(-50%,-50%);
+    transition: all 0.2s ease;
+    opacity: 0.08;
+    pointer-events: none;
+}
+.radio:hover .label:after {
+  transform: translate(-50%,-50%) scale(3.6);
+}
+input[type="radio"]:checked + .label {
+    border-color: #f7ed7e;
+}
+input[type="radio"]:checked + .label:after {
+    transform: scale(1) translate(-50%,-50%);
+    transition: all 0.2s cubic-bezier(0.35, 0.9, 0.4, 0.9);
+    opacity: 1;
+}
+.cntr {
+  position: absolute;
+  top: calc(50% - 10px);
+  left: 0;
+  width: 100%;
+  text-align: center;
+}
+.hidden {
+  display: none;
+}
 
