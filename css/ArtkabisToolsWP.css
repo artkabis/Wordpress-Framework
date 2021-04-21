@@ -188,13 +188,13 @@
 .rotY-180{-webkit-transform:rotateY(-180deg);transform:rotateY(-180deg)}
 
 /**** FLEX ORDER ****/
-.fo-0, fo-0-inner > .vc_column-inner {display: -webkit-box;display: -ms-flexbox;display: flex;-webkit-box-ordinal-group: 1;-ms-flex-order: 0;order: 0;}
-.fo-1, fo-1-inner > .vc_column-inner {display: -webkit-box;display: -ms-flexbox;display: flex;-webkit-box-ordinal-group: 2;-ms-flex-order: 1;order: 1;}
-.fo-2, fo-2-inner > .vc_column-inner {display: -webkit-box;display: -ms-flexbox;display: flex;-webkit-box-ordinal-group: 3;-ms-flex-order: 2;order: 2;}
-.fo-3, fo-3-inner > .vc_column-inner {display: -webkit-box;display: -ms-flexbox;display: flex;-webkit-box-ordinal-group: 4;-ms-flex-order: 3;order: 3;}
-.fo-4, fo-4-inner > .vc_column-inner {display: -webkit-box;display: -ms-flexbox;display: flex;-webkit-box-ordinal-group: 5;-ms-flex-order: 4;order: 4;}
-.fo-5, fo-5-inner > .vc_column-inner {display: -webkit-box;display: -ms-flexbox;display: flex;-webkit-box-ordinal-group: 6;-ms-flex-order: 5;order: 5;}
-.fo-6, fo-6-inner > .vc_column-inner {display: -webkit-box;display: -ms-flexbox;display: flex;-webkit-box-ordinal-group: 7;-ms-flex-order: 6;order: 6;}
+.fo-0, .fo-0-inner > .vc_column-inner {display: -webkit-box;display: -ms-flexbox;display: flex;-webkit-box-ordinal-group: 1;-ms-flex-order: 0;order: 0;}
+.fo-1, .fo-1-inner > .vc_column-inner {display: -webkit-box;display: -ms-flexbox;display: flex;-webkit-box-ordinal-group: 2;-ms-flex-order: 1;order: 1;}
+.fo-2, .fo-2-inner > .vc_column-inner {display: -webkit-box;display: -ms-flexbox;display: flex;-webkit-box-ordinal-group: 3;-ms-flex-order: 2;order: 2;}
+.fo-3, .fo-3-inner > .vc_column-inner {display: -webkit-box;display: -ms-flexbox;display: flex;-webkit-box-ordinal-group: 4;-ms-flex-order: 3;order: 3;}
+.fo-4, .fo-4-inner > .vc_column-inner {display: -webkit-box;display: -ms-flexbox;display: flex;-webkit-box-ordinal-group: 5;-ms-flex-order: 4;order: 4;}
+.fo-5, .fo-5-inner > .vc_column-inner {display: -webkit-box;display: -ms-flexbox;display: flex;-webkit-box-ordinal-group: 6;-ms-flex-order: 5;order: 5;}
+.fo-6, .fo-6-inner > .vc_column-inner {display: -webkit-box;display: -ms-flexbox;display: flex;-webkit-box-ordinal-group: 7;-ms-flex-order: 6;order: 6;}
 
 /**** Z-INDEX ****/
 .posn,.zi-n {z-index: -1;}
