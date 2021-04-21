@@ -296,8 +296,8 @@
 #Content .liBlue li{color:blue;}
 
 
-linkColor1 a {color:var(--color1);}
-linkColor2 a {color:var(--color2);}
+.linkColor1 a {color:var(--color1);}
+.linkColor2 a {color:var(--color2);}
 .black,.blackLink a {color:black!important}
 .black1,.black1Link a {color:#111!important;}
 .black2,.black2Link a {color:#222!important;}
@@ -436,18 +436,18 @@ linkColor2 a {color:var(--color2);}
 .mbmColor{mix-blend-mode: color;}
 .mbmColorBurn{mix-blend-mode: color-burn;}
 .mbmColorDodge{mix-blend-mode: color-dodge;}
-.mbmDarken{mix-blend-mode: darken;
-.mbmDifference{mix-blend-mode: difference;
-.mbmExclusion{mix-blend-mode: exclusion;
-.mbmHardLight{mix-blend-mode: hard-light;
-.mbmHue{mix-blend-mode: hue;
-.mbmLighten{mix-blend-mode: lighten;
-.mbmLuminosity{mix-blend-mode: luminosity;
-.mbmMultiply{mix-blend-mode: multiply;
-.mbmOverlay{mix-blend-mode: overlay;
-.mbmSaturation{mix-blend-mode: saturation;
-.mbmScreen{mix-blend-mode: screen;
-.mbmSoftLight{mix-blend-mode: soft-light;
+.mbmDarken{mix-blend-mode: darken;}
+.mbmDifference{mix-blend-mode: difference;}
+.mbmExclusion{mix-blend-mode: exclusion;}
+.mbmHardLight{mix-blend-mode: hard-light;}
+.mbmHue{mix-blend-mode: hue;}
+.mbmLighten{mix-blend-mode: lighten;}
+.mbmLuminosity{mix-blend-mode: luminosity;}
+.mbmMultiply{mix-blend-mode: multiply;}
+.mbmOverlay{mix-blend-mode: overlay;}
+.mbmSaturation{mix-blend-mode: saturation;}
+.mbmScreen{mix-blend-mode: screen;}
+.mbmSoftLight{mix-blend-mode: soft-light;}
 
 /**** MAX HEIGHT ****/
 .maxH50{max-height: 50px;}.maxH70{max-height: 70px;}.maxH80{max-height: 80px;}.maxH90{max-height: 90px;}
